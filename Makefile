@@ -7,13 +7,13 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = minishell
-SRC_FILES = main.c
+SRC_FILES = main.c parser/parser.c
 OBJ_FILES = $(SRC_FILES:%.c=obj/%.o)
-OBJ_DIR = obj
+OBJ_DIR = obj obj/parser
 
 
 # readline flags
-RL_FLAGS = -L $$HOME/.brew/opt/readline/lib -lreadline -I $$HOME/.brew/opt/readline/include
+RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline -I $(HOME)/.brew/opt/readline/include
 
 # libft variables
 LIBFT = libft/libft.a
@@ -21,7 +21,7 @@ LIBFT_DIR = libft
 
 # compilation variables
 CC = cc
-INCLUDES = -I inc -I libft/incs
+INCLUDES = -I incs -I libft/incs
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 else
@@ -30,17 +30,17 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ_FILES)
 	@echo "${MAGENTA}Creating $@${END}"
-	@$(CC) $(INCLUDES) $(RL_FLAGS) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(INCLUDES) $(RL_FLAGS) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(LIBFT)
 	@echo "${GREEN}Done!${END}"
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
-obj/%.o: src/%.c | $(OBJ_DIR)
+obj/%.o: srcs/%.c | $(OBJ_DIR)
 	@echo "${BLUE}Compiling $<${END}"
-	@$(CC) $(INCLUDES) $(RL_FLAGS) $(CFLAGS) -c -o $@ $^
+	@$(CC) $(INCLUDES) $(CFLAGS) -c -o $@ $^
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
@@ -51,7 +51,7 @@ clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@echo "${RED}Removing ${NAME} adn $(LIBFT)${END}"
+	@echo "${RED}Removing ${NAME} and $(LIBFT)${END}"
 	@rm -rf $(LIBFT) $(NAME)
 
 debug: fclean
