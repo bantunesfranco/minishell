@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   echo.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/04/19 15:37:09 by bfranco       ########   odam.nl         */
+/*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
+/*   Updated: 2023/04/19 16:53:23 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	echo(char *str, char *option)
 {
-	char	*line;
-	char	**input_arr;
-	int		i;
-
-	while (1)
+	if (!str || ft_strlen(str) == 0)
 	{
-		i = 0;
-		line = readline("minishell$ ");
-		if (!ft_strrchr(line, '\n'))
-			printf("No nl\n");
-		input_arr = ft_split_args(line, '|');
-		if (!input_arr)
-			ft_error("minishell: ", ENOMEM);
-		printf("\n");
-		while (input_arr[i])
-		{
-			printf("%s\n", input_arr[i]);
-			i++;
-		}
-		printf("\n");
-		ft_free_arr(input_arr);
-		input_arr = NULL;
+		if (!option)
+			write(1, "\n", 1);
+		else
+			write(1, "\0", 1);
 	}
-	exit(0);
+	else if (option)
+	{
+		if (write(1, str, ft_strlen(str)) == -1)
+			ft_error("minishell: ", errno);
+	}
+	else
+	{
+		if (write(1, str, ft_strlen(str)) == -1)
+			ft_error("minishell: ", errno);
+		if (write(1, "\n", 1) == -1)
+			ft_error("minishell: ", errno);
+	}
 }
