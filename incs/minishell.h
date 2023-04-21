@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/04/19 15:06:36 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/04/21 12:28:55 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 # include "libft.h"
 
 char	**ft_split_args(char *str, char sep);
+char	**ft_arrdup(char **arr);
 
 #endif
