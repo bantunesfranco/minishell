@@ -11,31 +11,36 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "structs.h"
 
-int	main(void)
+static void	init_general(t_gen *general, char **envp)
 {
-	char	*line;
-	char	**input_arr;
-	int		i;
+	general->env = ft_arrdup(envp);
+	if (!general->env)
+		exit(1);
+	general->pwd = ft_strdup(getenv("PWD") + 4);
+	if (!general->pwd)
+		exit(1);
+	general->oldpwd = ft_strdup(getenv("OLDPWD") + 8);
+	if (!general->oldpwd)
+		exit(1);
+	general->path = ft_split(getenv("PATH"), ':');
+	if (!general->path)
+		exit(1);
+}
 
-	while (1)
+int	main(int argc, char **argv, char **envp)
+{
+	t_gen general;
+	int	i = 0;
+	(void)argv;
+	if (argc != 1)
+		exit(1);
+	init_general(&general, envp);
+	while (general.path[i])
 	{
-		i = 0;
-		line = readline("minishell$ ");
-		if (!ft_strrchr(line, '\n'))
-			printf("No nl\n");
-		input_arr = ft_split_args(line, '|');
-		if (!input_arr)
-			ft_error("minishell: ", ENOMEM);
-		printf("\n");
-		while (input_arr[i])
-		{
-			printf("%s\n", input_arr[i]);
-			i++;
-		}
-		printf("\n");
-		ft_free_arr(input_arr);
-		input_arr = NULL;
+		printf("%s\n", general.path[i]);
+		i++;
 	}
 	exit(0);
 }
