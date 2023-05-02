@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/02 17:14:46 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/02 19:06:23 by bruno         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int	echo(char **env, t_cmd *cmd)
 	}
 	str = join_message(&cmd->cmd[args], len);
 	if (write_content(str, cmd->output->fd, option) == -1)
-		return (-1);
+		return (free(str), -1);
+	free(str);
 	return (0);
 }
