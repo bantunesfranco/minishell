@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   echo_main.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/19 14:47:19 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/04/24 12:00:12 by bfranco       ########   odam.nl         */
+/*   Created: 2023/05/02 17:03:58 by bfranco       #+#    #+#                 */
+/*   Updated: 2023/05/02 17:11:08 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "structs.h"
 
-void	pwd(char **env, t_cmd *cmd)
+int	main(int argc, char **argv, char **envp)
 {
-	char	*path;
-	int		fd;
+	char		**env;
+	int			i;
+	t_cmd		cmd;
+	t_redirect	*out;
 
-	if (ft_arrlen(cmd->cmd) != 1)
-		return (-1);
-	fd = cmd->output->fd;
-	path = getcwd(NULL, 0);
-	if (!path)
-		ft_error("minishell: ", errno);
-	if (write(fd, path, ft_strlen(path)) == -1)
-		ft_error("minishell: ", errno);
-	if (write(fd, "\n", 1) == -1)
-		ft_error("minishell: ", errno);
-	free(path);
-	return (0);
+	i = 0;
+	(void)argc;
+	cmd.cmd = ft_split(argv[1], ' ');
+	env = ft_arrdup(envp);
+	out = malloc(sizeof(t_redirect));
+	out->fd = 1;
+	cmd.output = out;
+	echo(env, &cmd);
+	ft_free_arr(env);
+	exit(0);
 }

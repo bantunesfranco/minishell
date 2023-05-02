@@ -6,19 +6,22 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/04/21 14:44:10 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/02 17:14:46 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "structs.h"
 
-void	option_check(t_cmd *cmd)
+static int	option_check(t_cmd *cmd)
 {
 	int	i;
 
 	i = 1;
-	if (cmd->cmd[1][0] == '-')
+	if (cmd->cmd[1] && cmd->cmd[1][0] == '-')
 	{
+		if (cmd->cmd[1][1] != 'n')
+			return (0);
 		while (cmd->cmd[1][i] && cmd->cmd[1][i] == 'n')
 		{
 			i++;
@@ -30,43 +33,85 @@ void	option_check(t_cmd *cmd)
 	return (0);
 }
 
-int	echo(char **env, t_cmd *cmd)
+static int	write_content(char *content, int fd, int option)
 {
-	int	option;
-
-	(void)env;
-	option = option_check(cmd);
-	if (!cmd->cmd[0] || ft_strlen(*cmd->cmd[0]) == 0)
+	if (!content || ft_strlen(content) == 0)
 	{
 		if (option)
-			return (0);
-		if (write(cmd->output->fd, "\n", 1) == -1)
-			return (-1);
+		{
+			if (write(fd, "\0", 1) == -1)
+				return (-1);
+		}
+		else
+		{
+			if (write(fd, "\n", 1) == -1)
+				return (-1);
+		}
 	}
 	else
 	{
-		if (write(cmd->output->fd, str, ft_strlen(str)) == -1)
+		if (write(fd, content, ft_strlen(content)) == -1)
 			return (-1);
 		if (option)
 			return (0);
-		if (write(cmd->output->fd, "\n", 1) == -1)
+		if (write(fd, "\n", 1) == -1)
 			return (-1);
 	}
 	return (0);
 }
 
-int	main(int argc, char **argv, char **envp)
+static char	*join_message(char **args, int len)
 {
-	char	**env;
+	char	*str;
 	int		i;
-	t_cmd	cmd;
-	t_cmd	cmd2;
+	int		j;
+	int		size;
 
+	if (len == 0)
+		return (ft_strdup(""));
+	str = (char *)malloc(sizeof(char) * len);
+	if (!str)
+		return (NULL);
 	i = 0;
-	(void)argc;
-	cmd.cmd = ft_split(argv[1], ' ');
-	env = ft_arrdup(envp);
-	echo(env, &cmd)
-	ft_free_arr(env);
-	exit(0);
+	j = 0;
+	while (args[i] && j < len)
+	{
+		size = ft_strlen(args[i]);
+		ft_memmove(&str[j], args[i], size);
+		j += size;
+		if (j == len - 1)
+			str[j] = '\0';
+		else
+			str[j] = ' ';
+		j++;
+		i++;
+	}
+	return (str);
+}
+
+int	echo(char **env, t_cmd *cmd)
+{
+	int		option;
+	int		args;
+	int		len;
+	int		i;
+	char	*str;
+
+	(void)env;
+	option = option_check(cmd);
+	if (option == 1)
+		args = 2;
+	else
+		args = 1;
+	len = 0;
+	i = args;
+	while (cmd->cmd[i])
+	{
+		len += (ft_strlen(cmd->cmd[i]) + 1);
+		i++;
+	}
+	str = join_message(&cmd->cmd[args], len);
+	if (write_content(str, cmd->output->fd, option) == -1)
+		return (-1);
+	return (0);
 }

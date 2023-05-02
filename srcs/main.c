@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/04/19 15:37:09 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/02 11:54:35 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	main(void)
 	{
 		i = 0;
 		line = readline("minishell$ ");
-		if (!ft_strrchr(line, '\n'))
-			printf("No nl\n");
 		input_arr = ft_split_args(line, '|');
 		if (!input_arr)
 			ft_error("minishell: ", ENOMEM);
