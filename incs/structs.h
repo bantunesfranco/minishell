@@ -6,21 +6,38 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:57 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/04/24 13:05:34 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/02 17:52:13 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-// struct s_gen
-// {
-// 	pwd;
-// 	oldpwd;
-// 	env;
-	
-// };
+typedef enum e_token
+{
+	PIPE,
+	GREAT,
+	LESS,
+	GREAT_GREAT,
+	LESS_LESS,
+}	t_token;
 
+typedef struct s_lexer
+{
+	char			*word;
+	t_token			token;
+	struct s_lexer	*next;
+	struct s_lexer	*prev;
+}	t_lexer;
+
+typedef struct s_gen
+{
+	char	**env;
+	char	*pwd;
+	char	*oldpwd;
+	char	**path;
+	t_lexer	**lexer_list;
+}	t_gen;
 
 typedef struct s_redirect
 {
