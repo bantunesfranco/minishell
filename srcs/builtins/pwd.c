@@ -6,22 +6,19 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:47:19 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/03 09:37:26 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/03 16:53:31 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd(char **env, t_cmd *cmd)
+int	pwd(t_gen *gen, t_cmd *cmd)
 {
 	char	*path;
-	char 	*pwd;
+	char	*pwd;
 	int		fd;
 	int		len;
 
-	(void)env;
-	if (ft_arrlen(cmd->cmd) != 1)
-		return (-1);
 	fd = cmd->output->fd;
 	path = getcwd(NULL, 0);
 	if (!path)

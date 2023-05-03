@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 10:00:21 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/03 10:00:24 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/03 15:19:37 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ int	main(int argc, char **argv, char **envp)
 	cmd.cmd = ft_split(argv[1], ' ');
 	env = ft_arrdup(envp);
 	out = malloc(sizeof(t_redirect));
-	// out->fd = open("res.txt", O_RDWR);
-    out->fd = 1;
+	out->fd = 1;
 	if (out->fd == -1)
 		exit(1);
 	cmd.output = out;
 	pwd(env, &cmd);
-    chdir("..");
-    write(out->fd, "                 ", 17);
-    pwd(env, &cmd);
+	chdir("..");
+	write(out->fd, "                 ", 17);
+	pwd(env, &cmd);
 	ft_free_arr(env);
 	exit(0);
 }

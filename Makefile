@@ -7,7 +7,7 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = minishell
-SRC_FILES = main.c parser/ft_split_args.c
+SRC_FILES = main.c ft_arrdup.c
 OBJ_FILES = $(SRC_FILES:%.c=obj/%.o)
 OBJ_DIR = obj obj/parser
 

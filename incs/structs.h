@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:57 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/02 17:52:13 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/03 16:19:31 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_gen
 	char	*pwd;
 	char	*oldpwd;
 	char	**path;
+	int		exit_code;
 	t_lexer	**lexer_list;
 }	t_gen;
 
@@ -50,7 +51,7 @@ typedef struct s_cmd
 {
 	char				**cmd;
 	char				*path;
-	int					(*builtin)(char **, struct s_cmd *);
+	int					(*builtin)(t_gen *, struct s_cmd *);
 	struct s_redirect	*input;
 	struct s_redirect	*output;
 	struct s_cmd		*next;
