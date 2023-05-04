@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 09:27:34 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/04 10:44:35 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/04 13:45:15 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,16 @@ int	main(int argc, char **argv, char **envp)
 	cmd2.cmd = ft_split(argv[2], ' ');
 	gen.env = ft_arrdup(envp);
 	cmd.output = malloc(sizeof(t_redirect));
+	cmd2.output = malloc(sizeof(t_redirect));
 	cmd.output->fd = 1;
+	cmd2.output->fd = 1;
 	pwd(&gen, &cmd);
-	cd(&gen, &cmd2);
+	old = getenv("OLDPWD");
+	if (old)
+		gen.oldpwd = ft_strdup(old);
+	if (cd(&gen, &cmd2) == -1)
+		return (-1);
+	write(cmd.output->fd, "                 ", 17);
 	pwd(&gen, &cmd);
 	ft_free_arr(gen.env);
 	exit(0);

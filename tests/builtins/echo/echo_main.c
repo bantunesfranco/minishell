@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/02 17:03:58 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 10:14:20 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/04 12:34:20 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_cmd		cmd;
 	t_gen		gen;
+
 	(void)argc;
-	
 	cmd.cmd = ft_split(argv[1], ' ');
 	gen.env = ft_arrdup(envp);
 	cmd.output = malloc(sizeof(t_redirect));

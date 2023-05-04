@@ -28,6 +28,15 @@ else
 CFLAGS = -Wall -Werror -Wextra
 endif
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+	OBJ_FLAGS := $(RL_FLAGS)
+else ifeq ($(UNAME_S), Darwin)
+	OBJ_FLAGS := 
+else
+	$(error OS: $(OS) is not supported!)
+endif
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ_FILES)
@@ -40,7 +49,7 @@ $(LIBFT):
 
 obj/%.o: srcs/%.c | $(OBJ_DIR)
 	@echo "${BLUE}Compiling $<${END}"
-	@$(CC) $(INCLUDES) $(CFLAGS) -c -o $@ $^
+	@$(CC) $(INCLUDES) $(OBJ_FLAGS) $(CFLAGS) -c -o $@ $^
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)

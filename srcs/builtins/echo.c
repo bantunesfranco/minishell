@@ -6,12 +6,11 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 10:05:03 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/04 14:18:18 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "structs.h"
 
 static int	option_check(t_cmd *cmd)
 {

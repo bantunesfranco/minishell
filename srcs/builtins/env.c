@@ -1,43 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   env.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 14:00:59 by bfranco       ########   odam.nl         */
+/*   Created: 2023/05/04 14:18:25 by bfranco       #+#    #+#                 */
+/*   Updated: 2023/05/04 14:44:02 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "structs.h"
 
-static void	init_general(t_gen *general, char **envp)
+int	env(t_gen *gen, t_cmd *cmd)
 {
-	general->env = ft_arrdup(envp);
-	if (!general->env)
-		exit(1);
-	general->pwd = getcwd(NULL, 1);
-	if (!general->pwd)
-		exit(1);
-	general->oldpwd = NULL;
-}
+	int	i;
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_gen	general;
-	int		i;
-
+	if (ft_arrlen(cmd->cmd) != 1)
+		return (-1);
 	i = 0;
-	(void)argv;
-	if (argc != 1)
-		exit(1);
-	init_general(&general, envp);
-	while (general.env[i])
+	while (gen->env[i])
 	{
-		printf("%s\n", general.env[i]);
+		if (write(cmd->output->fd, gen->env[i], ft_strlen(gen->env[i])) == -1)
+			return (-1);
+		if (write(cmd->output->fd, "\n", 1) == -1)
+			return (-1);
 		i++;
 	}
-	exit(0);
+	return (0);
 }

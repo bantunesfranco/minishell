@@ -6,12 +6,11 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 10:54:05 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/04 14:18:13 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "structs.h"
 
 static char	*get_target(char *target, t_gen *gen)
 {
@@ -19,7 +18,11 @@ static char	*get_target(char *target, t_gen *gen)
 
 	i = 0;
 	if (!ft_strncmp(target, "OLDPWD=", 8))
+	{
+		if (!gen->oldpwd)
+			return (NULL);
 		return (ft_strdup(gen->oldpwd));
+	}
 	else if (!ft_strncmp(target, "HOME=", 5))
 	{
 		while (gen->env[i])
@@ -63,6 +66,10 @@ int	cd(t_gen *gen, t_cmd *cmd)
 	else if (!ft_strncmp(cmd->cmd[1], "-", 2))
 	{
 		if (go_to("OLDPWD=", gen) == -1)
+			return (-1);
+		if (write(cmd->output->fd, gen->pwd, ft_strlen(gen->pwd)) == -1)
+			return (-1);
+		if (write(cmd->output->fd, "\n", 1) == -1)
 			return (-1);
 	}
 	else

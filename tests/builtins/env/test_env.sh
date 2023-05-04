@@ -8,8 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/cd/cd_main.c srcs/builtins/cd.c srcs/builtins/pwd.c \
-srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address -g`
+`gcc -Wall -Wextra -Werror tests/builtins/env/env_main.c srcs/builtins/env.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -19,12 +18,12 @@ else
 	ECHO="echo"
 fi
 
-$ECHO "\n	${CYAN}CD TESTER${END}\n----------------------------"
+$ECHO "\n	${CYAN}ENV TESTER${END}\n----------------------------"
 
 $ECHO "	${MAGENTA}TO STDOUT${END}\n----------------------------"
-$ECHO "${BLUE}Test 1 - 'cd'\n${END}"
-OUT=`./a.out "pwd" "cd"`
-OUT2=`pwd && cd && echo -n "                 " && pwd`
+$ECHO "${BLUE}Test 1 - 'env'\n${END}"
+OUT=`./a.out "env" | grep -v _=`
+OUT2=`env | grep -v _=`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -38,9 +37,11 @@ fi
 
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 2 - 'cd -' no OLDPWD\n${END}"
-OUT=`./a.out "pwd" "cd -"`
-OUT2=`pwd && cd - && echo -n "                 " && pwd`
+$ECHO "${BLUE}Test 2 - 'env env'\n${END}"
+OUT=`./a.out "env env" | grep -v _=`
+OUT2=""
+
+$ECHO "Do not handle env env. Output should be empty. \n"
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -54,9 +55,9 @@ fi
 
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 3 - 'cd ..'\n${END}"
-OUT=`./a.out "pwd" "cd .."`
-OUT2=`pwd && cd .. && echo -n "                 " && pwd`
+$ECHO "${BLUE}Test 3 - 'env hi'\n${END}"
+OUT=`./a.out "env hi" | grep -v _=`
+OUT2=`env hi | grep -v _=`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -70,9 +71,15 @@ fi
 
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 4 - 'cd .'\n${END}"
-OUT=`./a.out "pwd" "cd ."`
-OUT2=`pwd && cd . && echo -n "                 " && pwd`
+$ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
+
+$ECHO "${BLUE}Test 1 - 'env'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`./a.out "env" res.txt && < res.txt cat | grep -v _=`
+OUT2=`env > res2.txt && < res2.txt cat | grep -v _=`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -84,11 +91,20 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 5 - 'cd incs'\n${END}"
-OUT=`./a.out "pwd" "cd incs"`
-OUT2=`pwd && cd incs && echo -n "                 " && pwd`
+$ECHO "${BLUE}Test 2 - 'env env'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+$ECHO "Do not handle env env. Output should be empty. \n"
+
+OUT=`./a.out "env env" res.txt && < res.txt cat | grep -v _=`
+OUT2=""
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -100,11 +116,18 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 6 - 'cd /'\n${END}"
-OUT=`./a.out "pwd" "cd /"`
-OUT2=`pwd && cd / && echo -n "                 " && pwd`
+$ECHO "${BLUE}Test 3 - 'env hi'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`./a.out "env hi" res.txt && < res.txt cat | grep -v _=`
+OUT2=`env hi > res2.txt && < res2.txt cat | grep -v _=`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -116,25 +139,9 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
-$ECHO "----------------------------"
-
-$ECHO "${BLUE}Test 7 - 'cd -' with OLDPWD\n${END}"
-
-cd .. && cd minishell
-
-OUT=`./a.out "pwd" "cd -"`
-OUT2=`pwd && cd - && echo -n "                 " && pwd`
-
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
-
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
 $ECHO "----------------------------"
 
-# `rm -rf a.out`
+`rm -rf a.out`
