@@ -35,15 +35,11 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
-`rm -rf a.out`
-
 $ECHO "----------------------------"
 
-`gcc -Wall -Wextra -Werror tests/builtins/pwd/pwd_main2.c srcs/builtins/pwd.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
-
-$ECHO "${BLUE}Test 2 - 'pwd with cd'\n${END}"
-OUT=`./a.out "pwd"`
-OUT2=`pwd && cd .. && echo -n "                 " && pwd`
+$ECHO "${BLUE}Test 2 - 'pwd hello\n${END}"
+OUT=`./a.out "pwd hello"`
+OUT2=`pwd hello`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -55,19 +51,15 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
-`rm -rf a.out`
-
 $ECHO "----------------------------"
 
 $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
 $ECHO "${BLUE}Test 1 - 'pwd'\n${END}"
 
-`gcc -Wall -Wextra -Werror tests/builtins/pwd/pwd_main3.c srcs/builtins/pwd.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
-
 `touch res.txt && chmod 777 res.txt`
 `touch res2.txt && chmod 777 res2.txt`
 
-OUT=`./a.out "pwd" > res.txt && cat res.txt`
+OUT=`./a.out "pwd" res.txt > res.txt && cat res.txt`
 OUT2=`pwd > res2.txt && cat res2.txt`
 
 $ECHO "minishell:	|$OUT|"
@@ -82,6 +74,27 @@ fi
 
 `rm -rf res.txt`
 `rm -rf res2.txt`
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 2 - 'pwd hello\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`./a.out "pwd hello" res.txt > res.txt && cat res.txt`
+OUT2=`pwd hello > res2.txt && cat res2.txt`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
 `rm -rf a.out`
 
 $ECHO "----------------------------"

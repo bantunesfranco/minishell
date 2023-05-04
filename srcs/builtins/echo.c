@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/03 16:21:07 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/04 10:05:03 by bruno         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	echo(t_gen *gen, t_cmd *cmd)
 	int		i;
 	char	*str;
 
+	(void)gen;
 	option = option_check(cmd);
 	if (option == 1)
 		args = 2;

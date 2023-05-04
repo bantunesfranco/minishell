@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:47:19 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/03 16:53:31 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/04 10:15:43 by bruno         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	pwd(t_gen *gen, t_cmd *cmd)
 	int		fd;
 	int		len;
 
+	(void)gen;
 	fd = cmd->output->fd;
 	path = getcwd(NULL, 0);
 	if (!path)
