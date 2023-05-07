@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:57 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/02 12:45:52 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/07 10:03:17 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@
 typedef enum e_token_type
 {
 	PIPE,
-	WORD,
+	OR,
+	AND,
 	GREAT,
+	GREAT_GREAT,
 	LESS,
+	LESS_LESS,
 	AMPERSAND,
-	// GREAT_GREAT,
-	// LESS_LESS
+	WHITESPACE,
+	// SPACE,
+	// TAB,
+	NEW_LINE,
+	WORD,
 }	t_token_type;
 
 typedef enum e_redirect_type
@@ -66,6 +72,21 @@ typedef struct s_cmd
 	struct s_redirect	*output;
 	struct s_cmd		*next;
 	struct s_cmd		*prev;
+	int					error_code;
+	int					subshell;
 }						t_cmd;
+
+typedef struct s_cmd_list
+{
+	int	error_code;
+	// enum				control_operator;
+	int					subshell;
+	int					cmd_count;
+	struct s_cmd		*first_cmd;
+	struct s_redirect	*input;
+	struct s_redirect	*output;
+	struct s_cmd_list	*next;
+	struct s_cmd_list	*prev;
+}	t_cmd_list;
 
 #endif
