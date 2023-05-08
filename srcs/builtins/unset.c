@@ -6,13 +6,13 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/08 10:22:29 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/08 17:22:59 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_size(char **env, char *target, int *delete)
+static int	get_size(char **env, char *target, int *delete)
 {
 	int	size;
 	int	i;
@@ -22,10 +22,10 @@ int	get_size(char **env, char *target, int *delete)
 	*delete = 0;
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], target, ft_strlen(target)))
+		if (!ft_envcmp(env[i], target))
 		{
 			size--;
-			*delete = 1;	
+			*delete = 1;
 		}
 		i++;
 		size++;
@@ -33,7 +33,7 @@ int	get_size(char **env, char *target, int *delete)
 	return (size);
 }
 
-char	**copy_env(char **env, char *target, int size)
+static char	**copy_env(char **env, char *target, int size)
 {
 	int		i;
 	int		j;
@@ -42,13 +42,13 @@ char	**copy_env(char **env, char *target, int size)
 	i = 0;
 	j = 0;
 	if (size == 0)
-		return (NULL);
+		return (env);
 	new_env = (char **)ft_calloc(size + 1, sizeof(char *));
 	if (!new_env)
 		return (NULL);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], target, ft_strlen(target)))
+		if (!ft_envcmp(env[i], target))
 		{
 			free(env[i++]);
 			if (!env[i])
@@ -74,10 +74,8 @@ int	unset(t_gen *gen, t_cmd *cmd)
 	if (!target)
 		return (-1);
 	size = get_size(gen->env, target, &delete);
-	if (size == -1)
+	if (!size || !delete)
 		return (free(target), -1);
-	if (!delete)
-		return (free(target), 0);
 	new_env = copy_env(gen->env, target, size);
 	if (!new_env)
 		return (free(target), -1);

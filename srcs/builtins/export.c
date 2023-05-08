@@ -6,70 +6,80 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 16:54:08 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/08 17:38:49 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_arr_size(char **arr)
+static int	get_size(char **env, char *target, int *replace)
 {
+	int	size;
 	int	i;
 
 	i = 0;
-	if (!arr)
-		return (i);
-	while (arr[i])
+	size = 0;
+	*replace = 0;
+	while (env[i])
+	{
+		if (!ft_envcmp(env[i], target))
+			*replace = 1;
 		i++;
-	return (i);
+		size++;
+	}
+	if (!*replace)
+		size++;
+	return (size);
 }
 
-static void	which_operation(char **env, char **cmd, int *op)
+static char	**copy_env(char **env, char *target, int size)
 {
 	int		i;
-	char	*str;
-	char	*str2;
+	int		j;
+	char	**new_env;
 
 	i = 0;
-	if (!cmd[1])
-		*op = 0;
-	else
+	j = 0;
+	if (size == 0)
+		return (env);
+	new_env = (char **)ft_calloc(size + 1, sizeof(char *));
+	if (!new_env)
+		return (NULL);
+	while (env[i])
 	{
-		*op = 1;
-		while (env[i])
-		{
-			str = ft_substr()
-			if (!ft_strnstr(env[i], cmd[1], ft_strlen))
-			i++;
-		}
+		new_env[j] = env[i];
+		i++;
+		j++;
 	}
+	free(env);
+	new_env[i] = ft_strdup(target);
+	if (!new_env[i])
+		return (NULL);
+	return (new_env);
 }
 
 int	export(t_gen *gen, t_cmd *cmd)
 {
 	int		size;
-	char	**new_env;
-	int		i;
-	int		operation;
+	int		replace;
+	char	*target;
 
-	which_operation(gen->env, cmd->cmd, &operation)
-	if (operation == 1)
-		size = get_arr_size(gen->env) + 1;
-	else
-		size = get_arr_size(gen->env);
-	new_env = (char **)ft_calloc(size + 1, sizeof(char *));
-	if (!new_env)
-		return (-1);
-	i = 0;
-	while (gen->env[i] && i < size)
+	if (!cmd->cmd[1])
+		return (print_export_env(gen->env), 0);
+	size = get_size(gen->env, target, &replace);
+	if (replace)
 	{
-		new_env[i] = gen->env[i];
-		i++;
+		while (gen->env[i] && ft_envcmp(env[i], target))
+			i++;
+		free(gen->env[i]);
+		gen->env[i] = ft_strdup(cmd->cmd[1]);
+		if (!gen->env[i])
+			return (-1);
 	}
-	free(gen->env);
-	new_env[i] = ft_strdup(cmd->cmd[1]);
-	if (!new_env[i])
-		return (-1);
-	gen->env = new_env;
+	else
+	{
+		free(gen->env);
+		gen->env = copy_env(gen->env, cmd->cmd[1], size);
+	}
 	return (0);
 }
