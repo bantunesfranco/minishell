@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:57 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/08 18:05:05 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/08 12:47:06 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_redirect
 	struct s_redirect	*next;
 }						t_redirect;
 
-typedef struct s_cmd
+typedef struct s_pipeline
 {
 	char				**cmd;
 	char				*path;
@@ -83,7 +83,7 @@ typedef struct s_cmd
 	struct s_cmd		*prev;
 	int					error_code;
 	int					subshell;
-}						t_cmd;
+}						t_pipeline;
 
 typedef struct s_cmd_list
 {

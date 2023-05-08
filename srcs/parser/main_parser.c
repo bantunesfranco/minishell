@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/07 13:29:20 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/08 12:29:02 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,56 @@ int	main(int argc, char *argv[], char **env)
 {
 	// char	*path = "/bin/cat";
 	// atexit(leaks);
-	// char **cmd = ft_arrdup(argv);	
+	// char *cmd[] = {"cat", NULL};	
 	(void)argc;
 	(void)argv;
 	(void)env;
 	// 2147483648
-	int	stat_loc;
-	printf("%s\n", getcwd(NULL, 0));
-	int pid = fork();
-	if (pid == 0)
-	{
-		printf("child%s\n", getcwd(NULL, 0));
-		chdir("..");
-		printf("child%s\n", getcwd(NULL, 0));
-		exit(2);
-	}
-	waitpid(pid, &stat_loc, 0);
-	// printf("%d\n", WIFEXITED);
-	printf("%d\n", stat_loc);
-	printf("parent%s\n", getcwd(NULL, 0));
-	chdir("..");
-	printf("parent%s\n", getcwd(NULL, 0));
+	// int pid;
+	int	pipe2[2];
+	int fd;
+	pipe(pipe2);
+	fd = open("hi", O_RDWR | O_TRUNC);
+	write(fd, "asd\n", 4);
+	write(fd, "asa\n", 4);
+	// for(int i = 0; 1; i++)
+	// char line[10];
+	// {
+	// write(pipe2[1], "hello\n", 7);
+	// pid = fork();
+	// if (pid == 0)
+	// {
+	// 	// dup2(fd, STDIN_FILENO);
+	// 	// close(fd);
+	// 	close(pipe2[1]);
+	// 	dup2(pipe2[0], STDIN_FILENO);
+	// 	close(pipe2[0]);
+	// 	execve(path, cmd, env);
+	// 	printf("error\n");
+	// 	exit(1);
+	// }
 
+	// sleep(2);
+	// write(pipe2[1], "world\n", 7);
+	// pid = fork();
+	// if (pid == 0)
+	// {
+	// 	// dup2(fd, STDIN_FILENO);
+	// 	// close(fd);
+	// 	close(pipe2[1]);
+	// 	dup2(pipe2[0], STDIN_FILENO);
+	// 	close(pipe2[0]);
+	// 	execve(path, cmd, env);
+	// 	printf("error\n");
+	// 	exit(1);
+	// }
+	// close(pipe2[1]);
+	// waitpid(pid, NULL, 0);
+	// printf("parent: %s", line);
+	// line[9] = '\0';
+	// printf("parent: %s", line);
+
+	// }
 	// char *temp = *cmd;
 	// cmd++;
 	// free(temp);

@@ -12,6 +12,6 @@ srcs/parser/parser.c"
 #!/bin/bash
 
 # compile
-rm parse_test
+rm -rf parse_test
 cc $CFLAGS $INCLUDES $RL_FLAGS -o parse_test libft/libft.a $SRC
 ./parse_test
