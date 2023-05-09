@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/08 17:38:49 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/09 10:45:45 by bruno         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,36 @@ static char	**copy_env(char **env, char *target, int size)
 	return (new_env);
 }
 
+static int	print_export_env(char **env, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (write(fd, "declare -x ", 11) == -1)
+			return (-1);
+		if (write(fd, env[i], ft_strlen(env[i])) == -1)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
 int	export(t_gen *gen, t_cmd *cmd)
 {
 	int		size;
 	int		replace;
 	char	*target;
+	int		i;
 
-	if (!cmd->cmd[1])
-		return (print_export_env(gen->env), 0);
+	i = 0;
 	size = get_size(gen->env, target, &replace);
+	if (!cmd->cmd[1])
+		return (print_export_env(gen->env, cmd->output->fd));
 	if (replace)
 	{
-		while (gen->env[i] && ft_envcmp(env[i], target))
+		while (gen->env[i] && ft_envcmp(gen->env[i], target))
 			i++;
 		free(gen->env[i]);
 		gen->env[i] = ft_strdup(cmd->cmd[1]);

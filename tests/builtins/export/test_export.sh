@@ -8,7 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/env/env_main.c srcs/builtins/env.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
+`gcc -Wall -Wextra -Werror tests/builtins/export/export_main.c srcs/builtins/export.c srcs/builtins/env.c srcs/ft_arrdup.c srcs/utils.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -21,9 +21,9 @@ fi
 $ECHO "\n	${CYAN}ENV TESTER${END}\n----------------------------"
 
 $ECHO "	${MAGENTA}TO STDOUT${END}\n----------------------------"
-$ECHO "${BLUE}Test 1 - 'env'\n${END}"
-OUT=`./a.out "env" | grep -v _=`
-OUT2=`env | grep -v _=`
+$ECHO "${BLUE}Test 1 - 'export'\n${END}"
+OUT=`./a.out env "export" | grep -v _=`
+OUT2=`export | grep -v _=`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -37,11 +37,9 @@ fi
 
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 2 - 'env env'\n${END}"
-OUT=`./a.out "env env" | grep -v _=`
-OUT2=""
-
-$ECHO "Do not handle env env. Output should be empty. \n"
+$ECHO "${BLUE}Test 2 - 'export HI=2'\n${END}"
+OUT=`./a.out "export env HI=2" | grep -v _=`
+OUT2=`export HI=2; env | grep -v _=`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -55,9 +53,9 @@ fi
 
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 3 - 'env hi'\n${END}"
-OUT=`./a.out "env hi" | grep -v _=`
-OUT2=`env hi | grep -v _=`
+$ECHO "${BLUE}Test 3 - 'export HOME=reeee'\n${END}"
+OUT=`./a.out "export env HOME=reeee" | grep -v _=`
+OUT2=`export HOME=reeee; env | grep -v _=`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -71,77 +69,77 @@ fi
 
 $ECHO "----------------------------"
 
-$ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
+# $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
 
-$ECHO "${BLUE}Test 1 - 'env'\n${END}"
+# $ECHO "${BLUE}Test 1 - 'env'\n${END}"
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
 
-OUT=`./a.out "env" res.txt && < res.txt cat | grep -v _=`
-OUT2=`env > res2.txt && < res2.txt cat | grep -v _=`
+# OUT=`./a.out "env" res.txt && < res.txt cat | grep -v _=`
+# OUT2=`env > res2.txt && < res2.txt cat | grep -v _=`
 
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
 
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
 
-$ECHO "----------------------------"
+# $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 2 - 'env env'\n${END}"
+# $ECHO "${BLUE}Test 2 - 'env env'\n${END}"
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
 
-$ECHO "Do not handle env env. Output should be empty. \n"
+# $ECHO "Do not handle env env. Output should be empty. \n"
 
-OUT=`./a.out "env env" res.txt && < res.txt cat | grep -v _=`
-OUT2=""
+# OUT=`./a.out "env env" res.txt && < res.txt cat | grep -v _=`
+# OUT2=""
 
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
 
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
 
-$ECHO "----------------------------"
+# $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 3 - 'env hi'\n${END}"
+# $ECHO "${BLUE}Test 3 - 'env hi'\n${END}"
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
 
-OUT=`./a.out "env hi" res.txt && < res.txt cat | grep -v _=`
-OUT2=`env hi > res2.txt && < res2.txt cat | grep -v _=`
+# OUT=`./a.out "env hi" res.txt && < res.txt cat | grep -v _=`
+# OUT2=`env hi > res2.txt && < res2.txt cat | grep -v _=`
 
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
 
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
 
-$ECHO "----------------------------"
+# $ECHO "----------------------------"
 
-`rm -rf a.out`
+# `rm -rf a.out`
