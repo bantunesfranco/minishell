@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 14:07:05 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/09 13:59:54 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/09 17:07:57 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,22 @@ int	is_valid_input(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	err_msg_exit(char *msg, char *msg2, char *msg3)
+{
+	write(2, "minishell: ", 11);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, ": ", 2);
+	}
+	if (errno == 127)
+	{
+		write(2, msg3, ft_strlen(msg3));
+		write(2, ": command not found\n", 21);
+	}
+	else
+		perror(msg3);
+	exit(errno);
 }

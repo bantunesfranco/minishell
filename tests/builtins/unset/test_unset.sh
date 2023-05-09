@@ -38,8 +38,8 @@ fi
 $ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 2 - 'unset HI'\n${END}"
-OUT=`./a.out env "unset HI" | grep -v _=`
-OUT2="`unset HI; env | grep -v _=`"
+OUT=`./a.out env "unset HI" | grep HI=`
+OUT2="`unset HI; env | grep HI=`"
 
 $ECHO "minishell:	|$OUT|\n"
 $ECHO "bash: 		|$OUT2|"
@@ -54,10 +54,10 @@ fi
 $ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 3 - 'unset HOME'\n${END}"
-OUT=`./a.out env "unset HOME" | grep -v _=`
-OUT2=`unset HOME; env | grep -v _=`
+OUT=`./a.out env "unset HOME" | grep HOME=`
+OUT2=`unset HOME; env | grep HOME=`
 
-$ECHO "minishell:	|$OUT|\n"
+$ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
 
 if [ "$OUT" == "$OUT2" ];
@@ -70,14 +70,9 @@ fi
 $ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 4 - 'unset HOME='\n${END}"
-
+OUT=`./a.out env "unset HOME=" | grep HOME=`
 unset HOME=
-
-OUT=`./a.out env "unset HOME=" | grep -v _=`
-
-unset HOME=
-
-OUT2=`env | grep -v _=`
+OUT2=`env | grep HOME=`
 
 $ECHO "minishell:	|$OUT|\n"
 $ECHO "bash: 		|$OUT2|"
