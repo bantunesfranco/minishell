@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
@@ -30,14 +31,14 @@ typedef enum e_token_type
 	WORD,
 }	t_token_type;
 
-// typedef enum e_control_operator
-// {
-// 	PIPE,
-// 	OR,
-// 	AND,
-// 	OPEN_PAR,
-// 	CLOSE_PAR
-// }	t_control_operator;
+typedef enum e_control_operator
+{
+	PIPE,
+	OR,
+	AND,
+	OPEN_PAR,
+	CLOSE_PAR
+}	t_control_operator;
 
 typedef enum e_redirect_type
 {
@@ -72,30 +73,33 @@ typedef struct s_redirect
 	struct s_redirect	*next;
 }						t_redirect;
 
+typedef struct s_subshell
+{
+	int					pipe; // this is a identifier to know if we need to get inpiut from a pipe
+	struct s_cmd_list	*subshell_cmd_list; // this is a pointer to a t_cmd_list that contains the next couple pipeline
+	struct s_redirect	*input; // this is a pointer to a list of redirects that redirect the whole input or output of the subshell
+	struct s_redirect	*output; // this is a pointer to a list of redirects that redirect the whole input or output of the subshell
+}	t_subshell;
+
 typedef struct s_pipeline
 {
 	char				**cmd;
 	char				*path;
 	int					(*builtin)(char **, struct s_cmd *);
+	int					cmd_count;
 	struct s_redirect	*input;
 	struct s_redirect	*output;
 	struct s_cmd		*next;
 	struct s_cmd		*prev;
-	int					error_code;
-	int					subshell;
 }						t_pipeline;
 
 typedef struct s_cmd_list
 {
-	int	error_code;
-	// enum				control_operator;
-	
-	int					subshell;
-	int					cmd_count;
-	int					(*builtin)(char **, struct s_cmd *);
-	struct s_cmd		*first_cmd; // pipeline
-	struct s_redirect	*input;
-	struct s_redirect	*output;
+	int					error_code; // this is the error code of our current pipeline, might be unnesecary if we have it in the geeral struct
+	t_control_operator	next_control_operator; // This is the control operator after the pipeline or after the subshell
+	t_control_operator	prev_control_operator; // This is the control operator before the pipeline or before the subshell
+	t_subshell			*subshell; // This exist if we want to fork
+	t_pipeline			*first_cmd; // This is NULL if there is a subshell
 	struct s_cmd_list	*next;
 	struct s_cmd_list	*prev;
 }	t_cmd_list;

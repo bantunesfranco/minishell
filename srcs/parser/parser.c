@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/03 10:59:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/10 16:16:59 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,9 @@ t_token	*lexer(char *line)
 	return (first_token);
 }
 
-t_cmd	*parse_line(char *line)
+t_cmd_list	*parse_line(char *line)
 {
-	t_cmd	*first_cmd;
+	t_pipeline	*first_cmd;
 	t_token	*first_token;
 
 	first_cmd = NULL;
