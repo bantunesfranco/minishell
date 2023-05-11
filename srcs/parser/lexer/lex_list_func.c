@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lexer_list_func.c                                  :+:    :+:            */
+/*   lex_list_func.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:56:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/10 19:56:33 by janmolenaar   ########   odam.nl         */
+/*   Updated: 2023/05/11 14:47:59 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "parsing_structs.h"
 #include <stdlib.h>
 
-void	add_token_to_back(t_token **first_token, t_token *new_token)
+/*	these functions are kind of self explanatory*/
+
+void	add_new_token_to_back(t_token **first_token, t_token *new_token)
 {
 	t_token	*temp;
 

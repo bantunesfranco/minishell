@@ -6,24 +6,26 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:16:12 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/10 19:55:01 by janmolenaar   ########   odam.nl         */
+/*   Updated: 2023/05/11 17:28:39 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_STRUCTS_H
 # define PARSING_STRUCTS_H
 
+# include <stdbool.h>
+
 typedef enum e_token_type
 {
-	PIPE,
 	PIPE_PIPE,
+	PIPE,
 	AMPERSAND_AMPERSAND,
 	OPEN_PAR,
 	CLOSE_PAR,
-	LESS,
 	LESS_LESS,
-	GREAT,
+	LESS,
 	GREAT_GREAT,
+	GREAT,
 	SPACE_,
 	TAB_,
 	NEW_LINE,
@@ -33,6 +35,7 @@ typedef enum e_token_type
 typedef enum e_token_group
 {
 	CONTROL_OPERATOR,
+	PARENTHESIS,
 	REDIRECTION,
 	WHITESPACE,
 	WORD
@@ -51,6 +54,7 @@ typedef struct s_parsing_info
 {
 	char	metacharacters[9];
 	char	*token_array[13];
-}	t_parsing_info;
+	bool	syntax_error;
+}			t_parsing_info;
 
 #endif
