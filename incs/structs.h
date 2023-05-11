@@ -14,20 +14,6 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef enum e_token_type
-{
-	PIPE,
-	AMPERSAND,
-	OPEN_PAR,
-	CLOSE_PAR,
-	LESS,
-	GREAT,
-	SPACE,
-	TAB,
-	NEW_LINE,
-	WORD
-}	t_token_type;
-
 typedef enum e_control_operator
 {
 	PIPELINE,
@@ -43,30 +29,12 @@ typedef enum e_redirect_type
 	HEREDOC
 }	t_redirect_type;
 
-typedef enum e_token_group
-{
-	CONTROL_OPERATOR,
-	REDIRECTION,
-	WHITESPACE,
-	WORD
-}	t_token_group;
-
-typedef struct s_token
-{
-	char			*word;
-	t_token_type	type;
-	t_token_group	
-	struct s_token	*next;
-	struct s_token	*prev;
-}					t_token;
-
 typedef struct s_gen
 {
 	char	**env;
 	char	*pwd;
 	char	*oldpwd;
 	char	**path;
-	t_token	**lexer_list;
 }			t_gen;
 
 typedef struct s_redirect
@@ -89,7 +57,7 @@ typedef struct s_pipeline
 {
 	char				**cmd;
 	char				*path;
-	int					(*builtin)(char **, struct s_cmd *);
+	int					(*builtin)(char **, struct s_pipeline *);
 	int					cmd_count;
 	struct s_redirect	*input;
 	struct s_redirect	*output;

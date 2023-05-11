@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/10 16:17:13 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/10 19:45:20 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ int	main(int argc, char *argv[], char **env)
 	while (1)
 	{
 		i = 0;
+		i++;
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		lol = parse_line(line);
+		lol++;
 		// printf("%s\n", line);
 		// input_arr = ft_split_args(line, '|');
 		// if (!input_arr)

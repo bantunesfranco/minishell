@@ -6,12 +6,13 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:20:03 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/03 10:31:44 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/10 19:58:05 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "structs.h"
+// #include "structs.h"
+#include "parsing_structs.h"
 
 void	print_token(t_token_type type, char *word)
 {
@@ -21,8 +22,6 @@ void	print_token(t_token_type type, char *word)
 		printf("GREAT			>\n");
 	else if (type == LESS)
 		printf("LESS			<\n");
-	else if (type == AMPERSAND)
-		printf("AMPERSAND		&\n");
 	else if (type == WHITESPACE)
 		printf("WHITESPACE		[]\n");
 	else if (type == NEW_LINE)

@@ -4,10 +4,12 @@ RESET='\033[0m'
 BOLD='\033[1m'
 INCLUDES="-I incs -I libft/incs"
 #-g -fsanitize=address
+# srcs/parser/ft_split_args.c
+# -L $HOME/.brew/opt/readline/lib
 CFLAGS="-Wall -Werror -Wextra"
-RL_FLAGS="-L $HOME/.brew/opt/readline/lib -lreadline -I $HOME/.brew/opt/readline/include"
-SRC="srcs/parser/main_parser.c srcs/parser/ft_split_args.c srcs/ft_arrdup.c srcs/test_utils.c \
-srcs/parser/parser.c"
+RL_FLAGS=" -lreadline -I $HOME/.brew/opt/readline/include"
+SRC="srcs/parser/main_parser.c srcs/ft_arrdup.c srcs/test_utils.c \
+srcs/parser/parser.c srcs/parser/parser_init.c srcs/parser/lexer_list_func.c"
 
 #!/bin/bash
 

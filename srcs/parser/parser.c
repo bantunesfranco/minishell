@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/10 16:16:59 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/10 20:16:58 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,73 +14,19 @@
 #include "structs.h"
 #include "parsing.h"
 
-void	add_token_to_back(t_token **first_token, t_token *new_token)
-{
-	t_token	*temp;
-
-	temp = *first_token;
-	if (temp == NULL)
-		*first_token = new_token;
-	else
-	{
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = new_token;
-		new_token->prev = temp;
-	}
-}
-
-t_token	*make_new_token(char *word, t_token_type type)
-{
-	t_token	*new;
-
-	new = malloc(sizeof(t_token));
-	if (new == NULL)
-		return (NULL);
-	new->word = word;
-	new->type = type;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
-
-void	setup_array(char *token_array[7])
-{
-	token_array[0] = "|";
-	token_array[1] = ">";
-	token_array[2] = "<";
-	token_array[3] = "&";
-	token_array[4] = " \t";
-	token_array[5] = "\n";
-	token_array[6] = NULL;
-}
-
-t_token_type	get_token_type(char *line)
+t_token_type	get_token_type(char *line, t_parsing_info *p_info)
 {
 	char	*token_array[7];
 	int		i;
 
 	i = 0;
-	setup_array(token_array);
-	while (*(token_array + i) != NULL)
+	while (*(p_info->token_array + i) != NULL)
 	{
-		if (ft_strchr(*(token_array + i), *line))
+		if (!ft_strncmp(*(token_array + i), line, ft_strlen(*(token_array + i))))
 			return (i);
 		i++;
 	}
 	return (i);
-}
-
-void	setup_meta_characters(char meta_characters[8])
-{
-	meta_characters[0] = '|';
-	meta_characters[1] = '<';
-	meta_characters[2] = '>';
-	meta_characters[3] = '&';
-	meta_characters[4] = ' ';
-	meta_characters[5] = '\t';
-	meta_characters[6] = '\n';
-	meta_characters[7] = '\0';
 }
 
 size_t	skip_quotes(char *line, size_t i)
@@ -94,15 +40,15 @@ size_t	skip_quotes(char *line, size_t i)
 	return (i);
 }
 
-char	*create_word(char *line)
+char	*create_word(char *line, t_parsing_info *p_info)
 {
 	size_t	i;
-	char	meta_characters[8];
 
-	setup_meta_characters(meta_characters);
 	i = 0;
-	while (ft_strchr(meta_characters, *(line + i)) == NULL)
+	while (ft_strchr(p_info->metacharacters, *(line + i)) == NULL)
 	{
+		if (*(line + i) == '&' && *(line + i + 1) == '&')
+			break ;
 		if (*(line + i) == '\'' || *(line + i) == '"')
 			i = skip_quotes(line, i);
 		if (*(line + i) == '\0')
@@ -112,18 +58,18 @@ char	*create_word(char *line)
 	return (ft_substr(line, 0, i));
 }
 
-t_token	*create_token(char *line, t_token_type new_token_type)
+t_token	*create_token(char *line, t_token_type new_token_type, t_parsing_info *p_info)
 {
 	t_token *new_token;
 	char	*new_word;
 
 	new_word = NULL;
 	if (new_token_type == WORD)
-	{
-		new_word = create_word(line);
-		if (new_word == NULL)
+		new_word = create_word(line, p_info);
+	else
+		new_word = ft_strdup(*(p_info->token_array) + new_token_type);
+	if (new_word == NULL)
 			return (NULL);
-	}
 	new_token = make_new_token(new_word, new_token_type);
 	return (new_token);
 }
@@ -136,20 +82,20 @@ void	skip_token(char **line, char *new_word)
 		(*line) = *(line) + ft_strlen(new_word);
 }
 
-void	tokenize(char **line, t_token **first_token)
+void	tokenize(char **line, t_token **first_token, t_parsing_info *p_info)
 {
 	t_token			*new_token;
 	t_token_type	new_token_type;
 
-	new_token_type = get_token_type(*line);
-	new_token = create_token(*line, new_token_type);
+	new_token_type = get_token_type(*line, p_info);
+	new_token = create_token(*line, new_token_type, p_info);
 	if (new_token == NULL)
 		exit(1);			//change later to some malloc failure function
 	add_token_to_back(first_token, new_token);
 	skip_token(line, new_token->word);
 }
 
-t_token	*lexer(char *line)
+t_token	*lexer(char *line, t_parsing_info *p_info)
 {
 	t_token	*first_token;
 	int		i;
@@ -158,7 +104,7 @@ t_token	*lexer(char *line)
 	i = 0;
 	while (*(line + i) != '\0')
 	{
-		tokenize(&line, &first_token);
+		tokenize(&line, &first_token, p_info);
 	}
 	print_tokens(first_token);
 	return (first_token);
@@ -166,10 +112,16 @@ t_token	*lexer(char *line)
 
 t_cmd_list	*parse_line(char *line)
 {
-	t_pipeline	*first_cmd;
-	t_token	*first_token;
+	t_cmd_list		*first_cmd;
+	t_token			*first_token;
+	t_parsing_info	p_info;
 
+	// (void)line;
+	// (void)first_token;
+	init_struct(&p_info);
+	// printf("%s\n", p_info.metacharacters);
+	// print_array(p_info.token_array);
 	first_cmd = NULL;
-	first_token = lexer(line);
+	first_token = lexer(line, &p_info);
 	return (first_cmd);
 }
