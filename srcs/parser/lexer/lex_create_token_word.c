@@ -6,26 +6,13 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 11:05:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/11 14:47:39 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/12 09:50:00 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
 #include <stdlib.h>
-
-/*	skips the quotes by checking which ones we encountered in c and then looping till the next c or \0 */
-
-static size_t	skip_quotes(char *line, size_t i)
-{
-	char	c;
-
-	c = *(line + i);
-	i++;
-	while (*(line + i) != c && *(line + i) != '\0')
-		i++;
-	return (i);
-}
 
 /*	loops through string until it encounters one of the metacharacters
 	& is done separately since we're treating a single & as a normal character but a && separates words

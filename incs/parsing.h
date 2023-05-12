@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/11 19:44:17 by janmolenaar   ########   odam.nl         */
+/*   Updated: 2023/05/12 09:51:07 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ bool		is_parenthesis_valid(t_token *temp, int *open_brackets);
 
 void		add_new_token_to_back(t_token **first_token, t_token *new_token);
 t_token		*make_new_token(char *word, t_token_type type);
+size_t		skip_quotes(char *line, size_t i);
 
 #endif

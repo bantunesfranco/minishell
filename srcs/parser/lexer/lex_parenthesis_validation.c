@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_parethesis_validation.c                        :+:    :+:            */
+/*   lex_parenthesis_validation.c                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 19:43:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/11 19:44:31 by janmolenaar   ########   odam.nl         */
+/*   Updated: 2023/05/12 09:33:13 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static bool	is_open_par_valid(t_token *temp, int *open_brackets)
 
 static bool	is_close_par_valid(t_token *temp, int *open_brackets)
 {
-	if (*open_brackets == 0)
-		return (false);
 	(*open_brackets)--;
+	if (*open_brackets == -1)
+		return (false);
 	if (temp->next->token_group == WORD || \
 		temp->next->type == OPEN_PAR)
 		return (false);
