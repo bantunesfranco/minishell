@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 14:40:23 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/12 09:55:13 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/12 09:59:06 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,19 @@ bool	are_exit_conditions_valid(t_token *temp, int *open_brackets)
 		return (are_quotes_closed(temp->prev->word));
 }
 
+void	lex_error_function(char *word);
+{
+	write(2, "minishell: ", )
+}
+
 void	write_syntax_error(t_token *temp, int *open_brackets)
 {
 	if (*open_brackets == -1)
-		
+		lex_error_function(temp->word);
+	else if (temp->type == NEW_LINE || temp->next->type == NEW_LINE)
+		lex_error_function("newline");
+	else
+		lex_error_function(temp->next->word);
 }
 
 void	analyze_syntax(t_token *first_token, t_parsing_info *p_info)
@@ -63,5 +72,4 @@ void	analyze_syntax(t_token *first_token, t_parsing_info *p_info)
 		p_info->syntax_error = 1;
 	if (p_info->syntax_error == 1)
 		write_syntax_error(temp, open_brackets);
-	printf("%d\n", p_info->syntax_error);
 }
