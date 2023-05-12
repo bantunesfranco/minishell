@@ -13,7 +13,7 @@ RL_FLAGS=" -lreadline -I $HOME/.brew/opt/readline/include"
 SRC="srcs/parser/main_parser.c srcs/ft_arrdup.c srcs/test_utils.c \
 srcs/parser/parser.c srcs/parser/parser_init.c srcs/parser/lexer/lex_utils.c \
 srcs/parser/lexer/lex.c srcs/parser/lexer/lex_create_tokens.c srcs/parser/lexer/lex_create_token_word.c \
-srcs/parser/lexer/lex_assign_groups.c srcs/parser/lexer/lex_analyze_syntax.c \
+srcs/parser/lexer/lex_assign_groups.c srcs/parser/lexer/lex_validate_syntax.c \
 srcs/parser/lexer/lex_token_validation.c srcs/parser/lexer/lex_parenthesis_validation.c"
 
 #!/bin/bash

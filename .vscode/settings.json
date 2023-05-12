@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"stdlib.h": "c",
-		"structs.h": "c"
+		"structs.h": "c",
+		"minishell.h": "c"
 	}
 }

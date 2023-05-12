@@ -6,12 +6,15 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 13:11:32 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/11 15:17:30 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/12 13:57:02 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include <stdlib.h>
+
+/*	tokens have certain functions they do, which can be grouped.
+	this will make parsing and error checking more concise, cause we're lookign at groups instead of individual tokens*/
 
 static void	assign_group(t_token *temp)
 {

@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/12 09:51:07 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/12 15:06:51 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ void		lexer(char *line, t_parsing_info *p_info, t_token **first_token);
 void		create_token_list(char *line, t_parsing_info *p_info, t_token **first_token);
 char		*create_word(char *line, t_token_type new_token_type, t_parsing_info *p_info);
 void		assign_token_groups(t_token *first_token);
-void		analyze_syntax(t_token	*first_token, t_parsing_info *p_info);
-bool		is_token_valid(t_token *temp, int *open_brackets);
+void		validate_syntax(t_token	*first_token, t_parsing_info *p_info);
+bool		is_single_token_valid(t_token *temp, int *open_brackets);
 bool		is_parenthesis_valid(t_token *temp, int *open_brackets);
 
 // functions used for the token list
 
 void		add_new_token_to_back(t_token **first_token, t_token *new_token);
 t_token		*make_new_token(char *word, t_token_type type);
+void		lex_error_function(char *word, int syntax_erorr);
 size_t		skip_quotes(char *line, size_t i);
 
 #endif
