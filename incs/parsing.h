@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/11 17:37:56 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/11 19:44:17 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void		create_token_list(char *line, t_parsing_info *p_info, t_token **first_toke
 char		*create_word(char *line, t_token_type new_token_type, t_parsing_info *p_info);
 void		assign_token_groups(t_token *first_token);
 void		analyze_syntax(t_token	*first_token, t_parsing_info *p_info);
+bool		is_token_valid(t_token *temp, int *open_brackets);
+bool		is_parenthesis_valid(t_token *temp, int *open_brackets);
 
 // functions used for the token list
 
