@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/09 13:30:31 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/10 14:47:23 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	unset(t_gen *gen, t_cmd *cmd)
 
 	if (!cmd->cmd[1])
 		return (0);
-	if (!is_valid_input(cmd->cmd[1]))
+	if (!is_valid_input(cmd->cmd[1]) || ft_strchr(cmd->cmd[1], '='))	
 		return (-1);
 	target = ft_strjoin(cmd->cmd[1], "=");
 	if (!target)

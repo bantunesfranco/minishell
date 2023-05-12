@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 14:18:18 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/12 12:58:35 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,35 @@
 static int	option_check(t_cmd *cmd)
 {
 	int	i;
+	int	j;
 
 	i = 1;
-	if (cmd->cmd[1] && cmd->cmd[1][0] == '-')
+	while (cmd->cmd[i])
 	{
-		if (cmd->cmd[1][1] != 'n')
-			return (0);
-		while (cmd->cmd[1][i] && cmd->cmd[1][i] == 'n')
+		j = 1;
+		if (cmd->cmd[i][0] == '-')
 		{
-			i++;
-			if (cmd->cmd[1][i] && cmd->cmd[1][i] != 'n')
-				return (0);
+			if (cmd->cmd[i][1] != 'n')
+				return (i);
+			while (cmd->cmd[i][j] && cmd->cmd[i][j] == 'n')
+			{
+				j++;
+				if (cmd->cmd[i][j] && cmd->cmd[i][j] != 'n')
+					return (i);
+			}
 		}
-		return (1);
+		else
+			return (i);
+		i++;
 	}
-	return (0);
+	return (i);
 }
 
-static int	write_content(char *content, int fd, int option)
+static int	write_content(char *content, int fd, int opt)
 {
 	if (!content || ft_strlen(content) == 0)
 	{
-		if (option)
+		if (opt)
 		{
 			if (write(fd, "\0", 1) == -1)
 				return (-1);
@@ -51,7 +58,7 @@ static int	write_content(char *content, int fd, int option)
 	{
 		if (write(fd, content, ft_strlen(content)) == -1)
 			return (-1);
-		if (option)
+		if (opt)
 			return (0);
 		if (write(fd, "\n", 1) == -1)
 			return (-1);
@@ -90,27 +97,26 @@ static char	*join_message(char **args, int len)
 
 int	echo(t_gen *gen, t_cmd *cmd)
 {
-	int		option;
-	int		args;
+	int		opt;
+	int		pos;
 	int		len;
 	int		i;
 	char	*str;
 
 	(void)gen;
-	option = option_check(cmd);
-	if (option == 1)
-		args = 2;
-	else
-		args = 1;
+	opt = 0;
+	pos = option_check(cmd);
+	if (pos != 1)
+		opt = 1;
 	len = 0;
-	i = args;
+	i = pos;
 	while (cmd->cmd[i])
 	{
 		len += (ft_strlen(cmd->cmd[i]) + 1);
 		i++;
 	}
-	str = join_message(&cmd->cmd[args], len);
-	if (write_content(str, cmd->output->fd, option) == -1)
+	str = join_message(&cmd->cmd[pos], len);
+	if (write_content(str, cmd->output->fd, opt) == -1)
 		return (free(str), -1);
 	free(str);
 	return (0);

@@ -9,7 +9,7 @@ END='\033[0m'
 #!/bin/bash
 
 `gcc -Wall -Wextra -Werror tests/builtins/cd/cd_main.c srcs/builtins/cd.c srcs/builtins/pwd.c \
-srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address -g`
+srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -g` #-fsanitize=address -g`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -23,6 +23,9 @@ $ECHO "\n	${CYAN}CD TESTER${END}\n----------------------------"
 
 $ECHO "	${MAGENTA}TO STDOUT${END}\n----------------------------"
 $ECHO "${BLUE}Test 1 - 'cd'\n${END}"
+
+`export HOME=/Users/bfranco`
+
 OUT=`./a.out "pwd" "cd"`
 OUT2=`pwd && cd && echo -n "                 " && pwd`
 
@@ -120,7 +123,8 @@ $ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 7 - 'cd -' with OLDPWD\n${END}"
 
-cd .. && cd minishell
+OLDPWD=`cd .. && pwd`
+`export OLDPWD=$OLDPWD`
 
 OUT=`./a.out "pwd" "cd -"`
 OUT2=`pwd && cd - && echo -n "                 " && pwd`
@@ -135,6 +139,48 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
+`unset OLDPWD`
+
 $ECHO "----------------------------"
 
-# `rm -rf a.out`
+$ECHO "${BLUE}Test 9 - 'cd --' with HOME\n${END}"
+
+`export HOME=/Users/bfranco`
+
+OUT=`./a.out "pwd" "cd -"`
+OUT2=`pwd && cd - && echo -n "                 " && pwd`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`unset HOME`
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 9 - 'cd --' with no HOME\n${END}"
+
+`unset HOME`
+
+OUT=`./a.out "pwd" "cd --"`
+OUT2=`pwd && cd -- && echo -n "                 " && pwd`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+`rm -rf a.out`

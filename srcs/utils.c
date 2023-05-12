@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 14:07:05 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/09 17:07:57 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/12 13:52:58 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 int	ft_envcmp(char *s1, char *s2)
 {
 	size_t	i;
+	size_t	j;
 
 	i = 0;
-	while ((s1[i] || s2[i]) && s1[i] == s2[i] && s1[i] != '=' && s2[i] != '=')
+	j = 0;
+	while ((s1[i] || s2[j]) && s1[i] == s2[j] && s1[i] != '=' && s2[j] != '=')
+	{
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		j++;
+		if (s2[j] == '+' && s2[j + 1] == '=' && s1[i] == '=')
+			return (0);
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[j]);
 }
 
 int	is_valid_input(char *str)
@@ -41,7 +48,7 @@ int	is_valid_input(char *str)
 	return (1);
 }
 
-void	err_msg_exit(char *msg, char *msg2, char *msg3)
+void	err_msg_exit(char *msg, char *msg2)
 {
 	write(2, "minishell: ", 11);
 	if (msg)
@@ -51,10 +58,10 @@ void	err_msg_exit(char *msg, char *msg2, char *msg3)
 	}
 	if (errno == 127)
 	{
-		write(2, msg3, ft_strlen(msg3));
+		write(2, msg2, ft_strlen(msg2));
 		write(2, ": command not found\n", 21);
 	}
 	else
-		perror(msg3);
+		perror(msg2);
 	exit(errno);
 }

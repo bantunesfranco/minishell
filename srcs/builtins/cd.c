@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 14:18:13 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/10 14:59:32 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static int	go_to(char *target, t_gen *gen)
 	free(gen->oldpwd);
 	gen->oldpwd = getcwd(NULL, 1);
 	if (!gen->oldpwd)
-		return (-1);
+		return (free(target), -1);
 	if (chdir(target) == -1)
-		return (-1);
+		return (free(target), -1);
 	free(target);
 	free(gen->pwd);
 	gen->pwd = getcwd(NULL, 1);
@@ -58,7 +58,7 @@ static int	go_to(char *target, t_gen *gen)
 
 int	cd(t_gen *gen, t_cmd *cmd)
 {
-	if (!cmd->cmd[1])
+	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
 	{
 		if (go_to("HOME=", gen) == -1)
 			return (-1);

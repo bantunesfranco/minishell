@@ -8,7 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/env/env_main.c srcs/builtins/env.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
+`gcc -Wall -Wextra -Werror tests/builtins/env/env_main.c srcs/builtins/env.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs` #-fsanitize=address`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]

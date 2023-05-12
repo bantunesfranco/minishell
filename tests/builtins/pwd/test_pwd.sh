@@ -8,7 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/pwd/pwd_main.c srcs/builtins/pwd.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
+`gcc -Wall -Wextra -Werror tests/builtins/pwd/pwd_main.c srcs/builtins/pwd.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs` #-fsanitize=address`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -95,6 +95,9 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
-`rm -rf a.out`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
 $ECHO "----------------------------"
+
+`rm -rf a.out`

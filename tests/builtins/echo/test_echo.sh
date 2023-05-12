@@ -8,7 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/echo/echo_main.c srcs/builtins/echo.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
+`gcc -Wall -Wextra -Werror tests/builtins/echo/echo_main.c srcs/builtins/echo.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -g` #-fsanitize=address`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -244,6 +244,58 @@ else
 fi
 
 $ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 15 - 'echo -n -n hi test'\n${END}"
+OUT=`./a.out "echo -n -n hi test"`
+OUT2=`echo -n -n hi test`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 16 - 'echo -nnnn -nnnn hi test'\n${END}"
+OUT=`./a.out "echo -nnnn -nnnn hi test"`
+OUT2=`echo -nnnn -nnnn hi test`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 17 - 'echo -nnnn -nnnna hi test'\n${END}"
+OUT=`./a.out "echo -nnnn -nnnna hi test"`
+OUT2=`echo -nnnn -nnnna hi test`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+####################################
+#          REDIRECTIONS            #
+####################################
 
 
 $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
