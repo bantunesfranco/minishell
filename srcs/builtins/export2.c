@@ -12,35 +12,64 @@
 
 #include "minishell.h"
 
-static char	*get_target(char *cmd)
+static char	*get_target(char *cmd, int *join)
 {
 	char	*target;
 	int		i;
 
 	i = 0;
-	while (cmd[i] && cmd[i] != '=')
+	while (cmd[i] && (cmd[i] != '=' || (cmd[i] == '+' && cmd[i + 1] == '=')))
 		i++;
 	target = ft_calloc(i + 2, sizeof(char));
 	if (!target)
 		return (0);
 	i = 0;
-	while (cmd[i] && cmd[i] != '=')
+	while (cmd[i] && (cmd[i] != '=' || (cmd[i] == '+' && cmd[i + 1] == '=')))
 	{
 		target[i] = cmd[i];
 		i++;
+		if (cmd[i] == '+' && cmd[i + 1] == '=')
+			*join = 1;
 	}
-	target[i] = cmd[i];
+	target[i] = '=';
 	return (target);
+}
+
+char	*dup_target(char *target)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	while (target[i])
+	{
+		if (target[i] == '+')
+			i++;
+		j++;
+		i++;
+	}
+	str = ft_calloc(j + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (target[i])
+	{
+		if (target[i] == '+')
+			i++;
+		str[j++] = target[i++];
+	}
+	return (str);
 }
 
 static char	**copy_env(char **env, char *target, int size)
 {
 	int		i;
-	int		j;
 	char	**new_env;
 
 	i = 0;
-	j = 0;
 	if (size == 0)
 		return (env);
 	new_env = (char **)ft_calloc(size + 1, sizeof(char *));
@@ -48,35 +77,48 @@ static char	**copy_env(char **env, char *target, int size)
 		return (NULL);
 	while (env[i])
 	{
-		new_env[j] = env[i];
+		new_env[i] = env[i];
 		i++;
-		j++;
 	}
 	free(env);
-	new_env[i] = ft_strdup(target);
+	new_env[i] = dup_target(target);
 	if (!new_env[i])
 		return (NULL);
 	return (new_env);
+}
+
+static char	*export_type(char *cmd, char *temp, int join)
+{
+	char	*str;
+
+	if (join)
+		str = ft_strjoin(temp, ft_strchr(cmd, '=') + 1);
+	else
+		str = ft_strdup(cmd);
+	if (str)
+		free(temp);
+	return (str);
 }
 
 int	export2(t_gen *gen, char *cmd, int add, int size)
 {
 	int		i;
 	char	*target;
-
+	int		join;
+	char	*temp;
 	i = 0;
-	target = get_target(cmd);
+	join = 0;
+	target = get_target(cmd, &join);
 	if (!target)
 		return (-1);
 	if (!add)
 	{
 		while (gen->env[i] && ft_envcmp(gen->env[i], target))
 			i++;
+		
+		temp = gen->env[i];
+		gen->env[i] = export_type(cmd, temp, join);
 		if (!gen->env[i])
-			return (free(target), 0);
-		free(gen->env[i]);
-		gen->env[i] = ft_strdup(cmd);
-		if (gen->env[i])
 			return (free(target), -1);
 	}
 	else

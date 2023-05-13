@@ -8,7 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/export/export_main.c srcs/builtins/export.c srcs/builtins/export2.c srcs/builtins/env.c srcs/ft_arrdup.c srcs/utils.c libft/libft.a -I incs -I libft/incs -fsanitize=address`
+`gcc -Wall -Wextra -Werror tests/builtins/export/export_main.c srcs/builtins/export.c srcs/builtins/export2.c srcs/builtins/env.c srcs/ft_arrdup.c srcs/utils.c libft/libft.a -I incs -I libft/incs -g -fsanitize=address`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -25,8 +25,8 @@ $ECHO "${BLUE}Test 1 - 'export'\n${END}"
 OUT=`./a.out env "export"`
 OUT2=`export`
 
-$ECHO "minishell:	|$OUT|\n"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "minishell:	|$OUT|\n"
+# $ECHO "bash: 		|$OUT2|"
 
 if [ "$OUT" != "$OUT2" ];
 then
@@ -67,6 +67,71 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
+$ECHO "${BLUE}Test 4 - 'export HOME=reeee BOB=bob'\n${END}"
+OUT=`./a.out env "export HOME=reeee BOB=bob" | (grep HOME= && grep BOB=)`
+OUT2=`export HOME=reeee BOB=bob; env | (grep HOME= && grep BOB=)`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "${BLUE}Test 5 - 'export BOB=bob BOB+=hello'\n${END}"
+
+OUT=`./a.out env "export BOB=bob BOB+=hello" | grep BOB=`
+OUT2=`export BOB=bob BOB+=hello; env | grep BOB=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "${BLUE}Test 6 - 'export BANANA+=hello'\n${END}"
+
+`unset BANANA`
+
+OUT=`./a.out env "export BANANA+=hello" | grep BANANA=`
+OUT2=`export BANANA+=hello; env | grep BANANA=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 7 - 'export BANANA+=hello BANANA+=hello BANANA+=hello'\n${END}"
+
+`unset BANANA`
+
+OUT=`./a.out env "export BANANA+=hello BANANA+=hello BANANA+=hello" | grep BANANA=`
+OUT2=`export BANANA+=hello BANANA+=hello BANANA+=hello; env | grep BANANA=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
 $ECHO "----------------------------"
 
 $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
@@ -79,8 +144,8 @@ $ECHO "${BLUE}Test 1 - 'export'\n${END}"
 OUT=`./a.out env "export" res.txt && < res.txt cat`
 OUT2=`export > res2.txt && < res2.txt cat`
 
-$ECHO "minishell:	|$OUT|\n"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "minishell:	|$OUT|\n"
+# $ECHO "bash: 		|$OUT2|"
 
 if [ "$OUT" != "$OUT2" ];
 then

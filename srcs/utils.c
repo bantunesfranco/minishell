@@ -65,3 +65,29 @@ void	err_msg_exit(char *msg, char *msg2)
 		perror(msg2);
 	exit(errno);
 }
+
+int	atoi_mini(char *str)
+{
+	long long	nb;
+	int			i;
+
+	i = 0;
+	nb = 0;
+	if (!p_strlen(str) || str[0] == '-')
+		return (-1);
+	if (str[0] == '+')
+		i++;
+	while (str[i])
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+		{
+			nb = nb * 10 + (str[i] - '0');
+			i++;
+			if (nb < 0 || nb > INT_MAX)
+				return (-1);
+		}
+		else
+			return (-1);
+	}
+	return ((int)(nb % 256));
+}

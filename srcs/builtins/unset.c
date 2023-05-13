@@ -35,8 +35,6 @@ static char	**copy_env(char **env, char *target, int size)
 
 	i = 0;
 	j = 0;
-	if (size == 0)
-		return (env);
 	new_env = (char **)ft_calloc(size + 1, sizeof(char *));
 	if (!new_env)
 		return (NULL);
@@ -61,20 +59,25 @@ int	unset(t_gen *gen, t_cmd *cmd)
 	int		delete;
 	char	*target;
 	char	**new_env;
+	int		i;
 
-	if (!cmd->cmd[1])
-		return (0);
-	if (!is_valid_input(cmd->cmd[1]) || ft_strchr(cmd->cmd[1], '='))	
-		return (-1);
-	target = ft_strjoin(cmd->cmd[1], "=");
-	if (!target)
-		return (-1);
-	size = get_size(gen->env, target, &delete) - delete;
-	if (!size || !delete)
-		return (free(target), -1);
-	new_env = copy_env(gen->env, target, size);
-	if (!new_env)
-		return (free(target), -1);
-	gen->env = new_env;
+	i = 1;
+	while (cmd->cmd[i])
+	{
+		if (is_valid_input(cmd->cmd[i]) && !ft_strchr(cmd->cmd[i], '='))
+		{
+			target = ft_strjoin(cmd->cmd[1], "=");
+			if (!target)
+				return (-1);
+			size = get_size(gen->env, target, &delete) - delete;
+			if (!delete)
+				return (free(target), 0);
+			new_env = copy_env(gen->env, target, size);
+			if (!new_env)
+				return (free(target), -1);
+			gen->env = new_env;
+		}
+		i++;
+	}
 	return (0);
 }

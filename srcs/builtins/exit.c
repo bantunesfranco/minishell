@@ -17,10 +17,15 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 	int	exit_code;
 
 	exit_code = 0;
+	if (ft_arrlen(cmd->cmd) > 2)
+	{
+		ft_putendl_fd(2, "minishell: exit: too many arguments");
+		exit(1);
+	}
 	if (cmd->cmd[1])
 	{
 		if (ft_isnumber(cmd->cmd[1]))
-			exit_code = ft_atoi_mini(cmd->cmd[1]);
+			exit_code = atoi_mini(cmd->cmd[1]);
 		else
 		{
 			//error msg

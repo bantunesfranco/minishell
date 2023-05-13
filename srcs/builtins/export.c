@@ -58,8 +58,8 @@ int	export(t_gen *gen, t_cmd *cmd)
 	{
 		if (!ft_strchr(cmd->cmd[i], '='))
 			i++;
-		size = get_size(gen->env, cmd->cmd[1], &add) + add;
-		if (export2(gen, cmd->cmd[1], add, size) == -1)
+		size = get_size(gen->env, cmd->cmd[i], &add) + add;
+		if (export2(gen, cmd->cmd[i], add, size) == -1)
 			return (-1);
 		i++;
 	}
