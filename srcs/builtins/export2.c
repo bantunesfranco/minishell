@@ -106,6 +106,7 @@ int	export2(t_gen *gen, char *cmd, int add, int size)
 	char	*target;
 	int		join;
 	char	*temp;
+
 	i = 0;
 	join = 0;
 	target = get_target(cmd, &join);
@@ -115,7 +116,6 @@ int	export2(t_gen *gen, char *cmd, int add, int size)
 	{
 		while (gen->env[i] && ft_envcmp(gen->env[i], target))
 			i++;
-		
 		temp = gen->env[i];
 		gen->env[i] = export_type(cmd, temp, join);
 		if (!gen->env[i])
