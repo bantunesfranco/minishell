@@ -1,4 +1,4 @@
-GREEN='\033[0;32m'
+GREEN='\033[0;33m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
@@ -14,11 +14,28 @@ SRC="srcs/parser/main_parser.c srcs/ft_arrdup.c srcs/test_utils.c \
 srcs/parser/parser.c srcs/parser/parser_init.c srcs/parser/lexer/lex_utils.c \
 srcs/parser/lexer/lex.c srcs/parser/lexer/lex_create_tokens.c srcs/parser/lexer/lex_create_token_word.c \
 srcs/parser/lexer/lex_assign_groups.c srcs/parser/lexer/lex_validate_syntax.c \
-srcs/parser/lexer/lex_token_validation.c srcs/parser/lexer/lex_parenthesis_validation.c"
+srcs/parser/lexer/lex_token_validation.c srcs/parser/lexer/lex_parenthesis_validation.c \
+srcs/parser/lexer/lex_error_functions.c"
 
 #!/bin/bash
 
 # compile
 rm -rf minishell
-cc $CFLAGS $INCLUDES $RL_FLAGS -o minishell libft/libft.a $SRC
-./minishell
+#	compile
+
+
+main () {
+	cc $CFLAGS $INCLUDES $RL_FLAGS -o minishell libft/libft.a $SRC
+	if [[ $1 == "sy" ]]
+	then
+	echo "\n		${BOLD}${GREEN}Testing syntax errors${RESET}\n"
+	test_syntax
+	fi
+}
+
+test_syntax () {
+	./testers_j/syntax_error.sh
+}
+# ./minishell
+
+main $1

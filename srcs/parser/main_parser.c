@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/12 20:16:28 by janmolenaar   ########   odam.nl         */
+/*   Updated: 2023/05/15 15:02:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 #include "parsing.h"
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
 
 int	main(int argc, char *argv[], char **env)
@@ -36,8 +39,8 @@ int	main(int argc, char *argv[], char **env)
 			line2 = get_next_line(STDIN_FILENO);
 			if (line2 == NULL)
 				break ;
-			printf("%s\n", line2);
 			line = ft_strtrim(line2, "\n");
+			printf("%s\n", line);
 			free(line2);
 		}
 		if (line == NULL)
@@ -63,20 +66,20 @@ void	leaks(void)
 
 // int	main(int argc, char *argv[], char **env)
 // {
-// 	// char	*path = "/bin/cat";
+// 	char	*path = "/Users/jmolenaa/Codam/Codam_unfinished/minihell/minishell/script.sh";
 // 	// atexit(leaks);
-// 	// char *cmd[] = {"cat", NULL};	
+// 	char *cmd[] = {"script.sh", NULL};	
 // 	(void)argc;
 // 	(void)argv;
 // 	(void)env;
 // 	// 2147483648
 // 	// int pid;
-// 	int	pipe2[2];
+// 	// int	pipe2[2];
 // 	int fd;
-// 	pipe(pipe2);
-// 	fd = open("hi", O_RDWR | O_TRUNC);
-// 	write(fd, "asd\n", 4);
-// 	write(fd, "asa\n", 4);
+// 	// pipe(pipe2);
+// 	// fd = open("hi", O_RDWR | O_TRUNC);
+// 	// write(fd, "asd\n", 4);
+// 	// write(fd, "asa\n", 4);
 // 	// for(int i = 0; 1; i++)
 // 	// char line[10];
 // 	// {
@@ -122,7 +125,7 @@ void	leaks(void)
 
 // 	// printf("%d\n", execve(path, argv, env));
 // 	// chdir("/Users/jmolenaa/Codam/Codam_unfinished/minihell/minishell/incs");
-// 	// execve(path, cmd, env);
+// 	execve(path, cmd, env);
 // 	// printf("%d\n", errno);
 // 	// perror("hi");
 // }

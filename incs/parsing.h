@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/12 15:06:51 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/15 11:41:35 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void		assign_token_groups(t_token *first_token);
 void		validate_syntax(t_token	*first_token, t_parsing_info *p_info);
 bool		is_single_token_valid(t_token *temp, int *open_brackets);
 bool		is_parenthesis_valid(t_token *temp, int *open_brackets);
+void		token_order_error(t_token *temp, int open_brackets);
+bool		are_quotes_closed(char *word);
 
 // functions used for the token list
 

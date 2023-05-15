@@ -6,12 +6,11 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:56:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/12 14:15:55 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/15 11:41:28 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "libft.h"
 #include <stdlib.h>
 
 /*	these functions are kind of self explanatory*/
@@ -59,21 +58,27 @@ size_t	skip_quotes(char *line, size_t i)
 	return (i);
 }
 
-/*	writes an error based on what mistake the sintax has, either a token is in the wrong position
-	or we have unclosed parenthesis or brackets*/
+/*	similar to the function from creating words*/
 
-void	lex_error_function(char *word, int syntax_erorr)
+bool	are_quotes_closed(char *word)
 {
-	if (syntax_erorr == 1)
+	size_t	i;
+	char	c;
+
+	i = 0;
+	while (*(word + i) != '\0')
 	{
-		write(2, "minishell: syntax error near unexpected token `", 47);
-		write(2, word, ft_strlen(word));
-		write(2, "'\n", 2);
+		if (*(word + i) == '\'' || *(word + i) == '"')
+		{
+			c = *(word + i);
+			i = skip_quotes(word, i);
+		}
+		if (*(word + i) == '\0')
+		{
+			lex_error_function(&c, 2);
+			return (false);
+		}
+		i++;
 	}
-	else
-	{
-		write(2, "minishell: unexpected newline while looking for matching `", 59);
-		write(2, word, 1);
-		write(2, "'\n", 2);
-	}
+	return (true);
 }
