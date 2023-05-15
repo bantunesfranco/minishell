@@ -6,11 +6,12 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 14:07:05 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/12 13:52:58 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/15 14:23:59 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <limits.h>
 
 int	ft_envcmp(char *s1, char *s2)
 {
@@ -48,7 +49,7 @@ int	is_valid_input(char *str)
 	return (1);
 }
 
-void	err_msg_exit(char *msg, char *msg2)
+void	err_msg(char *msg, char *msg2)
 {
 	write(2, "minishell: ", 11);
 	if (msg)
@@ -63,7 +64,26 @@ void	err_msg_exit(char *msg, char *msg2)
 	}
 	else
 		perror(msg2);
-	exit(errno);
+	if (errno == ENOMEM)
+		exit(errno);
+}
+
+void	built_err_msg(char *msg, char *msg2, char *msg3)
+{
+	write(2, "minishell: ", 11);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, ": ", 2);
+	}
+	if (msg2)
+	{
+		write(2, "`", 1);
+		write(2, msg2, ft_strlen(msg2));
+		write(2, "': ", 3);
+	}
+	if (msg3)
+		write(2, msg3, ft_strlen(msg3));
 }
 
 int	atoi_mini(char *str)
@@ -73,7 +93,7 @@ int	atoi_mini(char *str)
 
 	i = 0;
 	nb = 0;
-	if (!p_strlen(str) || str[0] == '-')
+	if (!ft_strlen(str) || str[0] == '-')
 		return (-1);
 	if (str[0] == '+')
 		i++;
@@ -89,5 +109,5 @@ int	atoi_mini(char *str)
 		else
 			return (-1);
 	}
-	return ((int)(nb % 256));
+	return ((int)(nb));
 }

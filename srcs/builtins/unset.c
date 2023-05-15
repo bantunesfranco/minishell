@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/10 14:47:23 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/15 16:58:55 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	unset(t_gen *gen, t_cmd *cmd)
 				return (free(target), -1);
 			gen->env = new_env;
 		}
+		else
+			built_err_msg(cmd->cmd[0], cmd->cmd[i], "not a valid identifier\n");
 		i++;
 	}
 	return (0);

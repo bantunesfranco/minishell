@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/12 13:44:23 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/15 16:49:28 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,17 @@ int	export(t_gen *gen, t_cmd *cmd)
 	i = 1;
 	while (cmd->cmd[i])
 	{
-		if (!ft_strchr(cmd->cmd[i], '='))
-			i++;
-		size = get_size(gen->env, cmd->cmd[i], &add) + add;
-		if (export2(gen, cmd->cmd[i], add, size) == -1)
-			return (-1);
+		if (is_valid_input(cmd->cmd[i]))
+		{
+			if (ft_strchr(cmd->cmd[i], '='))
+			{
+				size = get_size(gen->env, cmd->cmd[i], &add) + add;
+				if (export2(gen, cmd->cmd[i], add, size) == -1)
+					return (err_msg(NULL, cmd->cmd[0]), -1);
+			}
+		}
+		else
+			built_err_msg(cmd->cmd[0], cmd->cmd[i], "not a valid identifier\n");
 		i++;
 	}
 	return (0);

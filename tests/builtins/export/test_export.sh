@@ -67,6 +67,8 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
+$ECHO "----------------------------"
+
 $ECHO "${BLUE}Test 4 - 'export HOME=reeee BOB=bob'\n${END}"
 OUT=`./a.out env "export HOME=reeee BOB=bob" | (grep HOME= && grep BOB=)`
 OUT2=`export HOME=reeee BOB=bob; env | (grep HOME= && grep BOB=)`
@@ -80,6 +82,8 @@ then
 else
 	$ECHO "Result: ${RED}KO${END}"
 fi
+
+$ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 5 - 'export BOB=bob BOB+=hello'\n${END}"
 
@@ -96,9 +100,11 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
+$ECHO "----------------------------"
+
 $ECHO "${BLUE}Test 6 - 'export BANANA+=hello'\n${END}"
 
-`unset BANANA`
+unset BANANA
 
 OUT=`./a.out env "export BANANA+=hello" | grep BANANA=`
 OUT2=`export BANANA+=hello; env | grep BANANA=`
@@ -117,10 +123,101 @@ $ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 7 - 'export BANANA+=hello BANANA+=hello BANANA+=hello'\n${END}"
 
-`unset BANANA`
+unset BANANA
 
 OUT=`./a.out env "export BANANA+=hello BANANA+=hello BANANA+=hello" | grep BANANA=`
 OUT2=`export BANANA+=hello BANANA+=hello BANANA+=hello; env | grep BANANA=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 8 - 'export BANANA=hello HELLO BANANA+=nope'\n${END}"
+
+`unset BANANA`
+
+OUT=`./a.out env "export BANANA=hello HELLO BANANA+=nope" | (grep BANANA= && grep HELLO)`
+OUT2=`export BANANA=hello HELLO BANANA+=nope; env | (grep BANANA= && grep HELLO)`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 9 - 'export HI HELLO HO='\n${END}"
+
+OUT=`./a.out env "export HI HELLO HO=" | grep HO=`
+OUT2=`export export HI HELLO HO=; env | grep HO=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 10 - 'export HI HELLO HO!='\n${END}"
+
+unset HO
+
+OUT=`./a.out env "export HI HELLO HO!=" | grep HO=`
+OUT2=`export HI HELLO HO!=; env | grep HO=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 11 - 'export HI HELLO HO)='\n${END}"
+
+unset HO
+
+OUT=`./a.out env "export HI HELLO HO)=" | grep HO=`
+OUT2=`export HI HELLO HO)=; env | grep HO=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+$ECHO "${BLUE}Test 12 - 'export -'\n${END}"
+
+unset HI
+
+OUT=`./a.out env "export -" | grep HI`
+OUT2=`export -`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"

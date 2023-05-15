@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/09 14:27:03 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/15 14:21:55 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 // # include <readline/readline.h>
 # include "libft.h"
 # include "structs.h"
@@ -35,5 +36,9 @@ int		env(t_gen *gen, t_cmd *cmd);
 int		export(t_gen *gen, t_cmd *cmd);
 int		export2(t_gen *gen, char *target, int add, int size);
 int		unset(t_gen *gen, t_cmd *cmd);
+
+/* Error handeling */
+void	err_msg(char *msg, char *msg2);
+void	built_err_msg(char *msg, char *msg2, char *msg3);
 
 #endif
