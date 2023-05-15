@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/12 17:50:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/12 20:16:28 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 int	main(int argc, char *argv[], char **env)
 {
 	char	*line;
+	char 	*line2;
 	// char	**input_arr;
-	int		i;
 	t_cmd_list	*lol;
 	(void)argc;
 	(void)argv;
@@ -29,9 +29,17 @@ int	main(int argc, char *argv[], char **env)
 
 	while (1)
 	{
-		i = 0;
-		i++;
-		line = readline("minishell$ ");
+		if (isatty(STDIN_FILENO))
+			line = readline("minishell$ ");
+		else
+		{
+			line2 = get_next_line(STDIN_FILENO);
+			if (line2 == NULL)
+				break ;
+			printf("%s\n", line2);
+			line = ft_strtrim(line2, "\n");
+			free(line2);
+		}
 		if (line == NULL)
 			break ;
 		lol = parse_line(line);

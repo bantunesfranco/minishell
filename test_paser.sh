@@ -19,6 +19,6 @@ srcs/parser/lexer/lex_token_validation.c srcs/parser/lexer/lex_parenthesis_valid
 #!/bin/bash
 
 # compile
-rm -rf parse_test
-cc $CFLAGS $INCLUDES $RL_FLAGS -o parse_test libft/libft.a $SRC
-./parse_test
+rm -rf minishell
+cc $CFLAGS $INCLUDES $RL_FLAGS -o minishell libft/libft.a $SRC
+./minishell

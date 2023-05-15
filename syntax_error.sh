@@ -1,6 +1,6 @@
 #!/bin/bash
-
-echo hi '
+echo hi | ./minishell
+# echo hi '
 # cat | || echo hi
 
 # cat | && echo hi
