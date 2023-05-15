@@ -42,7 +42,8 @@ static char	**copy_env(char **env, char *target, int size)
 	{
 		if (!ft_envcmp(env[i], target))
 		{
-			free(env[i++]);
+			free(env[i]);
+			i++;
 			if (!env[i])
 				break ;
 		}
@@ -50,15 +51,31 @@ static char	**copy_env(char **env, char *target, int size)
 			new_env[j++] = env[i++];
 	}
 	free(env);
+	free(target);
 	return (new_env);
 }
 
+static int	exec_unset(t_gen *gen, t_cmd *cmd)
+{
+	char	**new_env;
+	char	*target;
+	int		delete;
+	int		size;
+
+	target = ft_strjoin(cmd->cmd[1], "=");
+	if (!target)
+		return (-1);
+	size = get_size(gen->env, target, &delete) - delete;
+	if (!delete)
+		return (free(target), 0);
+	new_env = copy_env(gen->env, target, size);
+	if (!new_env)
+		return (free(target), -1);
+	gen->env = new_env;
+	return (0);
+}
 int	unset(t_gen *gen, t_cmd *cmd)
 {
-	int		size;
-	int		delete;
-	char	*target;
-	char	**new_env;
 	int		i;
 
 	i = 1;
@@ -66,16 +83,8 @@ int	unset(t_gen *gen, t_cmd *cmd)
 	{
 		if (is_valid_input(cmd->cmd[i]) && !ft_strchr(cmd->cmd[i], '='))
 		{
-			target = ft_strjoin(cmd->cmd[1], "=");
-			if (!target)
-				return (-1);
-			size = get_size(gen->env, target, &delete) - delete;
-			if (!delete)
-				return (free(target), 0);
-			new_env = copy_env(gen->env, target, size);
-			if (!new_env)
-				return (free(target), -1);
-			gen->env = new_env;
+			if (exec_unset(gen, cmd) == -1)
+				return (err_msg(NULL, cmd->cmd[0]), -1);
 		}
 		else
 			built_err_msg(cmd->cmd[0], cmd->cmd[i], "not a valid identifier\n");

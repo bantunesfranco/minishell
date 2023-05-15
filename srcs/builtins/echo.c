@@ -116,8 +116,9 @@ int	echo(t_gen *gen, t_cmd *cmd)
 		i++;
 	}
 	str = join_message(&cmd->cmd[pos], len);
+	if (!str)
+		return (err_msg(NULL, cmd->cmd[0]), -1);
 	if (write_content(str, cmd->output->fd, opt) == -1)
-		return (free(str), -1);
-	free(str);
-	return (0);
+		return (free(str), err_msg(cmd->cmd[0], "write error"), -1);
+	return (free(str), 0);
 }
