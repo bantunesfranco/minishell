@@ -29,9 +29,9 @@ int	main(int argc, char **argv, char **envp)
 	cmd.cmd = ft_split(argv[1], ' ');
 	gen.env = ft_arrdup(envp);
 	cmd.output = malloc(sizeof(t_redirect));
-	if (argv[2])
-		cmd.output->fd = open(argv[2], O_RDWR);
-	else
+	// if (argv[2])
+	// 	cmd.output->fd = open(argv[2], O_RDWR);
+	// else
 		cmd.output->fd = 1;
 	env(&gen, &cmd);
 	ft_free_arr(gen.env);

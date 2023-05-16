@@ -8,7 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/pwd/pwd_main.c srcs/builtins/pwd.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs` #-fsanitize=address`
+`gcc -Wall -Wextra -Werror tests/builtins/pwd/pwd_main.c srcs/builtins/pwd.c srcs/utils.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs` #-fsanitize=address`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -99,5 +99,35 @@ fi
 `rm -rf res2.txt`
 
 $ECHO "----------------------------"
+
+####################################
+#         ERROR HANDELING          #
+####################################
+
+$ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
+
+$ECHO "${BLUE}Test 1 - 'closed stdout'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`exec 3>&1; exec 1<&-; ./a.out "pwd" 2> res.txt; exec 1>&3;\
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`exec 3>&1; exec 1<&-; pwd 2> res2.txt; exec 1>&3; < res2.txt cat\
+| awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
 
 `rm -rf a.out`

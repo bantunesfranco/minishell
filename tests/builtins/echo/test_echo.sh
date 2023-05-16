@@ -622,4 +622,37 @@ fi
 
 $ECHO "----------------------------"
 
+
+####################################
+#         ERROR HANDELING          #
+####################################
+
+
+$ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
+
+$ECHO "${BLUE}Test 1 - 'closed stdout'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`exec 3>&1; exec 1<&-; ./a.out "echo" 2> res.txt; exec 1>&3;\
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`exec 3>&1; exec 1<&-; echo 2> res2.txt; exec 1>&3;\
+< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
+$ECHO "----------------------------"
+
 `rm -rf a.out`

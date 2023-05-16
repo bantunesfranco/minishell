@@ -74,6 +74,7 @@ static int	exec_unset(t_gen *gen, t_cmd *cmd)
 	gen->env = new_env;
 	return (0);
 }
+
 int	unset(t_gen *gen, t_cmd *cmd)
 {
 	int		i;

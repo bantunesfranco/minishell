@@ -85,29 +85,3 @@ void	built_err_msg(char *msg, char *msg2, char *msg3)
 	if (msg3)
 		write(2, msg3, ft_strlen(msg3));
 }
-
-int	atoi_mini(char *str)
-{
-	long long	nb;
-	int			i;
-
-	i = 0;
-	nb = 0;
-	if (!ft_strlen(str) || str[0] == '-')
-		return (-1);
-	if (str[0] == '+')
-		i++;
-	while (str[i])
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-		{
-			nb = nb * 10 + (str[i] - '0');
-			i++;
-			if (nb < 0 || nb > INT_MAX)
-				return (-1);
-		}
-		else
-			return (-1);
-	}
-	return ((int)(nb));
-}

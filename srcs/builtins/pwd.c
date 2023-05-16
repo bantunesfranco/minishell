@@ -23,16 +23,16 @@ int	pwd(t_gen *gen, t_cmd *cmd)
 	fd = cmd->output->fd;
 	path = getcwd(NULL, 0);
 	if (!path)
-		ft_error("minishell: ", errno);
+		return (err_msg(NULL, cmd->cmd[0]), -1);;
 	len = ft_strlen(path);
 	pwd = (char *)malloc(len + 2);
 	if (!pwd)
-		ft_error("minishell: ", errno);
+		return (err_msg(NULL, cmd->cmd[0]), -1);
 	ft_memmove(pwd, path, len);
 	pwd[len] = '\n';
 	pwd[len + 1] = '\0';
 	if (write(fd, pwd, len + 2) == -1)
-		ft_error("minishell: ", errno);
+		return (err_msg(cmd->cmd[0], "write error"), -1);
 	free(path);
 	free(pwd);
 	return (0);

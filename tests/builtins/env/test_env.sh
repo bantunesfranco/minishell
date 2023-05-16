@@ -8,7 +8,7 @@ END='\033[0m'
 
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/env/env_main.c srcs/builtins/env.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs` #-fsanitize=address`
+gcc -Wall -Wextra -Werror tests/builtins/env/env_main.c srcs/builtins/env.c srcs/utils.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs -fsanitize=address
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -25,7 +25,7 @@ $ECHO "${BLUE}Test 1 - 'env'\n${END}"
 OUT=`./a.out "env" | grep -v _=`
 OUT2=`env | grep -v _=`
 
-$ECHO "minishell:	|$OUT|"
+$ECHO "minishell:	|$OUT|\n"
 $ECHO "bash: 		|$OUT2|"
 
 if [ "$OUT" == "$OUT2" ];
@@ -81,7 +81,7 @@ $ECHO "${BLUE}Test 1 - 'env'\n${END}"
 OUT=`./a.out "env" res.txt && < res.txt cat | grep -v _=`
 OUT2=`env > res2.txt && < res2.txt cat | grep -v _=`
 
-$ECHO "minishell:	|$OUT|"
+$ECHO "minishell:	|$OUT|\n"
 $ECHO "bash: 		|$OUT2|"
 
 if [ "$OUT" == "$OUT2" ];
@@ -128,6 +128,36 @@ $ECHO "${BLUE}Test 3 - 'env hi'\n${END}"
 
 OUT=`./a.out "env hi" res.txt && < res.txt cat | grep -v _=`
 OUT2=`env hi > res2.txt && < res2.txt cat | grep -v _=`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
+$ECHO "----------------------------"
+
+####################################
+#         ERROR HANDELING          #
+####################################
+
+$ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
+
+$ECHO "${BLUE}Test 1 - 'closed stdout'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`exec 3>&1; exec 1<&-; ./a.out "env" 2> res.txt; exec 1>&3;\
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`exec 3>&1; exec 1<&-; env 2> res2.txt; exec 1>&3; < res2.txt cat`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
