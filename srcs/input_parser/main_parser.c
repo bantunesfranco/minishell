@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/15 15:02:29 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/16 15:24:38 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
+void	leaks(void)
+{
+	system("leaks minishell");
+}
 
 int	main(int argc, char *argv[], char **env)
 {
@@ -30,6 +34,7 @@ int	main(int argc, char *argv[], char **env)
 	(void)argv;
 	(void)env;
 
+	// atexit(leaks);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -40,12 +45,12 @@ int	main(int argc, char *argv[], char **env)
 			if (line2 == NULL)
 				break ;
 			line = ft_strtrim(line2, "\n");
-			printf("%s\n", line);
 			free(line2);
 		}
 		if (line == NULL)
 			break ;
 		lol = parse_line(line);
+		free(line);
 		lol++;
 		// printf("%s\n", line);
 		// input_arr = ft_split_args(line, '|');
@@ -56,12 +61,8 @@ int	main(int argc, char *argv[], char **env)
 		// ft_free_arr(input_arr);
 		// input_arr = NULL;
 	}
-	exit(0);
-}
-
-void	leaks(void)
-{
-	system("leaks parse_test");
+	printf("\ndone\n\n");
+	return (0);
 }
 
 // int	main(int argc, char *argv[], char **env)

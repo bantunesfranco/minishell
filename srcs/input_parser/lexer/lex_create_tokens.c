@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 10:44:46 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/11 17:07:39 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/16 14:15:06 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,19 @@ static void	add_token(char **line, t_parsing_info *p_info, t_token **first_token
 	}
 }
 
+/*	adding newline token to the back of the list*/
+
 static void	add_newline_token(t_token **first_token)
 {
 	t_token	*newline_token;
 	char	*word;
 
-	word = ft_strdup("\n");												// malloc
+	word = ft_strdup("newline");												// malloc
 	if (word == NULL)													// malloc check
 		exit(1);														// change later to some malloc failure function
-	newline_token = make_new_token(ft_strdup("newline"), NEW_LINE);		// malloc
+	newline_token = make_new_token(word, NEW_LINE);		// malloc
 	if (newline_token == NULL)											// malloc check
-		exit(1);														// change later to some malloc failure function
+		exit(1);														// change later to some malloc failure function and free word
 	add_new_token_to_back(first_token, newline_token);
 }
 

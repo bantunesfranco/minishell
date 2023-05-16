@@ -6,12 +6,37 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 14:40:23 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/15 11:41:03 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/16 12:31:07 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include <stdlib.h>
+
+/*	similar to the function from creating words*/
+
+static bool	are_quotes_closed(char *word)
+{
+	size_t	i;
+	char	c;
+
+	i = 0;
+	while (*(word + i) != '\0')
+	{
+		if (*(word + i) == '\'' || *(word + i) == '"')
+		{
+			c = *(word + i);
+			i = skip_quotes(word, i);
+		}
+		if (*(word + i) == '\0')
+		{
+			lex_error_function(&c, 2);
+			return (false);
+		}
+		i++;
+	}
+	return (true);
+}
 
 /*	checks for error conditions
 	first check is when there is only one token, which means ther is aonly a newline ergo, no input

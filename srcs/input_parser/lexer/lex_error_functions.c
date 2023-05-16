@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/15 11:27:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/15 12:39:56 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/16 11:41:59 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	lex_error_function(char *word, int syntax_erorr)
 	}
 	else
 	{
-		write(2, "minishell: unexpected newline while looking for matching `", 59);
+		write(2, "minishell: unexpected newline while looking for matching `", 58);
 		write(2, word, 1);
 		write(2, "'\n", 2);
 	}

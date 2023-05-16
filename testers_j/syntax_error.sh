@@ -1,14 +1,56 @@
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+RESET='\033[0m'
+BOLD='\033[1m'
+
 #!/bin/bash
+
+# functions comparing output, error and error code
+
+test_output(){
+	echo -n "Output :   "
+	if ! diff -q $1 $2 >/dev/null
+	then
+		echo -e -n  "${RED}KO🤢   ${RESET}"
+		((KO++))
+		echo -e "different outputs for argument: \n$TEST" >> error_args
+	else
+		echo -e -n "${GREEN}OK🌟   ${RESET}"
+	fi
+}
+
+test_err(){
+	echo -n "Error :   "
+	if [[ -s $1 && -s $2 ]] || [[ ! -s $1 && ! -s $2 ]]
+	then
+		echo -e "${GREEN}OK🌟\n${RESET}"
+	else
+		echo -e "${RED}KO🤢\n${RESET}"
+		((KO++))
+		echo -e "different errors for argument: \n$TEST" >> error_args
+	fi
+}
+
+test_code(){
+	echo $1 $2
+	if [[ $1 == $2 ]]
+	then
+		echo -e "${GREEN}OK${RESET}"
+	else
+		echo -e "${RED}KO${RESET}"
+	fi
+}
+
+
+# script
 
 FILE="./testers_j/files/syntax_errors"
 IFS=0
-i=1
-line_count=0
 NL=$'\n'
-
+KO=0
+rm -rf error_args
 	while read -r line
 	do
-		# echo $line
 		if [[ $line == "" ]]
 		then
 			continue
@@ -19,30 +61,21 @@ NL=$'\n'
 				read -r line
 			done
 		fi
-		echo $TEST
-		# echo -e 'lol\n'
-		echo -n "$TEST" | ./minishell
+		echo -e -n "	Test for input :\n👉	$TEST"
+		echo -n "$TEST" | ./minishell 2>err_mini >out_mini
+		exit_mini=$?
+		echo -n "$TEST" | bash 2>err_bash >out_bash
+		exit_bash=$?
+		test_output out_mini out_bash
+		test_err err_mini err_bash
+		# test_code $exit_mini $exit_bash
 		TEST=""
 	done < "$FILE"
-
-
-
-# echo uu | ./minishell
-# echo hi '
-# cat | || echo hi
-
-# cat | && echo hi
-
-# cat | | echo hi
-
-# cat || | echo hi
-
-# cat || && echo hi
-
-# cat || || echo hi
-
-# cat && | echo hi
-
-# cat && || echo hi
-
-# cat && && echo hi
+if [[ $KO == 0 ]]
+then
+	echo -e "\n	👍${GREEN}TESTS PASSED${RESET}\n"
+else
+	echo -e "\n	🤮${RED}${KO} TESTS FAILED${RESET}\n"
+fi
+rm -f err_*
+rm -f out_*

@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:56:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/15 11:41:28 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/16 14:19:16 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include <stdlib.h>
 
 /*	these functions are kind of self explanatory*/
+
+void	free_token_list(t_token *first_token)
+{
+	t_token	*temp;
+
+	while (first_token != NULL)
+	{
+		temp = first_token;
+		first_token = first_token->next;
+		free(temp->word);
+		free(temp);
+	}
+}
 
 void	add_new_token_to_back(t_token **first_token, t_token *new_token)
 {
@@ -56,29 +69,4 @@ size_t	skip_quotes(char *line, size_t i)
 	while (*(line + i) != c && *(line + i) != '\0')
 		i++;
 	return (i);
-}
-
-/*	similar to the function from creating words*/
-
-bool	are_quotes_closed(char *word)
-{
-	size_t	i;
-	char	c;
-
-	i = 0;
-	while (*(word + i) != '\0')
-	{
-		if (*(word + i) == '\'' || *(word + i) == '"')
-		{
-			c = *(word + i);
-			i = skip_quotes(word, i);
-		}
-		if (*(word + i) == '\0')
-		{
-			lex_error_function(&c, 2);
-			return (false);
-		}
-		i++;
-	}
-	return (true);
 }
