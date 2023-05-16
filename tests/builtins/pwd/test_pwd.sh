@@ -129,5 +129,6 @@ fi
 `rm -rf res.txt`
 `rm -rf res2.txt`
 
+$ECHO "----------------------------"
 
 `rm -rf a.out`
