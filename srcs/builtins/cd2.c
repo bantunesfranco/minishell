@@ -3,42 +3,38 @@
 /*                                                        ::::::::            */
 /*   cd.c                                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: codespace <codespace@student.codam.nl>       +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/16 17:14:18 by codespace     #+#    #+#                 */
-/*   Updated: 2023/05/16 17:56:47 by codespace     ########   odam.nl         */
+/*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
+/*   Updated: 2023/05/10 14:59:32 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 static char	*get_target(char *target, t_gen *gen)
 {
-	int		i;
-	char	*path;
+	int	i;
 
 	i = 0;
-	while (gen->env[i])
+	if (!ft_strncmp(target, "OLDPWD=", 8))
 	{
-		if (!ft_envcmp(gen->env[i], target))
-			return (ft_strdup(ft_strchr(gen->env[i], '=') + 1))
-		i++;
+		if (!gen->oldpwd)
+			return (NULL);
+		return (ft_strdup(gen->oldpwd));
 	}
-	if (!ft_envcmp(target, "OLDPWD=", 8) || !ft_strncmp(target, "HOME=", 5))
+	else if (!ft_strncmp(target, "HOME=", 5))
 	{
-		path = ft_substr(target, 0, ft_strlen(target));
-		if (!path)
-			return (err_msg(NULL, "cd"), NULL);
-		return (built_err_msg("cd", NULL))
+		while (gen->env[i])
+		{
+			if (!ft_strncmp(gen->env[i], "HOME=", 5))
+				return (ft_strdup(gen->env[i] + 5));
+			i++;
+		}
+		return (NULL);
 	}
 	else
-	{
-		path = ft_strdup(target);
-		if (!path)
-			return (err_msg(NULL, "cd"), NULL);
-		return (path);
-	}
+		return (ft_strdup(target));
 }
 
 static int	go_to(char *target, t_gen *gen)
@@ -46,17 +42,23 @@ static int	go_to(char *target, t_gen *gen)
 	target = get_target(target, gen);
 	if (!target)
 		return (-1);
+	free(gen->oldpwd);
+	gen->oldpwd = getcwd(NULL, 1);
+	if (!gen->oldpwd)
+		return (free(target), -1);
 	if (chdir(target) == -1)
 		return (free(target), -1);
 	free(target);
+	free(gen->pwd);
+	gen->pwd = getcwd(NULL, 1);
+	if (!gen->pwd)
+		return (-1);
 	return (0);
 }
 
-int	cd(t_gen * gen, t_cmd *cmd)
+int	cd(t_gen *gen, t_cmd *cmd)
 {
-	if (ft_arrlen(cmd->cmd) > 2)
-		return (built_err_msg(cmd->cmd[0], NULL, "too many arguments\n"), -1);
-	if (!cmd->cmd[1] | !ft_strncmp(cmd->cmd[1], "--", 3))
+	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
 	{
 		if (go_to("HOME=", gen) == -1)
 			return (-1);
