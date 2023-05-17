@@ -77,5 +77,5 @@ then
 else
 	echo -e "\n	🤮${RED}${KO} TESTS FAILED${RESET}\n"
 fi
-rm -f err_*
+# rm -f err_*
 rm -f out_*

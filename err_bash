@@ -1,0 +1,2 @@
+bash: line 1: syntax error near unexpected token `cat'
+bash: line 1: `cat | (echo hello) cat'
