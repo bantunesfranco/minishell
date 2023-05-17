@@ -176,61 +176,6 @@ fi
 
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 10 - 'export HI HELLO HO!='\n${END}"
-
-unset HO
-
-OUT=`./a.out env "export HI HELLO HO!=" | grep HO=`
-OUT2=`export HI HELLO HO!=; env | grep HO=`
-
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
-
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
-
-$ECHO "----------------------------"
-
-$ECHO "${BLUE}Test 11 - 'export HI HELLO HO)='\n${END}"
-
-unset HO
-
-OUT=`./a.out env "export HI HELLO HO)=" | grep HO=`
-OUT2=`export HI HELLO HO)=; env | grep HO=`
-
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
-
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
-
-$ECHO "${BLUE}Test 12 - 'export -'\n${END}"
-
-unset HI
-
-OUT=`./a.out env "export -" | grep HI`
-OUT2=`export -`
-
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
-
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
-
-$ECHO "----------------------------"
-
 $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
 
 $ECHO "${BLUE}Test 1 - 'export'\n${END}"
@@ -245,6 +190,105 @@ OUT2=`export > res2.txt && < res2.txt cat`
 # $ECHO "bash: 		|$OUT2|"
 
 if [ "$OUT" != "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
+$ECHO "----------------------------"
+
+####################################
+#         ERROR HANDELING          #
+####################################
+
+$ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
+
+$ECHO "${BLUE}Test 1 - 'closed stdout'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+
+OUT=`exec 3>&1; exec 1<&-; ./a.out "env" "export" 2> res.txt; exec 1>&3;\
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2="export: write error: Bad file descriptor"
+
+$ECHO "Bash doesn not print any errors, but we do\n"
+
+$ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 2 - 'export HI HELLO HO!='\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`./a.out env "export HI HELLO HO!=" > /dev/null 2> res.txt; < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`export HI HELLO HO!= 2> res2.txt; < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
+$ECHO "----------------------------"
+
+$ECHO "${BLUE}Test 3 - 'export HI HELLO HO-='\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+unset HO
+
+OUT=`./a.out env "export HI HELLO HO-=" > /dev/null 2> res.txt; < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`export HI HELLO HO-= 2> res2.txt; < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
+
+`rm -rf res.txt`
+`rm -rf res2.txt`
+
+$ECHO "${BLUE}Test 4 - 'export -'\n${END}"
+
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
+
+OUT=`./a.out env "export -" > /dev/null 2> res.txt; < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`export - 2> res2.txt; < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
+
+if [ "$OUT" == "$OUT2" ];
 then
 	$ECHO "Result: ${GREEN}OK${END}"
 else

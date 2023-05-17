@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/15 16:49:28 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/17 12:37:08 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ int	export(t_gen *gen, t_cmd *cmd)
 	int		add;
 	int		i;
 
-	if (!cmd->cmd[1])
-		return (print_export_env(gen->env, cmd->output->fd));
 	i = 1;
+	if (!cmd->cmd[1])
+		i = print_export_env(gen->env, cmd->output->fd);
+	if (i == -1)
+		return (err_msg(cmd->cmd[0], "write error"), -1);
 	while (cmd->cmd[i])
 	{
 		if (is_valid_input(cmd->cmd[i]))
