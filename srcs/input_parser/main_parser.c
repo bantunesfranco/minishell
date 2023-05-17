@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/16 15:24:38 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/16 19:40:40 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char *argv[], char **env)
 		// ft_free_arr(input_arr);
 		// input_arr = NULL;
 	}
-	printf("\ndone\n\n");
+	// printf("\ndone\n\n");
 	return (0);
 }
 
