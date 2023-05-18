@@ -9,7 +9,7 @@ END='\033[0m'
 #!/bin/bash
 
 `gcc -Wall -Wextra -Werror tests/builtins/cd/cd_main.c srcs/builtins/cd.c srcs/builtins/pwd.c \
-srcs/ft_arrdup.c srcs/utils.c libft/libft.a -I incs -I libft/incs -g` #-fsanitize=leak`
+srcs/ft_arrdup.c srcs/utils.c libft/libft.a -I incs -I libft/incs -g -fsanitize=leak`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
