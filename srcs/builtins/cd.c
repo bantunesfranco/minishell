@@ -3,60 +3,86 @@
 /*                                                        ::::::::            */
 /*   cd.c                                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: codespace <codespace@student.codam.nl>       +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/16 17:14:18 by codespace     #+#    #+#                 */
-/*   Updated: 2023/05/16 17:56:47 by codespace     ########   odam.nl         */
+/*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
+/*   Updated: 2023/05/18 19:42:04 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-static char	*get_target(char *target, t_gen *gen)
+static char	*get_target(char *target, char **env)
 {
-	int		i;
-	char	*path;
+	int	i;
 
 	i = 0;
-	while (gen->env[i])
+	while (env[i])
 	{
-		if (!ft_envcmp(gen->env[i], target))
-			return (ft_strdup(ft_strchr(gen->env[i], '=') + 1))
+		if (!ft_envcmp(env[i], target))
+			return (ft_strchr(env[i], '=') + 1);
 		i++;
 	}
-	if (!ft_envcmp(target, "OLDPWD=", 8) || !ft_strncmp(target, "HOME=", 5))
-	{
-		path = ft_substr(target, 0, ft_strlen(target));
-		if (!path)
-			return (err_msg(NULL, "cd"), NULL);
-		return (built_err_msg("cd", NULL))
-	}
+	if (!ft_strncmp(target, "OLDPWD=", 8))
+		return (built_err_msg("cd", NULL, "OLDPWD not set\n"), NULL);
+	else if (!ft_strncmp(target, "HOME=", 6))
+		return (built_err_msg("cd", NULL, "HOME not set\n"), NULL);
 	else
-	{
-		path = ft_strdup(target);
-		if (!path)
-			return (err_msg(NULL, "cd"), NULL);
-		return (path);
-	}
+		return (target);
+}
+
+static int	set_env_vars(char *target, char **env)
+{
+	int		i;
+	char	*cwd;
+
+	i = 0;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (err_msg(NULL, "cd"), -1);
+	while (env[i] && ft_envcmp(env[i], target))
+		i++;
+	free(env[i]);
+	env[i] = ft_strjoin(target, cwd);
+	if (!env[i])
+		return (err_msg(NULL, "cd"), -1);
+	return (0);
 }
 
 static int	go_to(char *target, t_gen *gen)
 {
-	target = get_target(target, gen);
-	if (!target)
+	char	*path;
+
+	path = get_target(target, gen->env);
+	if (!path)
 		return (-1);
-	if (chdir(target) == -1)
-		return (free(target), -1);
-	free(target);
+	if (set_env_vars("OLD_PWD=", gen->env) == -1)
+		return (-1);
+	if (chdir(path) == -1)
+		return (err_msg("cd", path), -1);
+	if (set_env_vars("PWD=", gen->env) == -1)
+		return (-1);
 	return (0);
 }
 
-int	cd(t_gen * gen, t_cmd *cmd)
+static int	print_oldpwd(t_cmd *cmd)
+{
+	char	*old;
+
+	old = getcwd(NULL, 0);
+	if (write(cmd->output->fd, old, ft_strlen(old)) == -1)
+		return (free(old), -1);
+	if (write(cmd->output->fd, "\n", 1) == -1)
+		return (free(old), -1);
+	free(old);
+	return (0);
+}
+
+int	cd(t_gen *gen, t_cmd *cmd)
 {
 	if (ft_arrlen(cmd->cmd) > 2)
 		return (built_err_msg(cmd->cmd[0], NULL, "too many arguments\n"), -1);
-	if (!cmd->cmd[1] | !ft_strncmp(cmd->cmd[1], "--", 3))
+	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
 	{
 		if (go_to("HOME=", gen) == -1)
 			return (-1);
@@ -65,10 +91,8 @@ int	cd(t_gen * gen, t_cmd *cmd)
 	{
 		if (go_to("OLDPWD=", gen) == -1)
 			return (-1);
-		if (write(cmd->output->fd, gen->pwd, ft_strlen(gen->pwd)) == -1)
-			return (-1);
-		if (write(cmd->output->fd, "\n", 1) == -1)
-			return (-1);
+		if (print_oldpwd(cmd) == -1)
+			return (err_msg(cmd->cmd[0], "write error"), -1);
 	}
 	else
 	{
