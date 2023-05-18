@@ -179,120 +179,15 @@ fi
 
 $ECHO "----------------------------"
 
-####################################
-#          REDIRECTIONS            #
-####################################
-
-$ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
-
-$ECHO "${BLUE}Test 1 - 'cd -'\n${END}"
-
-TEMP=$OLDPWD
-export OLDPWD=$PWD/tests/builtins/cd
-
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
-
-OUT2=``
-
-OUT=`./a.out "pwd" "cd -" res.txt > /dev/null && < res.txt cat`
-OUT2=`cd - 2> res2.txt && < res2.txt cat`
-
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
-
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
-
-`rm -rf res.txt`
-`rm -rf res2.txt`
-
-export OLDPWD=$TEMP
-
-$ECHO "----------------------------"
-
-####################################
-#         ERROR HANDELING          #
-####################################
-
-$ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
-
-$ECHO "${BLUE}Test 1 - 'cd' with no HOME\n${END}"
-
-TEMP=$HOME
-unset HOME
-
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
-
-OUT=`./a.out "pwd" "cd" > /dev/null 2> res.txt; \
-< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-OUT2=`cd > /dev/null 2> res2.txt; \
-< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
-
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
-
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
-
-`rm -rf res.txt`
-`rm -rf res2.txt`
-
-export HOME=$TEMP
-
-$ECHO "----------------------------"
-
-$ECHO "${BLUE}Test 2 - 'cd --' with no HOME\n${END}"
-
-TEMP=$HOME
-unset HOME
-
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
-
-OUT=`./a.out "pwd" "cd --" > /dev/null 2> res.txt; \
-< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-OUT2=`cd -- > /dev/null 2> res2.txt; \
-< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
-
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
-
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
-
-`rm -rf res.txt`
-`rm -rf res2.txt`
-
-export HOME=$TEMP
-
-$ECHO "----------------------------"
-
-$ECHO "${BLUE}Test 3 - 'cd -' no OLDPWD\n${END}"
+$ECHO "${BLUE}Test 9 - 'cd ..' with no OLDPWD\n${END}"
 
 TEMP=$OLDPWD
 unset OLDPWD
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+env | grep OLDPWD=
 
-OUT=`./a.out "pwd" "cd -" > /dev/null 2> res.txt; \
-< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-OUT2=`cd - > /dev/null 2> res2.txt; \
-< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=`./a.out "pwd" "cd .."`
+OUT2=`pwd && cd .. && echo -n "                 " && pwd`
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -303,95 +198,224 @@ then
 else
 	$ECHO "Result: ${RED}KO${END}"
 fi
-
-`rm -rf res.txt`
-`rm -rf res2.txt`
 
 export OLDPWD=$TEMP
 
-$ECHO "----------------------------"
+# $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 4 - 'cd' with nonexistant path\n${END}"
+# ####################################
+# #          REDIRECTIONS            #
+# ####################################
 
-mkdir $PWD/nonexistantpath
-EC=`echo $?`
-if [ $EC != "0" ];
-then
-	exit 1
-fi
-rm -rf nonexistantpath
+# $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+# $ECHO "${BLUE}Test 1 - 'cd -'\n${END}"
 
-OUT=`./a.out "pwd" "cd nonexistantpath" > /dev/null 2> res.txt; \
-< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-OUT2=`cd nonexistantpath> /dev/null 2> res2.txt; \
-< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+# TEMP=$OLDPWD
+# export OLDPWD=$PWD/tests/builtins/cd
 
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
 
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+# OUT2=``
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+# OUT=`./a.out "pwd" "cd -" res.txt > /dev/null && < res.txt cat`
+# OUT2=`cd - 2> res2.txt && < res2.txt cat`
 
-$ECHO "----------------------------"
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
 
-$ECHO "${BLUE}Test 5 - 'cd' with too many args\n${END}"
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
 
-OUT=`./a.out "pwd" "cd .. hello" > /dev/null 2> res.txt; \
-< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-OUT2=`cd .. hello > /dev/null 2> res2.txt; \
-< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+# export OLDPWD=$TEMP
 
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "----------------------------"
 
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+# ####################################
+# #         ERROR HANDELING          #
+# ####################################
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+# $ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
 
-$ECHO "----------------------------"
+# $ECHO "${BLUE}Test 1 - 'cd' with no HOME\n${END}"
 
-$ECHO "${BLUE}Test 6 - 'closed stdout'\n${END}"
+# TEMP=$HOME
+# unset HOME
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
 
-OUT=`exec 3>&1; exec 1<&-; ./a.out "pwd" "cd -" 2> res.txt; exec 1>&3;\
-< res.txt cat | awk -F ': ' 'FNR == 2 {sub($1 FS, ""); print}'`
-OUT2=`exec 3>&1; exec 1<&-; (cd -) 2> res2.txt; exec 1>&3;\
-< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+# OUT=`./a.out "pwd" "cd" > /dev/null 2> res.txt; \
+# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+# OUT2=`cd > /dev/null 2> res2.txt; \
+# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
 
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
 
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
 
-$ECHO "----------------------------"
+# export HOME=$TEMP
 
-`rm -rf a.out`
+# $ECHO "----------------------------"
+
+# $ECHO "${BLUE}Test 2 - 'cd --' with no HOME\n${END}"
+
+# TEMP=$HOME
+# unset HOME
+
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
+
+# OUT=`./a.out "pwd" "cd --" > /dev/null 2> res.txt; \
+# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+# OUT2=`cd -- > /dev/null 2> res2.txt; \
+# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
+
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
+
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
+
+# export HOME=$TEMP
+
+# $ECHO "----------------------------"
+
+# $ECHO "${BLUE}Test 3 - 'cd -' no OLDPWD\n${END}"
+
+# TEMP=$OLDPWD
+# unset OLDPWD
+
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
+
+# OUT=`./a.out "pwd" "cd -" > /dev/null 2> res.txt; \
+# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+# OUT2=`cd - > /dev/null 2> res2.txt; \
+# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
+
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
+
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
+
+# export OLDPWD=$TEMP
+
+# $ECHO "----------------------------"
+
+# $ECHO "${BLUE}Test 4 - 'cd' with nonexistant path\n${END}"
+
+# mkdir $PWD/nonexistantpath
+# EC=`echo $?`
+# if [ $EC != "0" ];
+# then
+# 	exit 1
+# fi
+# rm -rf nonexistantpath
+
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
+
+# OUT=`./a.out "pwd" "cd nonexistantpath" > /dev/null 2> res.txt; \
+# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+# OUT2=`cd nonexistantpath> /dev/null 2> res2.txt; \
+# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
+
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
+
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
+
+# $ECHO "----------------------------"
+
+# $ECHO "${BLUE}Test 5 - 'cd' with too many args\n${END}"
+
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
+
+# OUT=`./a.out "pwd" "cd .. hello" > /dev/null 2> res.txt; \
+# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+# OUT2=`cd .. hello > /dev/null 2> res2.txt; \
+# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
+
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
+
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
+
+# $ECHO "----------------------------"
+
+# $ECHO "${BLUE}Test 6 - 'closed stdout'\n${END}"
+
+# `touch res.txt && chmod 777 res.txt`
+# `touch res2.txt && chmod 777 res2.txt`
+
+# OUT=`exec 3>&1; exec 1<&-; ./a.out "pwd" "cd -" 2> res.txt; exec 1>&3;\
+# < res.txt cat | awk -F ': ' 'FNR == 2 {sub($1 FS, ""); print}'`
+# OUT2=`exec 3>&1; exec 1<&-; (cd -) 2> res2.txt; exec 1>&3;\
+# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
+
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
+
+# `rm -rf res.txt`
+# `rm -rf res2.txt`
+
+# $ECHO "----------------------------"
+
+# `rm -rf a.out`

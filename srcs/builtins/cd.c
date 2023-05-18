@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/18 19:52:54 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/18 20:12:26 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static int	set_env_vars(char *target, char **env)
 		return (err_msg(NULL, "cd"), -1);
 	while (env[i] && ft_envcmp(env[i], target))
 		i++;
+	if (!env[i])
+		return (free(cwd), 0);
 	free(env[i]);
 	env[i] = ft_strjoin(target, cwd);
 	if (!env[i])
@@ -57,7 +59,7 @@ static int	go_to(char *target, t_gen *gen)
 	path = get_target(target, gen->env);
 	if (!path)
 		return (-1);
-	if (set_env_vars("OLD_PWD=", gen->env) == -1)
+	if (set_env_vars("OLDPWD=", gen->env) == -1)
 		return (-1);
 	if (chdir(path) == -1)
 		return (err_msg("cd", path), -1);
