@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/15 14:21:55 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/18 11:56:10 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		env(t_gen *gen, t_cmd *cmd);
 int		export(t_gen *gen, t_cmd *cmd);
 int		export2(t_gen *gen, char *target, int add, int size);
 int		unset(t_gen *gen, t_cmd *cmd);
+int		mini_exit(t_gen *gen, t_cmd *cmd);
 
 /* Error handeling */
 void	err_msg(char *msg, char *msg2);

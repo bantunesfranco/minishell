@@ -18,9 +18,9 @@ else
 	ECHO="echo"
 fi
 
-$ECHO "\n	${CYAN}ENV TESTER${END}\n----------------------------"
+$ECHO "\n       ${CYAN}EXPORT TESTER${END}\n----------------------------"
 
-$ECHO "	${MAGENTA}TO STDOUT${END}\n----------------------------"
+$ECHO "	 ${MAGENTA}TO STDOUT${END}\n----------------------------"
 $ECHO "${BLUE}Test 1 - 'export'\n${END}"
 OUT=`./a.out env "export"`
 OUT2=`export`
