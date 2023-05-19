@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:47:19 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/04 10:15:43 by bruno         ########   odam.nl         */
+/*   Updated: 2023/05/19 11:31:31 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	pwd(t_gen *gen, t_cmd *cmd)
 	fd = cmd->output->fd;
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (err_msg(NULL, cmd->cmd[0]), -1);;
+		return (err_msg(NULL, cmd->cmd[0]), -1);
 	len = ft_strlen(path);
 	pwd = (char *)malloc(len + 2);
 	if (!pwd)

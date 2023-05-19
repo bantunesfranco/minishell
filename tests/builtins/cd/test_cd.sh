@@ -201,221 +201,221 @@ fi
 
 export OLDPWD=$TEMP
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# ####################################
-# #          REDIRECTIONS            #
-# ####################################
+####################################
+#          REDIRECTIONS            #
+####################################
 
-# $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
+$ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
 
-# $ECHO "${BLUE}Test 1 - 'cd -'\n${END}"
+$ECHO "${BLUE}Test 1 - 'cd -'\n${END}"
 
-# TEMP=$OLDPWD
-# export OLDPWD=$PWD/tests/builtins/cd
+TEMP=$OLDPWD
+export OLDPWD=$PWD/tests/builtins/cd
 
-# `touch res.txt && chmod 777 res.txt`
-# `touch res2.txt && chmod 777 res2.txt`
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
 
-# OUT2=``
+OUT2=``
 
-# OUT=`./a.out "pwd" "cd -" res.txt > /dev/null && < res.txt cat`
-# OUT2=`cd - 2> res2.txt && < res2.txt cat`
+OUT=`./a.out "pwd" "cd -" res.txt > /dev/null && < res.txt cat`
+OUT2=`cd - 2> res2.txt && < res2.txt cat`
 
-# $ECHO "minishell:	|$OUT|"
-# $ECHO "bash: 		|$OUT2|"
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
 
-# if [ "$OUT" == "$OUT2" ];
-# then
-# 	$ECHO "Result: ${GREEN}OK${END}"
-# else
-# 	$ECHO "Result: ${RED}KO${END}"
-# fi
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
 
-# `rm -rf res.txt`
-# `rm -rf res2.txt`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
-# export OLDPWD=$TEMP
+export OLDPWD=$TEMP
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# ####################################
-# #         ERROR HANDELING          #
-# ####################################
+####################################
+#         ERROR HANDELING          #
+####################################
 
-# $ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
+$ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
 
-# $ECHO "${BLUE}Test 1 - 'cd' with no HOME\n${END}"
+$ECHO "${BLUE}Test 1 - 'cd' with no HOME\n${END}"
 
-# TEMP=$HOME
-# unset HOME
+TEMP=$HOME
+unset HOME
 
-# `touch res.txt && chmod 777 res.txt`
-# `touch res2.txt && chmod 777 res2.txt`
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
 
-# OUT=`./a.out "pwd" "cd" > /dev/null 2> res.txt; \
-# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-# OUT2=`cd > /dev/null 2> res2.txt; \
-# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=`./a.out "pwd" "cd" > /dev/null 2> res.txt; \
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`cd > /dev/null 2> res2.txt; \
+< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
 
-# $ECHO "minishell:	|$OUT|"
-# $ECHO "bash: 		|$OUT2|"
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
 
-# if [ "$OUT" == "$OUT2" ];
-# then
-# 	$ECHO "Result: ${GREEN}OK${END}"
-# else
-# 	$ECHO "Result: ${RED}KO${END}"
-# fi
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
 
-# `rm -rf res.txt`
-# `rm -rf res2.txt`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
-# export HOME=$TEMP
+export HOME=$TEMP
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# $ECHO "${BLUE}Test 2 - 'cd --' with no HOME\n${END}"
+$ECHO "${BLUE}Test 2 - 'cd --' with no HOME\n${END}"
 
-# TEMP=$HOME
-# unset HOME
+TEMP=$HOME
+unset HOME
 
-# `touch res.txt && chmod 777 res.txt`
-# `touch res2.txt && chmod 777 res2.txt`
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
 
-# OUT=`./a.out "pwd" "cd --" > /dev/null 2> res.txt; \
-# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-# OUT2=`cd -- > /dev/null 2> res2.txt; \
-# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=`./a.out "pwd" "cd --" > /dev/null 2> res.txt; \
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`cd -- > /dev/null 2> res2.txt; \
+< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
 
-# $ECHO "minishell:	|$OUT|"
-# $ECHO "bash: 		|$OUT2|"
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
 
-# if [ "$OUT" == "$OUT2" ];
-# then
-# 	$ECHO "Result: ${GREEN}OK${END}"
-# else
-# 	$ECHO "Result: ${RED}KO${END}"
-# fi
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
 
-# `rm -rf res.txt`
-# `rm -rf res2.txt`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
-# export HOME=$TEMP
+export HOME=$TEMP
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# $ECHO "${BLUE}Test 3 - 'cd -' no OLDPWD\n${END}"
+$ECHO "${BLUE}Test 3 - 'cd -' no OLDPWD\n${END}"
 
-# TEMP=$OLDPWD
-# unset OLDPWD
+TEMP=$OLDPWD
+unset OLDPWD
 
-# `touch res.txt && chmod 777 res.txt`
-# `touch res2.txt && chmod 777 res2.txt`
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
 
-# OUT=`./a.out "pwd" "cd -" > /dev/null 2> res.txt; \
-# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-# OUT2=`cd - > /dev/null 2> res2.txt; \
-# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=`./a.out "pwd" "cd -" > /dev/null 2> res.txt; \
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`cd - > /dev/null 2> res2.txt; \
+< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
 
-# $ECHO "minishell:	|$OUT|"
-# $ECHO "bash: 		|$OUT2|"
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
 
-# if [ "$OUT" == "$OUT2" ];
-# then
-# 	$ECHO "Result: ${GREEN}OK${END}"
-# else
-# 	$ECHO "Result: ${RED}KO${END}"
-# fi
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
 
-# `rm -rf res.txt`
-# `rm -rf res2.txt`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
-# export OLDPWD=$TEMP
+export OLDPWD=$TEMP
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# $ECHO "${BLUE}Test 4 - 'cd' with nonexistant path\n${END}"
+$ECHO "${BLUE}Test 4 - 'cd' with nonexistant path\n${END}"
 
-# mkdir $PWD/nonexistantpath
-# EC=`echo $?`
-# if [ $EC != "0" ];
-# then
-# 	exit 1
-# fi
-# rm -rf nonexistantpath
+mkdir $PWD/nonexistantpath
+EC=`echo $?`
+if [ $EC != "0" ];
+then
+	exit 1
+fi
+rm -rf nonexistantpath
 
-# `touch res.txt && chmod 777 res.txt`
-# `touch res2.txt && chmod 777 res2.txt`
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
 
-# OUT=`./a.out "pwd" "cd nonexistantpath" > /dev/null 2> res.txt; \
-# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-# OUT2=`cd nonexistantpath> /dev/null 2> res2.txt; \
-# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=`./a.out "pwd" "cd nonexistantpath" > /dev/null 2> res.txt; \
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`cd nonexistantpath> /dev/null 2> res2.txt; \
+< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
 
-# $ECHO "minishell:	|$OUT|"
-# $ECHO "bash: 		|$OUT2|"
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
 
-# if [ "$OUT" == "$OUT2" ];
-# then
-# 	$ECHO "Result: ${GREEN}OK${END}"
-# else
-# 	$ECHO "Result: ${RED}KO${END}"
-# fi
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
 
-# `rm -rf res.txt`
-# `rm -rf res2.txt`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# $ECHO "${BLUE}Test 5 - 'cd' with too many args\n${END}"
+$ECHO "${BLUE}Test 5 - 'cd' with too many args\n${END}"
 
-# `touch res.txt && chmod 777 res.txt`
-# `touch res2.txt && chmod 777 res2.txt`
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
 
-# OUT=`./a.out "pwd" "cd .. hello" > /dev/null 2> res.txt; \
-# < res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-# OUT2=`cd .. hello > /dev/null 2> res2.txt; \
-# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=`./a.out "pwd" "cd .. hello" > /dev/null 2> res.txt; \
+< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
+OUT2=`cd .. hello > /dev/null 2> res2.txt; \
+< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
 
-# $ECHO "minishell:	|$OUT|"
-# $ECHO "bash: 		|$OUT2|"
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
 
-# if [ "$OUT" == "$OUT2" ];
-# then
-# 	$ECHO "Result: ${GREEN}OK${END}"
-# else
-# 	$ECHO "Result: ${RED}KO${END}"
-# fi
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
 
-# `rm -rf res.txt`
-# `rm -rf res2.txt`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# $ECHO "${BLUE}Test 6 - 'closed stdout'\n${END}"
+$ECHO "${BLUE}Test 6 - 'closed stdout'\n${END}"
 
-# `touch res.txt && chmod 777 res.txt`
-# `touch res2.txt && chmod 777 res2.txt`
+`touch res.txt && chmod 777 res.txt`
+`touch res2.txt && chmod 777 res2.txt`
 
-# OUT=`exec 3>&1; exec 1<&-; ./a.out "pwd" "cd -" 2> res.txt; exec 1>&3;\
-# < res.txt cat | awk -F ': ' 'FNR == 2 {sub($1 FS, ""); print}'`
-# OUT2=`exec 3>&1; exec 1<&-; (cd -) 2> res2.txt; exec 1>&3;\
-# < res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=`exec 3>&1; exec 1<&-; ./a.out "pwd" "cd -" 2> res.txt; exec 1>&3;\
+< res.txt cat | awk -F ': ' 'FNR == 2 {sub($1 FS, ""); print}'`
+OUT2=`exec 3>&1; exec 1<&-; (cd -) 2> res2.txt; exec 1>&3;\
+< res2.txt cat | awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
 
-# $ECHO "minishell:	|$OUT|"
-# $ECHO "bash: 		|$OUT2|"
+$ECHO "minishell:	|$OUT|"
+$ECHO "bash: 		|$OUT2|"
 
-# if [ "$OUT" == "$OUT2" ];
-# then
-# 	$ECHO "Result: ${GREEN}OK${END}"
-# else
-# 	$ECHO "Result: ${RED}KO${END}"
-# fi
+if [ "$OUT" == "$OUT2" ];
+then
+	$ECHO "Result: ${GREEN}OK${END}"
+else
+	$ECHO "Result: ${RED}KO${END}"
+fi
 
-# `rm -rf res.txt`
-# `rm -rf res2.txt`
+`rm -rf res.txt`
+`rm -rf res2.txt`
 
-# $ECHO "----------------------------"
+$ECHO "----------------------------"
 
-# `rm -rf a.out`
+`rm -rf a.out`

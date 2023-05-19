@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/18 14:39:26 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/19 11:30:24 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,20 @@ static int	atoi_exit(char *str)
 		return (-1);
 	if (str[0] == '+' || str[0] == '-')
 		i++;
-	while (str[i])
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		if (str[i] >= '0' && str[i] <= '9')
-		{
-			nb = nb * 10 + (str[i] - '0');
-			nb2 = nb2 * 10 + (str[i] - '0');
-			i++;
-			if (nb2 < LONG_MIN || nb2 > LONG_MAX)
-				return (-1);
-		}
-		else
+		nb = nb * 10 + (str[i] - '0');
+		nb2 = nb2 * 10 + (str[i] - '0');
+		if (nb2 < LONG_MIN || nb2 > LONG_MAX)
 			return (-1);
+		i++;
 	}
+	if (str[i] && !ft_is_digit(str[i]))
+		return (-1);
 	if (str[0] == '-')
 		return (256 - nb);
 	return ((int)nb);
 }
-
 
 int	mini_exit(t_gen *gen, t_cmd *cmd)
 {
