@@ -6,11 +6,11 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 19:41:08 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/12 18:25:23 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/24 09:36:37 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "lexer.h"
 
 /*	a control operator has to be followed by a redirection a word or an open parenthesis
 	it cannot be followed by a close parenthesis another control operator or a newline*/

@@ -6,11 +6,11 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 19:43:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/12 15:56:25 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/24 16:31:17 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "parsing_structs.h"
 
 /*	an open parenthesis has to be followed by a redirection a word or an open parenthesis
 	it cannot be followed by a close parenthesis another control operator or a newline

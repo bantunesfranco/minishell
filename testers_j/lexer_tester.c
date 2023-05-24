@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   input_parser.c                                     :+:    :+:            */
+/*   lexer_tester.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
+/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/24 19:10:05 by jmolenaa      ########   odam.nl         */
+/*   Created: 2023/05/24 18:45:01 by jmolenaa      #+#    #+#                 */
+/*   Updated: 2023/05/24 19:52:07 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,31 @@
 #include "parsing.h"
 #include "lexer.h"
 
-t_cmd_list	*parse_line(char *line)
+void	print_toks(t_token *first_token)
 {
-	t_cmd_list		*first_cmd;
+	t_token	*temp;
+
+	temp = first_token;
+	printf("%s", temp->word);
+	temp = temp->next;
+	while (temp->type != NEW_LINE)
+	{
+		printf(" ");
+		printf("%s", temp->word);
+		temp = temp->next;
+	}
+	printf("\n");
+}
+
+int	main(int argc, char *argv[])
+{
 	t_token			*first_token;
 	t_parsing_info	p_info;
 
-	first_cmd = NULL;
+	(void)argc;
+	(void)first_token;
+	(void)argv;
 	init_struct(&p_info);
-	lexer(line, &p_info, &first_token); // mallocs a list of nodes with malloced words, first_token will point to the first node
-	// print_tokens(first_token);
-	parser(&p_info, first_token, &first_cmd);
-	free_token_list(first_token);
-	return (first_cmd);
+	lexer(argv[1], &p_info, &first_token);
+	print_toks(first_token);
 }

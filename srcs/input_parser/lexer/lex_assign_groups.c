@@ -6,11 +6,11 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 13:11:32 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/12 13:57:02 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/24 16:04:58 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "parsing_structs.h"
 #include <stdlib.h>
 
 /*	tokens have certain functions they do, which can be grouped.

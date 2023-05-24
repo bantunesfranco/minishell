@@ -6,10 +6,11 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 10:44:46 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/16 14:15:06 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/24 16:30:06 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexer.h"
 #include "parsing.h"
 #include "libft.h"
 #include <stdlib.h>

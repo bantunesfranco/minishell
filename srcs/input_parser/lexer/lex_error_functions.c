@@ -6,11 +6,11 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/15 11:27:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/16 11:41:59 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/24 16:30:27 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "parsing_structs.h"
 #include "libft.h"
 
 /*	writes an error based on what mistake the sintax has, either a token is in the wrong position
