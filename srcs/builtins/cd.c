@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/18 20:12:26 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/25 13:23:07 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static int	set_env_vars(char *target, char **env)
 		return (err_msg(NULL, "cd"), -1);
 	while (env[i] && ft_envcmp(env[i], target))
 		i++;
-	if (!env[i])
-		return (free(cwd), 0);
+	// if (!env[i])
+	// 	return (free(cwd), 0);
+	// use copyenv from export
 	free(env[i]);
 	env[i] = ft_strjoin(target, cwd);
 	if (!env[i])

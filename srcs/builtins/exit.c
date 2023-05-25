@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/19 11:30:24 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/25 15:06:54 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	atoi_exit(char *str)
 	{
 		nb = nb * 10 + (str[i] - '0');
 		nb2 = nb2 * 10 + (str[i] - '0');
-		if (nb2 < LONG_MIN || nb2 > LONG_MAX)
+		if (nb2 * -1 < LONG_MIN || nb2 > LONG_MAX)
 			return (-1);
 		i++;
 	}

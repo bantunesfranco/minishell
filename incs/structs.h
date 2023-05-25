@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:57 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/22 13:04:41 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/25 15:23:58 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_redirect
 typedef struct s_cmd
 {
 	char				**cmd;
-	char				**path;
+	char				*path;
 	int					(*builtin)(t_gen *, struct s_cmd *);
 	struct s_redirect	*input;
 	struct s_redirect	*output;
