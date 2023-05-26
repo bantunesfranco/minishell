@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/25 13:23:07 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/26 16:20:14 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,44 @@ static char	*get_target(char *target, char **env)
 		return (target);
 }
 
+char	**if_unset(char *target, char *cwd, char **env)
+{
+	char	*var;
+	char	**new_env;
+
+	var = ft_strjoin(target, cwd);
+	free(cwd);
+	if (!var)
+		return (err_msg(NULL, "cd"), -1);
+	new_env = copy_env(env, var, ft_arrlen(env) + 1);
+	free(var);
+	if (!new_env)
+		return (err_msg(NULL, "cd"), NULL);
+}
+
 static int	set_env_vars(char *target, char **env)
 {
 	int		i;
 	char	*cwd;
+	char	*tmp;
 
 	i = 0;
+	temp = NULL;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (err_msg(NULL, "cd"), -1);
 	while (env[i] && ft_envcmp(env[i], target))
 		i++;
-	// if (!env[i])
-	// 	return (free(cwd), 0);
-	// use copyenv from export
-	free(env[i]);
+	if (!env[i])
+	{
+		env = if_unset(target, cwd, env);
+		return (0);
+	}
+	temp = env[i];
 	env[i] = ft_strjoin(target, cwd);
 	if (!env[i])
 		return (free(cwd), err_msg(NULL, "cd"), -1);
+	free(tmp);
 	free(cwd);
 	return (0);
 }
@@ -69,39 +89,29 @@ static int	go_to(char *target, t_gen *gen)
 	return (0);
 }
 
-static int	print_oldpwd(t_cmd *cmd)
+int	cd(t_gen *gen, t_cmd *cmd)
 {
 	char	*old;
 
-	old = getcwd(NULL, 0);
-	if (write(cmd->output->fd, old, ft_strlen(old)) == -1)
-		return (free(old), -1);
-	if (write(cmd->output->fd, "\n", 1) == -1)
-		return (free(old), -1);
-	free(old);
-	return (0);
-}
-
-int	cd(t_gen *gen, t_cmd *cmd)
-{
+	old = NULL;
 	if (ft_arrlen(cmd->cmd) > 2)
 		return (built_err_msg(cmd->cmd[0], NULL, "too many arguments\n"), -1);
 	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
-	{
 		if (go_to("HOME=", gen) == -1)
 			return (-1);
-	}
 	else if (!ft_strncmp(cmd->cmd[1], "-", 2))
 	{
 		if (go_to("OLDPWD=", gen) == -1)
 			return (-1);
-		if (print_oldpwd(cmd) == -1)
-			return (err_msg(cmd->cmd[0], "write error"), -1);
+		old = getcwd(NULL, 0);
+		if (write(cmd->output->fd, old, ft_strlen(old)) == -1)
+			return (free(old), err_msg(NULL, cmd->cmd[0]), -1);
+		free(old);
+		if (write(cmd->output->fd, "\n", 1) == -1)
+			return (err_msg(NULL, cmd->cmd[0]), -1);
 	}
 	else
-	{
 		if (go_to(cmd->cmd[1], gen) == -1)
 			return (-1);
-	}
 	return (0);
 }

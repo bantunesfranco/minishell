@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/15 16:58:55 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/26 16:03:35 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_size(char **env, char *target, int *delete)
 	return (i);
 }
 
-static char	**copy_env(char **env, char *target, int size)
+static char	**copy_env2(char **env, char *target, int size)
 {
 	int		i;
 	int		j;
@@ -68,7 +68,7 @@ static int	exec_unset(t_gen *gen, t_cmd *cmd)
 	size = get_size(gen->env, target, &delete) - delete;
 	if (!delete)
 		return (free(target), 0);
-	new_env = copy_env(gen->env, target, size);
+	new_env = copy_env2(gen->env, target, size);
 	if (!new_env)
 		return (free(target), -1);
 	gen->env = new_env;
@@ -82,6 +82,8 @@ int	unset(t_gen *gen, t_cmd *cmd)
 	i = 1;
 	while (cmd->cmd[i])
 	{
+		if (!ft_strncmp(cmd->cmd[i], "_", 2))
+			i++;
 		if (is_valid_input(cmd->cmd[i]) && !ft_strchr(cmd->cmd[i], '='))
 		{
 			if (exec_unset(gen, cmd) == -1)

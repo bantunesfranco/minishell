@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/18 11:56:10 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/26 15:10:13 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**ft_arrdup(char **arr);
 
 /* Builtin utils */
 int		ft_envcmp(char *env, char *s2);
+char	**copy_env(char **env, char *target, int size);
 int		is_valid_input(char *str);
 
 /* Builtins */

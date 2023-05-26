@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 13:31:57 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/15 16:48:08 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/26 16:02:55 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*dup_target(char *target)
 	return (str);
 }
 
-static char	**copy_env(char **env, char *target, int size)
+char	**copy_env(char **env, char *target, int size)
 {
 	int		i;
 	char	**new_env;
