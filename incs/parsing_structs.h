@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:16:12 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/24 09:49:14 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/26 07:53:17 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSING_STRUCTS_H
 
 # include <stdbool.h>
-# include "structs.h"
 
 typedef enum e_token_type
 {
@@ -58,7 +57,5 @@ typedef struct s_parsing_info
 	bool	syntax_error;
 	t_token	*error_token;
 }			t_parsing_info;
-
-typedef void	(*t_current_state_function)(t_token *, t_cmd_list *);
 
 #endif

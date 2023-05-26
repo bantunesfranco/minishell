@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:56:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/24 09:31:02 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/26 19:38:52 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,27 @@ t_token	*make_new_token(char *word, t_token_type type)
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
+}
+
+void	remove_token(t_token **first_token, t_token *node_to_delete)
+{
+	t_token	*temp;
+
+	temp = *first_token;
+	while (temp != node_to_delete)
+		temp = temp->next;
+	if (temp == *first_token)
+	{
+		*first_token = temp->next;
+		if (temp->next != NULL)
+			temp->next->prev = NULL;
+	}
+	else if (temp->next != NULL)
+	{
+		temp->prev->next = temp->next;
+		temp->next->prev = temp->prev;
+	}
+	if (temp->token_group != WORD)
+		free(temp->word);
+	free(temp);
 }

@@ -9,15 +9,21 @@ LEX_DIR="srcs/parser/lexer"
 # srcs/parser/ft_split_args.c
 # -L $HOME/.brew/opt/readline/lib
 CFLAGS="-Wall -Werror -Wextra"
+CFLAGSD="-Wall -Werror -Wextra -g -fsanitize=address"
 RL_FLAGS=" -lreadline -I $HOME/.brew/opt/readline/include"
 SRC="srcs/input_parser/main_parser.c srcs/ft_arrdup.c srcs/test_utils.c \
 srcs/input_parser/input_parser.c srcs/input_parser/parser_struct_init.c srcs/input_parser/token_list_functions.c \
-srcs/input_parser/lexer/* srcs/input_parser/parser/par.c"
+srcs/input_parser/lexer/*  \
+srcs/input_parser/pipeline_list_functions.c \
+srcs/input_parser/simple_cmd_list_functions.c \
+srcs/input_parser/redirect_list_functions.c \
+srcs/input_parser/parser/*"
 
 #!/bin/bash
 
 help_func(){
 	echo -e "\n\nrun - start minishell"
+	echo "debug - start minishell with fsanitize"
 	echo "sy - run syntax error tests"
 	echo "le - run lexer tests"
 	echo "help - display this message"
@@ -27,6 +33,7 @@ help_func(){
 
 help_arg(){
 	echo -e "\n\nrun - start minishell"
+	echo "debug - start minishell with fsanitize"
 	echo "sy - run syntax error tests"
 	echo "le - run lexer tests"
 	echo "help - display this message"
@@ -44,6 +51,10 @@ readinput(){
 		if [[ $option == "run" ]]
 		then
 			run_minishell
+			help_func
+		elif [[ $option == "debug" ]]
+		then
+			run_debug_minishell
 			help_func
 		elif [[ $option == "sy" ]]
 		then
@@ -73,6 +84,9 @@ runoption(){
 	if [[ $1 == "run" ]]
 	then
 		run_minishell
+	elif [[ $1 == "debug" ]]
+	then
+		run_debug_minishell
 	elif [[ $1 == "sy" ]]
 	then
 		echo -e "\n		${BOLD}${GREEN}Testing syntax errors${RESET}\n"
@@ -104,6 +118,12 @@ main () {
 run_minishell () {
 	rm -rf minishell
 	cc $CFLAGS $INCLUDES $RL_FLAGS -o minishell libft/libft.a $SRC
+	./minishell
+}
+
+run_debug_minishell () {
+	rm -rf minishell
+	cc $CFLAGSD $INCLUDES $RL_FLAGS -o minishell libft/libft.a $SRC
 	./minishell
 }
 

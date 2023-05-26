@@ -24,15 +24,18 @@ typedef enum e_control_operator
 {
 	PIPELINE,
 	AND,
-	OR
+	OR,
+	START,
+	END
 }	t_control_operator;
 
 typedef enum e_redirect_type
 {
+	HEREDOC,
 	INPUT,
-	OUTPUT,
 	APPEND,
-	HEREDOC
+	OUTPUT,
+	NONE
 }	t_redirect_type;
 
 typedef struct s_gen
@@ -47,6 +50,7 @@ typedef struct s_redirect
 {
 	int					fd;
 	char				*name;
+	// int					ambiguous; maybe
 	t_redirect_type		type;
 	struct s_redirect	*next;
 }						t_redirect;
@@ -60,27 +64,27 @@ typedef struct s_subshell
 	struct s_redirect	*output; // this is a pointer to a list of redirects that redirect the whole input or output of the subshell
 }						t_subshell;
 
-typedef struct s_pipeline
+typedef struct s_cmd
 {
 	char				**cmd;
 	char				*path;
-	int					(*builtin)(char **, struct s_pipeline *);
+	int					(*builtin)(t_gen *, struct s_cmd *);
 	int					cmd_count;
 	struct s_redirect	*input;
 	struct s_redirect	*output;
 	struct s_cmd		*next;
 	struct s_cmd		*prev;
-}						t_pipeline;
+}						t_cmd;
 
-typedef struct s_cmd_list
+typedef struct s_pipeline
 {
 	int					error_code; // this is the error code of our current pipeline, might be unnesecary if we have it in the geeral struct
 	t_control_operator	next_control_operator; // This is the control operator after the pipeline or after the subshell
 	t_control_operator	prev_control_operator; // This is the control operator before the pipeline or before the subshell
 	t_subshell			*subshell; // This exist if we want to fork
-	t_pipeline			*first_cmd; // This is NULL if there is a subshell
-	struct s_cmd_list	*next;
-	struct s_cmd_list	*prev;
-}	t_cmd_list;
+	t_cmd				*first_cmd; // This is NULL if there is a subshell
+	struct s_pipeline	*next;
+	struct s_pipeline	*prev;
+}						t_pipeline;
 
 #endif

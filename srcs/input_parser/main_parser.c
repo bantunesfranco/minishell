@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/16 19:40:40 by janmolenaar   ########   odam.nl         */
+/*   Updated: 2023/05/26 13:45:08 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char *argv[], char **env)
 	char	*line;
 	char 	*line2;
 	// char	**input_arr;
-	t_cmd_list	*lol;
+	t_pipeline	*lol;
 	(void)argc;
 	(void)argv;
 	(void)env;
