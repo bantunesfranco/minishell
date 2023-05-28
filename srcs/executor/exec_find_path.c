@@ -6,13 +6,12 @@
 /*   By: codespace <codespace@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/22 12:30:34 by codespace     #+#    #+#                 */
-/*   Updated: 2023/05/26 09:35:28 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/28 08:19:42 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
-
 
 char	**find_path(char **cmd, char **env)
 {

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/25 16:05:46 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/26 21:24:12 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,31 +107,31 @@ int	check_access(t_gen *gen, t_cmd *cmd)
 // 	system("leaks -q a.out");
 // }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_cmd	cmd;
-	t_gen	gen;
-	pid_t	id;
-	int		status;
-	int		i;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd	cmd;
+// 	t_gen	gen;
+// 	pid_t	id;
+// 	int		status;
+// 	int		i;
 
-	(void)argc;
-	// atexit(lks);
-	cmd.cmd = ft_split(argv[1], ' ');
-	gen.env = ft_arrdup(envp);
-	gen.path = find_path(cmd.cmd, gen.env);
-	i = check_access(&gen, &cmd);
-	printf("Can acces?\t%s\n", i ? "False\n":"True\n");
-	id = fork();
-	if (id == 0)
-	{
-		execve(cmd.path, cmd.cmd, gen.env);
-		err_msg(NULL, cmd.cmd[0]);
-		exit(errno);
-	}
-	else
-		waitpid(id, &status, 0);
-	if (WIFEXITED(status))
-		exit(WEXITSTATUS(status));
-	exit(1);
-}
+// 	(void)argc;
+// 	// atexit(lks);
+// 	cmd.cmd = ft_split(argv[1], ' ');
+// 	gen.env = ft_arrdup(envp);
+// 	gen.path = find_path(cmd.cmd, gen.env);
+// 	i = check_access(&gen, &cmd);
+// 	printf("Can acces?\t%s\n", i ? "False\n":"True\n");
+// 	id = fork();
+// 	if (id == 0)
+// 	{
+// 		execve(cmd.path, cmd.cmd, gen.env);
+// 		err_msg(NULL, cmd.cmd[0]);
+// 		exit(errno);
+// 	}
+// 	else
+// 		waitpid(id, &status, 0);
+// 	if (WIFEXITED(status))
+// 		exit(WEXITSTATUS(status));
+// 	exit(1);
+// }

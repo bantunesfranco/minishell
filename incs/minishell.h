@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/26 15:10:13 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/26 21:20:22 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "libft.h"
 # include "structs.h"
 
+char	**env_init(char **env);
 char	**ft_split_args(char *str, char sep);
 char	**ft_arrdup(char **arr);
 

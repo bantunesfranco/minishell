@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/25 15:06:54 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/26 21:15:12 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	atoi_exit(char *str)
 			return (-1);
 		i++;
 	}
-	if (str[i] && !ft_is_digit(str[i]))
+	if (str[i] && !ft_isdigit(str[i]))
 		return (-1);
 	if (str[0] == '-')
 		return (256 - nb);

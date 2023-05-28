@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/26 16:20:14 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/26 21:23:03 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**if_unset(char *target, char *cwd, char **env)
 	var = ft_strjoin(target, cwd);
 	free(cwd);
 	if (!var)
-		return (err_msg(NULL, "cd"), -1);
+		return (err_msg(NULL, "cd"), NULL);
 	new_env = copy_env(env, var, ft_arrlen(env) + 1);
 	free(var);
 	if (!new_env)
@@ -50,7 +50,7 @@ static int	set_env_vars(char *target, char **env)
 {
 	int		i;
 	char	*cwd;
-	char	*tmp;
+	char	*temp;
 
 	i = 0;
 	temp = NULL;
@@ -68,7 +68,7 @@ static int	set_env_vars(char *target, char **env)
 	env[i] = ft_strjoin(target, cwd);
 	if (!env[i])
 		return (free(cwd), err_msg(NULL, "cd"), -1);
-	free(tmp);
+	free(temp);
 	free(cwd);
 	return (0);
 }

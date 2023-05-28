@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 09:35:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/26 13:59:03 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/28 08:19:50 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,3 @@ int	handle_output_redirection(t_redirection *output)
 	}
 	return (head->fd);
 }
-
-
-// int	main(void)
-// {
-// 	int fd = open("ho.txt", O_RDONLY);
-// 	int fd2 = open("ho.txt", O_WRONLY);
-
-// 	printf("fd = %d, fd2 = %d\n" , fd, fd2);
-// }
