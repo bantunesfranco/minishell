@@ -22,9 +22,9 @@ typedef enum e_parenthesis
 
 typedef enum e_control_operator
 {
+	OR,
 	PIPELINE,
 	AND,
-	OR,
 	START,
 	END
 }	t_control_operator;

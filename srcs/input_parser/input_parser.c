@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/26 19:23:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 10:18:55 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_pipeline	*parse_line(char *line)
 	init_struct(&p_info);
 	lexer(line, &p_info, &first_token); // mallocs a list of nodes with malloced words, first_token will point to the first node
 	parser(&p_info, &first_token, &first_pipeline);
+	printf("hello\n");
 	// print_tokens(first_token);
 	// free_token_list(first_token);
 	return (first_pipeline);

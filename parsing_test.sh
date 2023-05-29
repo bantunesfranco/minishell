@@ -102,6 +102,8 @@ runoption(){
 	else
 		echo -e "\n\n${BOLD}Run ./parsing_test.sh with one of the following arguments or none for interactive input${RESET}"
 		help_arg
+		read option
+		runoption $option
 	fi
 	echo ""
 }

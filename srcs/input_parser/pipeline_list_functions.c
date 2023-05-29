@@ -6,14 +6,14 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 10:25:22 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/26 17:54:27 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 08:14:50 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include <stdlib.h>
 
-t_pipeline	*make_new_pipeline(void)
+t_pipeline	*make_new_pipeline(t_control_operator type)
 {
 	t_pipeline	*new_node;
 
@@ -21,7 +21,7 @@ t_pipeline	*make_new_pipeline(void)
 	if (new_node == NULL)
 		return (NULL);
 	new_node->next_control_operator = 0;
-	new_node->prev_control_operator = 0;
+	new_node->prev_control_operator = type;
 	new_node->subshell = NULL;
 	new_node->first_cmd = NULL;
 	new_node->next = NULL;
