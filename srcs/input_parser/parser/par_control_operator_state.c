@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 15:30:37 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 14:38:40 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/30 09:38:21 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_token	*control_operator_state(t_token *temp, t_pipeline *curr_pipeline, t_toke
 {
 	t_token	*next_token;
 
-	if (temp->type == PIPE && temp->next->token_group != PARENTHESIS)
+	if (temp->type == PIPE && temp->next->token_group != PARENTHESIS && curr_pipeline->prev_control_operator != CLOSE)
 		add_simple_cmd(temp, curr_pipeline, first_token);
 	else
 		add_pipeline(temp, curr_pipeline, first_token);

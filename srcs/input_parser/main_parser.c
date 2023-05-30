@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/29 10:30:16 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/30 09:54:17 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	main(int argc, char *argv[], char **env)
 		if (line == NULL)
 			break ;
 		lol = parse_line(line);
+		if (lol == NULL)
+			printf("Syntax error\n");
 		free(line);
 		lol++;
 		// printf("%s\n", line);
