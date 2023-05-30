@@ -1,0 +1,165 @@
+| cat hi
+
+&& cat hi
+
+|| cat hi
+
+) cat hi
+
+cat hi | | echo
+
+cat hi | && echo
+
+cat hi | || echo
+
+cat hi && | echo
+
+cat hi && && echo
+
+cat hi && || echo
+
+cat hi || | echo
+
+cat hi || || echo
+
+cat hi || && echo
+
+(cat | ) echo
+
+(cat || ) echo
+
+(cat && ) echo
+
+cat | 
+
+cat ||
+
+cat &&
+
+cat <
+
+cat < |
+
+cat < ||
+
+cat < &&
+
+cat < (echo hi)
+
+(cat < )
+
+cat < <<
+
+cat < <
+
+cat < >
+
+cat < >>
+
+cat >
+
+cat > |
+
+cat > ||
+
+cat > &&
+
+cat > (echo hi)
+
+(cat > )
+
+cat > <<
+
+cat > <
+
+cat > >
+
+cat > >>
+
+cat <<
+
+cat << |
+
+cat << ||
+
+cat << &&
+
+cat << (echo hi)
+
+(cat << )
+
+cat << <<
+
+cat << <
+
+cat << >
+
+cat << >>
+
+cat >>
+
+cat >> |
+
+cat >> ||
+
+cat >> &&
+
+cat >> (echo hi)
+
+(cat >> )
+
+cat >> <<
+
+cat >> <
+
+cat >> >
+
+cat >> >>
+
+((cat hi | (wc))
+
+(cat hi
+
+cat hi | wc )
+
+((((((((cat hi | (((((wc))))))))))))
+
+cat hi | (((wc)) | wc) && >> hi | ((wc)
+
+cat hi ( wc hello )
+
+cat hi | ( && wc hello)
+
+cat hi | (echo hi) (cat hi)
+
+cat hi | (echo hi) echo hello
+
+cat hi | echo """"""""""hi"""""""""
+
+cat hi | echo "'hi'
+
+cat hi | echo "'hi
+
+cat hi | echo "hi'
+
+cat hi | (((((echo "hi"
+
+cat hi | ((((((((echo "hello))))))))
+
+cat hi | (((((echo 'hello)))))
+
+cat hi | echo hihello"lol
+
+cat hi | echo "'"'"'"'"'"hi"
+
+cat hi | echo "''''''''''''''''"'hi
+
+cat hi | echo "hi"'hi'"hello''"'lol"
+
+cat hi | echo"hi
+
+cat hi (echo hello)
+
+cat | ()
+
+cat | (echo hello) cat

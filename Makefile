@@ -11,7 +11,6 @@ SRC_FILES = main.c ft_arrdup.c
 OBJ_FILES = $(SRC_FILES:%.c=obj/%.o)
 OBJ_DIR = obj obj/parser
 
-
 # readline flags
 RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline -I $(HOME)/.brew/opt/readline/include
 

@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"stdlib.h": "c",
+		"structs.h": "c",
+		"minishell.h": "c",
+		"parsing_structs.h": "c"
+	}
+}

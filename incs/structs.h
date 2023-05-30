@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
@@ -6,39 +7,36 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:57 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/26 21:19:54 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/26 21:19:54 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef enum e_parenthesis
-{
-	OPEN,
-	CLOSE
-}	t_parenthesis;
-
 typedef enum e_control_operator
 {
+	OR,
 	PIPELINE,
 	AND,
-	OR
+	OPEN,
+	CLOSE,
+	START,
+	END
 }	t_control_operator;
 
 typedef enum e_redirect_type
 {
+	HEREDOC,
 	INPUT,
-	OUTPUT,
 	APPEND,
-	HEREDOC
+	OUTPUT,
+	NONE
 }	t_redirect_type;
 
 typedef struct s_gen
 {
 	char	**env;
-	char	*pwd;
-	char	*oldpwd;
 	char	**path;
 }			t_gen;
 
@@ -46,13 +44,14 @@ typedef struct s_redirect
 {
 	int					fd;
 	char				*name;
+	// int					ambiguous; maybe
 	t_redirect_type		type;
 	struct s_redirect	*next;
 }						t_redirect;
 
 typedef struct s_subshell
 {
-	t_parenthesis		open_close;
+	t_control_operator	open_close;
 	int					pipe_input; // this is a identifier to know if we need to get inpiut from a pipe
 	int					pipe_output; // this is a identifier to know if the output needs to go into a pipe
 	struct s_redirect	*input; // this is a pointer to a list of redirects that redirect the whole input or output of the subshell
@@ -63,7 +62,7 @@ typedef struct s_cmd
 {
 	char				**cmd;
 	char				*path;
-	int					(*builtin)(char **, struct s_cmd *);
+	int					(*builtin)(t_gen *, struct s_cmd *);
 	int					cmd_count;
 	struct s_redirect	*input;
 	struct s_redirect	*output;
@@ -71,15 +70,15 @@ typedef struct s_cmd
 	struct s_cmd		*prev;
 }						t_cmd;
 
-// typedef struct s_cmd_list
-// {
-// 	int					error_code; // this is the error code of our current pipeline, might be unnesecary if we have it in the geeral struct
-// 	t_control_operator	next_control_operator; // This is the control operator after the pipeline or after the subshell
-// 	t_control_operator	prev_control_operator; // This is the control operator before the pipeline or before the subshell
-// 	t_subshell			*subshell; // This exist if we want to fork
-// 	t_pipeline			*first_pipeline; // This is NULL if there is a subshell
-// 	struct s_cmd_list	*next;
-// 	struct s_cmd_list	*prev;
-// }	t_cmd_list;
+typedef struct s_pipeline
+{
+	int					error_code; // this is the error code of our current pipeline, might be unnesecary if we have it in the geeral struct
+	t_control_operator	next_control_operator; // This is the control operator after the pipeline or after the subshell
+	t_control_operator	prev_control_operator; // This is the control operator before the pipeline or before the subshell
+	t_subshell			*subshell; // This exist if we want to fork
+	t_cmd				*first_cmd; // This is NULL if there is a subshell
+	struct s_pipeline	*next;
+	struct s_pipeline	*prev;
+}						t_pipeline;
 
 #endif
