@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 11:51:23 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/30 12:28:47 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include "libft.h"
 # include "parsing_structs.h"
 # include "structs.h"

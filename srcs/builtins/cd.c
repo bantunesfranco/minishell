@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/26 21:23:03 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/30 12:23:31 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	**if_unset(char *target, char *cwd, char **env)
 	free(var);
 	if (!new_env)
 		return (err_msg(NULL, "cd"), NULL);
+	return (NULL);
 }
 
 static int	set_env_vars(char *target, char **env)
@@ -97,8 +98,10 @@ int	cd(t_gen *gen, t_cmd *cmd)
 	if (ft_arrlen(cmd->cmd) > 2)
 		return (built_err_msg(cmd->cmd[0], NULL, "too many arguments\n"), -1);
 	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
+	{
 		if (go_to("HOME=", gen) == -1)
 			return (-1);
+	}
 	else if (!ft_strncmp(cmd->cmd[1], "-", 2))
 	{
 		if (go_to("OLDPWD=", gen) == -1)

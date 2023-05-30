@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 17:35:46 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/29 12:21:35 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/30 12:26:35 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	add_extra_vars(char **new_env, int *vars, int *j)
 {
 	char	*cwd;
 
-	cwd == NULL;
+	cwd = NULL;
 	if (vars[0] == 0)
 	{
 		cwd = getcwd(NULL, 0);

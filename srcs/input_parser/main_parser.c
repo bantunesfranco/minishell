@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 10:18:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/30 12:30:03 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,48 +30,48 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
-int	main(int argc, char *argv[], char **env)
-{
-	char	*line;
-	char 	*line2;
-	// char	**input_arr;
-	t_pipeline	*lol;
-	(void)argc;
-	(void)argv;
-	(void)env;
+// int	main(int argc, char *argv[], char **env)
+// {
+// 	char	*line;
+// 	char 	*line2;
+// 	// char	**input_arr;
+// 	t_pipeline	*lol;
+// 	(void)argc;
+// 	(void)argv;
+// 	(void)env;
 
-	atexit(leaks);
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			line = readline("minishell$ ");
-		else
-		{
-			line2 = get_next_line(STDIN_FILENO);
-			if (line2 == NULL)
-				break ;
-			line = ft_strtrim(line2, "\n");
-			free(line2);
-		}
-		if (line == NULL)
-			break ;
-		lol = parse_line(line);
-		if (lol == NULL)
-			printf("Syntax error\n");
-		free(line);
-		lol++;
-		// printf("%s\n", line);
-		// input_arr = ft_split_args(line, '|');
-		// if (!input_arr)
-		// 	ft_error("minishell: ", ENOMEM);
-		// print_array(input_arr);
-		// printf("\n");
-		// ft_free_arr(input_arr);
-		// input_arr = NULL;
-	}
-	// printf("\ndone\n\n");
-	return (0);
-}
+// 	atexit(leaks);
+// 	while (1)
+// 	{
+// 		if (isatty(STDIN_FILENO))
+// 			line = readline("minishell$ ");
+// 		else
+// 		{
+// 			line2 = get_next_line(STDIN_FILENO);
+// 			if (line2 == NULL)
+// 				break ;
+// 			line = ft_strtrim(line2, "\n");
+// 			free(line2);
+// 		}
+// 		if (line == NULL)
+// 			break ;
+// 		lol = parse_line(line);
+// 		if (lol == NULL)
+// 			printf("Syntax error\n");
+// 		free(line);
+// 		lol++;
+// 		// printf("%s\n", line);
+// 		// input_arr = ft_split_args(line, '|');
+// 		// if (!input_arr)
+// 		// 	ft_error("minishell: ", ENOMEM);
+// 		// print_array(input_arr);
+// 		// printf("\n");
+// 		// ft_free_arr(input_arr);
+// 		// input_arr = NULL;
+// 	}
+// 	// printf("\ndone\n\n");
+// 	return (0);
+// }
 
 // int	main(int argc, char *argv[], char **env)
 // {

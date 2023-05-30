@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 09:35:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/28 08:19:50 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/30 12:26:18 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 #include "executor.h"
 #include <fcntl.h>
 
-int	handle_input_redirection(t_redirection *input)
+int	handle_input_redirection(t_redirect *input)
 {
-	t_redirection	*head;
-	int				fd;
+	t_redirect	*head;
 
 	if (!input)
 		return (STDIN_FILENO);
@@ -32,15 +31,14 @@ int	handle_input_redirection(t_redirection *input)
 		}
 		if (head->next)
 			close(head->fd);
-		head->next;
+		head = head->next;
 	}
 	return (head->fd);
 }
 
-int	handle_output_redirection(t_redirection *output)
+int	handle_output_redirection(t_redirect *output)
 {
-	t_redirection	*head;
-	int				fd;
+	t_redirect	*head;
 
 	if (!output)
 		return (STDOUT_FILENO);
@@ -61,7 +59,7 @@ int	handle_output_redirection(t_redirection *output)
 		}
 		if (head->next)
 			close(head->fd);
-		head->next;
+		head = head->next;
 	}
 	return (head->fd);
 }
