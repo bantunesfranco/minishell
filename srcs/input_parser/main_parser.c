@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 09:54:17 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/30 10:18:54 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char *argv[], char **env)
 	(void)argv;
 	(void)env;
 
-	// atexit(leaks);
+	atexit(leaks);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))

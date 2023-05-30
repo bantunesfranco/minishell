@@ -19,7 +19,7 @@ srcs/input_parser/simple_cmd_list_functions.c \
 srcs/input_parser/redirect_list_functions.c \
 srcs/input_parser/subshell_struct_functions.c \
 srcs/input_parser/parser/* \
-srcs/error.c"
+srcs/error.c srcs/free_cmd_list.c"
 
 #!/bin/bash
 
@@ -132,7 +132,11 @@ run_debug_minishell () {
 }
 
 test_syntax () {
-	./testers_j/syntax_error.sh
+	# if all 
+		./testers_j/syntax_error.sh
+	# else
+	# 	./testers_j/syntax_error.sh
+
 }
 
 test_lexer () {

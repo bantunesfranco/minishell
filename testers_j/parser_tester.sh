@@ -4,8 +4,16 @@ RESET='\033[0m'
 BOLD='\033[1m'
 CFLAGS="-Wall -Werror -Wextra"
 INCLUDES="-I incs -I libft/incs"
-SRC="srcs/input_parser/lexer/* srcs/input_parser/parser_struct_init.c srcs/input_parser/token_list_functions.c \
-testers_j/lexer_tester.c srcs/test_utils.c srcs/error.c"
+SRC="srcs/input_parser/lexer/* srcs/input_parser/parser/* \
+srcs/input_parser/parser_struct_init.c srcs/input_parser/token_list_functions.c \
+srcs/input_parser/pipeline_list_functions.c \
+srcs/input_parser/simple_cmd_list_functions.c \
+srcs/input_parser/redirect_list_functions.c \
+srcs/input_parser/subshell_struct_functions.c \
+srcs/input_parser/input_parser.c \
+srcs/test_utils.c srcs/error.c \
+srcs/free_cmd_list.c \
+testers_j/parser_tester.c"
 
 #!/bin/bash
 

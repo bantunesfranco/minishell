@@ -1,0 +1,338 @@
+--------------------------------------------------------------------------
+------------------------------[0;32mSTARTING TESTS[0m------------------------------
+--------------------------------------------------------------------------
+	Test for input :
+👉	| cat hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	&& cat hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	|| cat hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	) cat hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | | echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | && echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | || echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi && | echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi && && echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi && || echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi || | echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi || || echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi || && echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat | ) echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat || ) echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat && ) echo
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat | 
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat ||
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat &&
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat <
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < |
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < ||
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < &&
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < (echo hi)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat < )
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < <<
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < <
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < >
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat < >>
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > |
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > ||
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > &&
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > (echo hi)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat > )
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > <<
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > <
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > >
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat > >>
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat <<
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << |
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << ||
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << &&
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << (echo hi)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat << )
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << <<
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << <
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << >
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat << >>
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >>
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> |
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> ||
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> &&
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> (echo hi)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat >> )
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> <<
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> <
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> >
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat >> >>
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	((cat hi | (wc))
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	(cat hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | wc )
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	((((((((cat hi | (((((wc))))))))))))
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | (((wc)) | wc) && >> hi | ((wc)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi ( wc hello )
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | ( && wc hello)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | (echo hi) (cat hi)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | (echo hi) echo hello
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo """"""""""hi"""""""""
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo "'hi'
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo "'hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo "hi'
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | (((((echo "hi"
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | ((((((((echo "hello))))))))
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | (((((echo 'hello)))))
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo hihello"lol
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo "'"'"'"'"'"hi"
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo "''''''''''''''''"'hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo "hi"'hi'"hello''"'lol"
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi | echo"hi
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat hi (echo hello)
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat | ()
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+	Test for input :
+👉	cat | (echo hello) cat
+Output :   [0;32mOK🌟   [0mError :   [0;32mOK🌟
+[0m
+
+	👍[0;32mTESTS PASSED[0m
+

@@ -5,7 +5,7 @@ BOLD='\033[1m'
 CFLAGS="-Wall -Werror -Wextra"
 INCLUDES="-I incs -I libft/incs"
 SRC="srcs/input_parser/lexer/* srcs/input_parser/parser_struct_init.c srcs/input_parser/token_list_functions.c \
-testers_j/syntax_tester.c srcs/test_utils.c"
+testers_j/syntax_tester.c srcs/test_utils.c srcs/error.c"
 
 #!/bin/bash
 
@@ -44,7 +44,6 @@ test_code(){
 		echo -e "${RED}KO${RESET}"
 	fi
 }
-
 
 # script
 
