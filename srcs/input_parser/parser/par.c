@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/16 15:21:06 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/30 10:16:34 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/30 14:46:02 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ void	parser(t_parsing_info *p_info, t_token **first_token, t_pipeline **first_pi
 	// printf("%p\n", (*first_pipeline)->first_cmd->cmd);
 	// printf("%s\n", (*first_pipeline)->first_cmd->cmd[0]);
 	// print_array((*first_pipeline)->first_cmd->cmd);
-	print_commands(*first_pipeline);
-	free_parsed_structs(*first_pipeline);
+	// print_commands(*first_pipeline);
+	// free_parsed_structs(*first_pipeline);
 }

@@ -6,18 +6,46 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 12:36:56 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/30 14:53:59 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+#include "executor.h"
+
+void	executor(t_gen *gen, t_pipeline *pipeline)
+{
+	t_cmd	*cmd;
+	int		id;
+	int		status;
+	int		i;
+
+	id = fork();
+	cmd = pipeline->first_cmd;
+	gen->path = find_path(cmd->cmd, gen->env);
+	i = check_access(gen, cmd);
+	if (i == 1)
+		return (printf("NO!!!\n"), exit(1));
+	if (id == 0)
+	{
+		execve(cmd->path, cmd->cmd, gen->env);
+		err_msg(NULL, cmd->cmd[0]);
+		exit(errno);
+	}
+	else
+		waitpid(id, &status, 0);
+	// if (WIFEXITED(status))
+	// 	exit(WEXITSTATUS(status));
+	// exit(1);
+}
+
 
 void	minishell_loop(t_gen *gen)
 {
 	char		*line;
 	char		*line2;
-	t_pipeline	*lol;
+	t_pipeline	*input;
 
 	(void)gen;
 	while (1)
@@ -38,21 +66,13 @@ void	minishell_loop(t_gen *gen)
 			line = ft_strtrim(line2, "\n");
 			free(line2);
 		}
-		lol = parse_line(line);
-		if (lol == NULL)
-			printf("Syntax error\n");
+		input = parse_line(line);
 		free(line);
-		lol++;
-		// printf("%s\n", line);
-		// input_arr = ft_split_args(line, '|');
-		// if (!input_arr)
-		// 	ft_error("minishell: ", ENOMEM);
-		// print_array(input_arr);
-		// printf("\n");
-		// ft_free_arr(input_arr);
-		// input_arr = NULL;
+		if (input == NULL)
+			printf("Syntax error\n");
+		executor(gen, input);
+		input++;
 	}
-	// printf("\ndone\n\n");
 }
 
 
