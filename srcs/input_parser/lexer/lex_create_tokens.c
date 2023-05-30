@@ -6,14 +6,13 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 10:44:46 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/24 16:30:06 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 13:23:38 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parsing.h"
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 /*	gets the type of token. Loops through our double array and compares the strings to where we are in the line
 	returns the index of the string we found which corresponds to the correct tokentype in our enum */
@@ -41,13 +40,11 @@ static t_token	*create_token_node(char *line, t_token_type new_token_type, t_par
 	t_token	*new_token;
 	char	*new_word;
 
-	new_word = create_word(line, new_token_type, p_info);	// malloc
-	if (new_word == NULL)									// malloc check
-			return (NULL);
-	new_token = make_new_token(new_word, new_token_type);	// malloc
-	if (new_token == NULL) 									// malloc check, so we can free word if necessary
-		free(new_word);
-	return (new_token); // returns malloc
+	new_word = create_word(line, new_token_type, p_info);
+	if (new_word == NULL)
+		err_msg(NULL, "parser");
+	new_token = make_new_token(new_word, new_token_type);
+	return (new_token);
 }
 
 /*	gets the token type we're dealing with, then creates the token node
@@ -65,9 +62,7 @@ static void	add_token(char **line, t_parsing_info *p_info, t_token **first_token
 		(*line)++;
 	else
 	{
-		new_token = create_token_node(*line, new_token_type, p_info);	// malloc
-		if (new_token == NULL)											// malloc check will exit
-			exit(1);													// change later to some malloc failure function
+		new_token = create_token_node(*line, new_token_type, p_info);
 		add_new_token_to_back(first_token, new_token);
 		(*line) = *(line) + ft_strlen(new_token->word);
 	}
@@ -80,12 +75,10 @@ static void	add_newline_token(t_token **first_token)
 	t_token	*newline_token;
 	char	*word;
 
-	word = ft_strdup("newline");												// malloc
-	if (word == NULL)													// malloc check
-		exit(1);														// change later to some malloc failure function
-	newline_token = make_new_token(word, NEW_LINE);		// malloc
-	if (newline_token == NULL)											// malloc check
-		exit(1);														// change later to some malloc failure function and free word
+	word = ft_strdup("newline");
+	if (word == NULL)
+		err_msg(NULL, "parser");
+	newline_token = make_new_token(word, NEW_LINE);
 	add_new_token_to_back(first_token, newline_token);
 }
 

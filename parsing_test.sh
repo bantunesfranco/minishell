@@ -17,7 +17,9 @@ srcs/input_parser/lexer/*  \
 srcs/input_parser/pipeline_list_functions.c \
 srcs/input_parser/simple_cmd_list_functions.c \
 srcs/input_parser/redirect_list_functions.c \
-srcs/input_parser/parser/*"
+srcs/input_parser/subshell_struct_functions.c \
+srcs/input_parser/parser/* \
+srcs/error.c"
 
 #!/bin/bash
 

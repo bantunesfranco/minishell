@@ -6,12 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 14:40:23 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/24 09:36:42 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 12:55:13 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 /*	checks for error conditions
 	first check is when there is only one token, which means ther is aonly a newline ergo, no input

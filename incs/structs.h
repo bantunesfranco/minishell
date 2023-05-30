@@ -14,17 +14,13 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef enum e_parenthesis
-{
-	OPEN,
-	CLOSE
-}	t_parenthesis;
-
 typedef enum e_control_operator
 {
 	OR,
 	PIPELINE,
 	AND,
+	OPEN,
+	CLOSE,
 	START,
 	END
 }	t_control_operator;
@@ -57,7 +53,7 @@ typedef struct s_redirect
 
 typedef struct s_subshell
 {
-	t_parenthesis		open_close;
+	t_control_operator	open_close;
 	int					pipe_input; // this is a identifier to know if we need to get inpiut from a pipe
 	int					pipe_output; // this is a identifier to know if the output needs to go into a pipe
 	struct s_redirect	*input; // this is a pointer to a list of redirects that redirect the whole input or output of the subshell

@@ -6,14 +6,13 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 08:22:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 08:38:37 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 13:12:52 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "parsing_structs.h"
-#include <stdlib.h>
-#include "libft.h"
+#include "minishell.h"
 
 static int	count_words(t_token *temp, t_token *first_token)
 {
@@ -39,7 +38,7 @@ char	**create_cmd_array(t_token *temp, t_token *first_token)
 		return (NULL);
 	cmd_array = ft_calloc((word_count + 1), sizeof(char *));
 	if (cmd_array == NULL)
-		exit (1);						//malloc failure
+		err_msg(NULL, "parser");
 	i = 0;
 	while (first_token != temp)
 	{

@@ -6,12 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 10:29:16 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/26 17:49:02 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 13:09:20 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 t_cmd	*make_new_simple_cmd(void)
 {
@@ -19,7 +19,7 @@ t_cmd	*make_new_simple_cmd(void)
 
 	new_node = malloc(sizeof(t_cmd));
 	if (new_node == NULL)
-		return (NULL);
+		err_msg(NULL, "parser");
 	new_node->cmd = NULL;
 	new_node->path = NULL;
 	new_node->builtin = NULL;

@@ -6,12 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 10:25:22 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 08:14:50 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 13:58:02 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 t_pipeline	*make_new_pipeline(t_control_operator type)
 {
@@ -19,7 +19,7 @@ t_pipeline	*make_new_pipeline(t_control_operator type)
 
 	new_node = malloc(sizeof(t_pipeline));
 	if (new_node == NULL)
-		return (NULL);
+		err_msg(NULL, "parser");
 	new_node->next_control_operator = 0;
 	new_node->prev_control_operator = type;
 	new_node->subshell = NULL;
@@ -29,17 +29,17 @@ t_pipeline	*make_new_pipeline(t_control_operator type)
 	return (new_node);
 }
 
-void	add_pipeline_back(t_pipeline **head, t_pipeline *new_pipeline)
-{
-	t_pipeline	*temp;
+// void	add_pipeline_back(t_pipeline **head, t_pipeline *new_pipeline)
+// {
+// 	t_pipeline	*temp;
 
-	temp = *head;
-	if (temp != NULL)
-	{
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = new_pipeline;
-	}
-	else
-		*head = new_pipeline;
-}
+// 	temp = *head;
+// 	if (temp != NULL)
+// 	{
+// 		while (temp->next != NULL)
+// 			temp = temp->next;
+// 		temp->next = new_pipeline;
+// 	}
+// 	else
+// 		*head = new_pipeline;
+// }

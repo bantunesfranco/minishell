@@ -6,26 +6,13 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/16 15:21:06 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 08:39:55 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 15:01:04 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "structs.h"
 #include "parsing.h"
-
-t_token	*parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
-{
-	(void)temp;
-	(void)first_token;
-	(void)curr_pipeline;
-	printf("%d\n", temp->token_group);
-	t_token	*next_token;
-
-	next_token = temp->next;
-	remove_token(first_token, temp);
-	return (next_token);
-}
 
 t_token	*word_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
 {
@@ -54,8 +41,6 @@ void	setup_starting_point(t_pipeline **first_pipeline)
 	t_pipeline	*first_node;
 
 	first_node = make_new_pipeline(START);
-	if (first_node == NULL)
-		exit(1);					//malloc failure function
 	*first_pipeline = first_node;
 }
 

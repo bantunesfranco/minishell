@@ -6,12 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 09:32:31 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/24 09:49:46 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 12:54:53 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "lexer.h"
+#include "minishell.h"
 
 /*	skips the quotes by storing which ones we encountered in c and then looping till the next c or \0 */
 

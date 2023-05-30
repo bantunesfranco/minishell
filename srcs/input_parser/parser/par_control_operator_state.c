@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 15:30:37 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 12:11:01 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 14:38:40 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ static void	add_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **f
 {
 	t_cmd	*new_cmd;
 
-	close_simple_cmd(temp, curr_pipeline, *first_token);
+	close_simple_cmd(temp, curr_pipeline, first_token);
 	new_cmd = make_new_simple_cmd();
-	if (new_cmd == NULL)
-		exit (1);								//malloc failure
 	add_simple_cmd_back(&(curr_pipeline->first_cmd), new_cmd);
 }
 
@@ -28,24 +26,11 @@ static void	add_pipeline(t_token *temp, t_pipeline *curr_pipeline, t_token **fir
 {
 	t_pipeline	*new_pipeline;
 
-	close_simple_cmd(temp, curr_pipeline, *first_token);
+	close_simple_cmd(temp, curr_pipeline, first_token);
+	curr_pipeline->next_control_operator = (t_control_operator)temp->type;
 	new_pipeline = make_new_pipeline((t_control_operator)temp->type);
-	if (new_pipeline == NULL)
-		exit (1);								//malloc failure
+	new_pipeline->prev = curr_pipeline;
 	curr_pipeline->next = new_pipeline;
-}
-
-static void	remove_tokens(t_token *temp, t_token **first_token)
-{
-	t_token	*temp2;
-
-	temp2 = *first_token;
-	while (temp2 != temp)
-	{
-		temp2 = temp2->next;
-		remove_token(first_token, temp2->prev);
-	}
-	remove_token(first_token, temp);
 }
 
 t_token	*control_operator_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
@@ -53,13 +38,10 @@ t_token	*control_operator_state(t_token *temp, t_pipeline *curr_pipeline, t_toke
 	t_token	*next_token;
 
 	if (temp->type == PIPE && temp->next->token_group != PARENTHESIS)
-	{
-		// printf("hi\n");
 		add_simple_cmd(temp, curr_pipeline, first_token);
-	}
 	else
 		add_pipeline(temp, curr_pipeline, first_token);
 	next_token = temp->next;
-	remove_tokens(temp, first_token);
+	remove_token(first_token, temp);
 	return (next_token);
 }

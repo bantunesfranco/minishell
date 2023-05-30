@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:20:03 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/26 19:42:03 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/29 18:43:01 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,38 +70,29 @@ void	print_array(char **arr)
 	}
 }
 
-void	print_redirects(t_pipeline *first_pipeline)
+void	print_redirects(t_redirect	*redirect, int i)
 {
-	t_redirect	*temp_input;
-	t_redirect	*temp_output;
+	t_redirect	*temp;
 
-	if (first_pipeline->first_cmd == NULL)
-		return ;
-	temp_input = first_pipeline->first_cmd->input;
-	temp_output = first_pipeline->first_cmd->output;
-	printf("INPUTS\n");
-	while (temp_input != NULL)
+	if (i == 0)
+		printf("INPUTS\n");
+	else
+		printf("\nOUTPUTS\n");
+	temp = redirect;
+	while (temp != NULL)
 	{
-		if (temp_input->type == 0)
+		if (temp->type == 0)
 			printf("%s",  "<<");
-		else if (temp_input->type == 1)
+		else if (temp->type == 1)
 			printf("%s",  "<");
-		else
-			printf("wrong");
-		printf(" %s, ", temp_input->name);
-		temp_input = temp_input->next;
-	}
-	printf("\nOUTPUTS\n");
-	while (temp_output != NULL)
-	{
-		if (temp_output->type == 2)
+		else if (temp->type == 2)
 			printf("%s",  ">>");
-		else if (temp_output->type == 3)
+		else if (temp->type == 3)
 			printf("%s",  ">");
 		else
 			printf("wrong");
-		printf(" %s, ", temp_output->name);
-		temp_output = temp_output->next;
+		printf(" %s, ", temp->name);
+		temp = temp->next;
 	}
 }
 
@@ -146,6 +137,34 @@ void	free_cmds(t_pipeline *first_pipeline)
 	}
 }
 
+void	print_subshell(t_subshell *subshell)
+{
+	if (subshell->open_close == OPEN)
+		printf("This is a opening subshell\n");
+	else
+		printf("This is a closing subshell\n");
+	if (subshell->input != NULL)
+		print_redirects(subshell->input, 0);
+	if (subshell->output != NULL)
+		print_redirects(subshell->output, 1);
+	printf("\n");
+}
+
+void	print_command(t_cmd *temp)
+{
+	if (temp->cmd == NULL)
+		printf("no cmd\n");
+	else
+	{
+		printf("next simple cmd : \n");
+		print_array(temp->cmd);
+	}
+	if (temp->input != NULL)
+		print_redirects(temp->input, 0);
+	if (temp->output != NULL)
+		print_redirects(temp->output, 1);
+}
+
 void	print_commands(t_pipeline *first_pipeline)
 {
 	t_pipeline	*temp;
@@ -154,19 +173,20 @@ void	print_commands(t_pipeline *first_pipeline)
 	temp = first_pipeline;
 	while (temp != NULL)
 	{
-		printf("nex pipeline : \n");
+		printf("	NEXT PIPELINE : \n\n");
 		temp_cmd = temp->first_cmd;
-		if (temp_cmd == NULL)
-			printf("no cmd\n");
-		else
+		if (temp_cmd != NULL)
 		{
 			while (temp_cmd != NULL)
 			{
-				printf("next simple cmd : \n");
-				print_array(temp_cmd->cmd);
+				print_command(temp_cmd);
 				temp_cmd = temp_cmd->next;
+				printf("\n");
 			}
 		}
+		if (temp->subshell != NULL)
+			print_subshell(temp->subshell);
 		temp = temp->next;
+		printf("------------------------------------------\n");
 	}
 }

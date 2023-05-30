@@ -1,17 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lex_error_functions.c                              :+:    :+:            */
+/*   error.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/15 11:27:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/24 16:30:27 by jmolenaa      ########   odam.nl         */
+/*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
+/*   Updated: 2023/05/29 12:51:02 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_structs.h"
 #include "libft.h"
+#include "parsing_structs.h"
+
+void	err_msg(char *msg, char *msg2)
+{
+	write(2, "minishell: ", 11);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, ": ", 2);
+	}
+	if (errno == 127)
+	{
+		write(2, msg2, ft_strlen(msg2));
+		write(2, ": command not found\n", 21);
+	}
+	else
+		perror(msg2);
+	if (errno == ENOMEM)
+		exit(errno);
+}
+
+void	built_err_msg(char *msg, char *msg2, char *msg3)
+{
+	write(2, "minishell: ", 11);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, ": ", 2);
+	}
+	if (msg2)
+	{
+		write(2, "`", 1);
+		write(2, msg2, ft_strlen(msg2));
+		write(2, "': ", 3);
+	}
+	if (msg3)
+		write(2, msg3, ft_strlen(msg3));
+}
 
 /*	writes an error based on what mistake the sintax has, either a token is in the wrong position
 	or we have unclosed parenthesis or brackets*/
