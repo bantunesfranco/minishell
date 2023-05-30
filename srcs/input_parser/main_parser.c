@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 12:30:03 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/30 16:58:11 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	malloc_failure()
-{
-	perror("minishell ");
-	exit(errno);
-}
+// void	malloc_failure()
+// {
+// 	perror("minishell ");
+// 	exit(errno);
+// }
 
-void	leaks(void)
-{
-	system("leaks minishell");
-}
+// void	leaks(void)
+// {
+// 	system("leaks minishell");
+// }
 
 // int	main(int argc, char *argv[], char **env)
 // {

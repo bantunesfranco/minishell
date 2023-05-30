@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 14:53:59 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/30 17:17:48 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	int		i;
 
 	id = fork();
-	cmd = pipeline->first_cmd;
-	gen->path = find_path(cmd->cmd, gen->env);
-	i = check_access(gen, cmd);
-	if (i == 1)
-		return (printf("NO!!!\n"), exit(1));
 	if (id == 0)
 	{
+		cmd = pipeline->first_cmd;
+		find_path(cmd->cmd, gen);
+		i = check_access(gen, cmd);
+		if (i == 1)
+			return (printf("NO!!!\n"), exit(1));
 		execve(cmd->path, cmd->cmd, gen->env);
 		err_msg(NULL, cmd->cmd[0]);
 		exit(errno);
@@ -40,14 +40,12 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	// exit(1);
 }
 
-
 void	minishell_loop(t_gen *gen)
 {
 	char		*line;
 	char		*line2;
 	t_pipeline	*input;
 
-	(void)gen;
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -68,19 +66,24 @@ void	minishell_loop(t_gen *gen)
 		}
 		input = parse_line(line);
 		free(line);
-		if (input == NULL)
-			printf("Syntax error\n");
-		executor(gen, input);
+		if (input != NULL)
+			executor(gen, input);
+		free_parsed_structs(input);
 		input++;
 	}
 }
 
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_gen	gen;
 	char	**start_env;
 
+	atexit(leaks);
 	(void)argv;
 	if (argc != 1)
 	{

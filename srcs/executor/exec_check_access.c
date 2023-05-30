@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/29 14:02:25 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/30 17:24:14 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	check_access(t_gen *gen, t_cmd *cmd)
 		i++;
 	}
 	errno = 127;
-	err_msg(NULL, cmd->cmd[0]);
+	err_msg("NULL", cmd->cmd[0]);
 	exit(127);
 	return (1);
 }

@@ -6,36 +6,34 @@
 /*   By: codespace <codespace@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/22 12:30:34 by codespace     #+#    #+#                 */
-/*   Updated: 2023/05/28 08:19:42 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/30 17:19:10 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
 
-char	**find_path(char **cmd, char **env)
+void	find_path(char **cmd, t_gen *gen)
 {
 	int		i;
-	char	**path_arr;
 
 	i = 0;
-	path_arr = NULL;
-	while (env[i])
+	ft_free_arr(gen->path);
+	gen->path = NULL;
+	while (gen->env[i])
 	{
-		if (!ft_envcmp(env[i], "PATH="))
+		if (!ft_envcmp(gen->env[i], "PATH="))
 		{
-			path_arr = ft_split(env[i] + 5, ':');
-			if (!path_arr)
-				return (err_msg(NULL, cmd[0]), NULL);
+			gen->path = ft_split(gen->env[i] + 5, ':');
+			if (!gen->path)
+				err_msg(NULL, cmd[0]);
 		}
 		i++;
 	}
-	if (!path_arr)
-	{
-		errno = 127;
-		err_msg(NULL, cmd[0]);
-		exit (127);
-	}
-	else
-		return (path_arr);
+	// if (!gen->path)
+	// {
+	// 	errno = 127;
+	// 	err_msg(NULL, cmd[0]);
+	// 	exit (127);
+	// }
 }

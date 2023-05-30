@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cat hi | EOF
+cat hi
 echo $?
