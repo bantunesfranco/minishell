@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 17:35:46 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/28 08:20:53 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/29 12:21:35 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	copy_var(char **new_env, char **env, int *i, int *j)
 	}
 	(*i)++;
 	(*j)++;
-	printf("v[0] = %d\tv[1] = %d\n", vars[0], vars[1]);
 	if (!env[*i])
 		add_extra_vars(new_env, vars, j);
 }

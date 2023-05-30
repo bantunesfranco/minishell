@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/26 21:24:12 by codespace     ########   odam.nl         */
+/*   Updated: 2023/05/29 14:02:25 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "executor.h"
 #include <sys/wait.h>
 
-int	check_rel_path(t_cmd *cmd)
+static int	check_rel_path(t_cmd *cmd)
 {
 	char	*tmp;
 
@@ -41,7 +41,7 @@ int	check_rel_path(t_cmd *cmd)
 	return (0);
 }
 
-int	check_abs_path(t_cmd *cmd)
+static int	check_abs_path(t_cmd *cmd)
 {
 	if (cmd->cmd[0][0] != '/')
 		return (1);
@@ -58,7 +58,7 @@ int	check_abs_path(t_cmd *cmd)
 	return (0);
 }
 
-int	can_access(char *path, t_cmd *cmd)
+static int	can_access(char *path, t_cmd *cmd)
 {
 	char	*tmp;
 
