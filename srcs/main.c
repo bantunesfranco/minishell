@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/31 16:02:58 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/31 18:00:46 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,15 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	int		id;
 	int		status;
 
+	cmd = pipeline->first_cmd;
+	if (cmd->builtin != NULL)
+	{
+		cmd->builtin(gen, cmd);
+		return ;
+	}
 	id = fork();
 	if (id == 0)
 	{
-		cmd = pipeline->first_cmd;
 		find_path(cmd->cmd, gen);
 		check_access(gen, cmd);
 		execve(cmd->path, cmd->cmd, gen->env);

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 10:17:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/05/31 18:07:56 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_pipeline	*parse_line(char *line)
 	t_token			*first_token;
 	t_parsing_info	p_info;
 
+	if (*line == '\0')
+		return (NULL);
 	first_pipeline = NULL;
 	init_struct(&p_info);
 	lexer(line, &p_info, &first_token); // mallocs a list of nodes with malloced words, first_token will point to the first node
