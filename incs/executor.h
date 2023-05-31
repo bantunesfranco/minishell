@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/22 12:31:23 by codespace     #+#    #+#                 */
-/*   Updated: 2023/05/30 17:17:36 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/31 15:33:04 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structs.h"
 
 void	find_path(char **cmd, t_gen *gen);
-int		check_access(t_gen *gen, t_cmd *cmd);
+void	check_access(t_gen *gen, t_cmd *cmd);
 int		handle_input_redirection(t_redirect *input);
 int		handle_output_redirection(t_redirect *output);
 

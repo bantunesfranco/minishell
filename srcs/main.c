@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 17:17:48 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/31 16:02:58 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,16 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	t_cmd	*cmd;
 	int		id;
 	int		status;
-	int		i;
 
 	id = fork();
 	if (id == 0)
 	{
 		cmd = pipeline->first_cmd;
 		find_path(cmd->cmd, gen);
-		i = check_access(gen, cmd);
-		if (i == 1)
-			return (printf("NO!!!\n"), exit(1));
+		check_access(gen, cmd);
 		execve(cmd->path, cmd->cmd, gen->env);
 		err_msg(NULL, cmd->cmd[0]);
-		exit(errno);
+		_exit(errno);
 	}
 	else
 		waitpid(id, &status, 0);
@@ -51,6 +48,7 @@ void	minishell_loop(t_gen *gen)
 		if (isatty(STDIN_FILENO))
 		{
 			line = readline("minishell$ ");
+			// CTRL+D signal handelen. exit
 			if (line == NULL)
 				err_msg(NULL, "line");
 			if (ft_strlen(line))
@@ -59,8 +57,13 @@ void	minishell_loop(t_gen *gen)
 		else
 		{
 			line2 = get_next_line(STDIN_FILENO);
+			// CTRL+D signal handelen. exit
 			if (line2 == NULL)
 				err_msg(NULL, "line");
+			else if (line == NULL)
+			{
+				exit(0);
+			}
 			line = ft_strtrim(line2, "\n");
 			free(line2);
 		}
@@ -69,7 +72,6 @@ void	minishell_loop(t_gen *gen)
 		if (input != NULL)
 			executor(gen, input);
 		free_parsed_structs(input);
-		input++;
 	}
 }
 
@@ -96,6 +98,7 @@ int	main(int argc, char **argv, char **envp)
 	gen.env = env_init(start_env);
 	if (!gen.env)
 		err_msg(NULL, "init");
+	gen.path = NULL;
 	minishell_loop(&gen);
 	exit(0);
 }

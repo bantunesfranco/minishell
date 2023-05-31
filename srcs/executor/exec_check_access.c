@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 17:24:14 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/05/31 15:30:45 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static int	check_rel_path(t_cmd *cmd)
 	{
 		err_msg(NULL, cmd->cmd[0]);
 		if (errno == 13)
-			exit(126);
-		exit(errno);
+			_exit(126);
+		_exit(errno);
 	}
 	return (0);
 }
@@ -49,8 +49,8 @@ static int	check_abs_path(t_cmd *cmd)
 	{
 		err_msg(NULL, cmd->cmd[0]);
 		if (errno == 13)
-			exit(126);
-		exit(errno);
+			_exit(126);
+		_exit(errno);
 	}
 	cmd->path = ft_strdup(cmd->cmd[0]);
 	if (!cmd->path)
@@ -73,32 +73,32 @@ static int	can_access(char *path, t_cmd *cmd)
 		return (1);
 	else if (errno != ENOENT)
 	{
+		free(cmd->path);
 		err_msg(NULL, cmd->cmd[0]);
-		exit(errno);
+		_exit(errno);
 	}
 	free(cmd->path);
 	return (0);
 }
 
-int	check_access(t_gen *gen, t_cmd *cmd)
+void	check_access(t_gen *gen, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
 	if (!check_abs_path(cmd))
-		return (0);
+		return ;
 	if (!check_rel_path(cmd))
-		return (0);
+		return ;
 	while (gen->path[i])
 	{
 		if (can_access(gen->path[i], cmd) == 1)
-			return (0);
+			return ;
 		i++;
 	}
 	errno = 127;
-	err_msg("NULL", cmd->cmd[0]);
-	exit(127);
-	return (1);
+	err_msg(NULL, cmd->cmd[0]);
+	_exit(127);
 }
 
 // void lks(void)
