@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 14:25:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 13:10:58 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/01 08:36:13 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*redirection_state(t_token *temp, t_pipeline *curr_pipeline, t_token **f
 	t_redirect	*new_redirect;
 	t_token		*next_token;
 	
-	new_redirect = make_new_redirect_node(temp->next->word, temp->type - 5);
+	new_redirect = make_new_redirect_node(temp->next->word, temp->type - 5, -1);
 	add_redirect_to_cmd(curr_pipeline, new_redirect);
 	next_token = temp->next->next;
 	remove_token(first_token, temp->next);

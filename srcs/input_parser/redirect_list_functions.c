@@ -6,21 +6,21 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:19:24 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 13:09:33 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/01 08:35:20 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-t_redirect	*make_new_redirect_node(char *name, t_redirect_type type)
+t_redirect	*make_new_redirect_node(char *name, t_redirect_type type, int fd)
 {
 	t_redirect	*new_node;
 
 	new_node = malloc(sizeof(t_redirect));
 	if (new_node == NULL)
 		err_msg(NULL, "parser");
-	new_node->fd = 1;
+	new_node->fd = fd;
 	new_node->name = name;
 	new_node->type = type;
 	new_node->next = NULL;

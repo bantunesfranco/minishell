@@ -22,9 +22,9 @@ LIBFT_DIR = libft
 CC = cc
 INCLUDES = -I incs -I libft/incs
 ifdef DEBUG
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
-else
 CFLAGS = -Wall -Werror -Wextra
+else
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 endif
 
 UNAME_S := $(shell uname -s)

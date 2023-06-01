@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 16:33:02 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/01 08:35:35 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		add_pipeline_back(t_pipeline **head, t_pipeline *new_pipeline);
 
 // functions used for redirect lists
 
-t_redirect	*make_new_redirect_node(char *name, t_redirect_type type);
+t_redirect	*make_new_redirect_node(char *name, t_redirect_type type, int fd);
 void		add_redirect_back(t_redirect **head, t_redirect *new_redirect);
 
 // functions used for redirect lists

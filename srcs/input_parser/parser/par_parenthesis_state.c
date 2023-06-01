@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 15:00:55 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/31 17:57:13 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/01 08:40:50 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_token	*add_redirection(t_subshell *new_subshell, t_token *temp, t_token **firs
 	t_redirect	*new_redirect;
 	t_token		*next_token;
 
-	new_redirect = make_new_redirect_node(temp->next->word, temp->type - 5);
+	new_redirect = make_new_redirect_node(temp->next->word, temp->type - 5, -1);
 	if (new_redirect->type == HEREDOC || new_redirect->type == INPUT)
 		add_redirect_back(&(new_subshell->input), new_redirect);
 	else
@@ -65,6 +65,14 @@ void	handle_subshell_redirections(t_subshell *new_subshell, t_token *open_par, t
 	}
 }
 
+static void	add_standard_in_out_nodes(t_subshell *new_subshell)
+{
+	if (new_subshell->input == NULL)
+		new_subshell->input = make_new_redirect_node(NULL, INPUT, 0);
+	if (new_subshell->output == NULL)
+		new_subshell->output = make_new_redirect_node(NULL, OUTPUT, 1);
+}
+
 void	open_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
 {
 	t_subshell	*new_subshell;
@@ -75,6 +83,7 @@ void	open_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **
 		new_subshell->pipe_input = 1;
 	curr_pipeline->subshell = new_subshell;
 	handle_subshell_redirections(curr_pipeline->subshell, temp, first_token);
+	add_standard_in_out_nodes(curr_pipeline->subshell);
 	curr_pipeline->next_control_operator = OPEN;
 	new_pipeline = make_new_pipeline(OPEN);
 	new_pipeline->prev = curr_pipeline;			//maybe remove this, the prev thing I mean

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/31 18:07:56 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/01 09:24:46 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,27 @@
 #include "parsing.h"
 #include "lexer.h"
 
+bool	line_is_only_whitespace(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (*(line + i) != '\0')
+	{
+		if (*(line + i) != ' ' || (*(line + i) >= '\t' && *(line + i) <= '\r'))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 t_pipeline	*parse_line(char *line)
 {
 	t_pipeline		*first_pipeline;
 	t_token			*first_token;
 	t_parsing_info	p_info;
 
-	if (*line == '\0')
+	if (line_is_only_whitespace(line))
 		return (NULL);
 	first_pipeline = NULL;
 	init_struct(&p_info);
