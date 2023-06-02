@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 12:51:02 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/02 08:58:55 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void	err_msg(char *msg, char *msg2)
 {
-	write(2, "minishell: ", 11);
 	if (msg)
 	{
 		write(2, msg, ft_strlen(msg));
@@ -30,6 +29,24 @@ void	err_msg(char *msg, char *msg2)
 		perror(msg2);
 	if (errno == ENOMEM)
 		exit(errno);
+}
+
+void	child_err_msg(char *msg, char *msg2)
+{
+	write(2, "minishell: ", 11);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, ": ", 2);
+	}
+	if (errno == 127)
+	{
+		write(2, msg2, ft_strlen(msg2));
+		write(2, ": command not found\n", 21);
+	}
+	else
+		perror(msg2);
+	_exit(errno);
 }
 
 void	built_err_msg(char *msg, char *msg2, char *msg3)

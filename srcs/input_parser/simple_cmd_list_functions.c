@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 10:29:16 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 13:09:20 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/01 15:22:02 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	add_simple_cmd_back(t_cmd **head, t_cmd *new_simple_cmd)
 		while (temp->next != NULL)
 			temp = temp->next;
 		temp->next = new_simple_cmd;
+		new_simple_cmd->prev = temp;
 	}
 	else
 		*head = new_simple_cmd;

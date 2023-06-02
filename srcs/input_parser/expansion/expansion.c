@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 14:51:40 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/02 08:38:14 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/02 13:43:26 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ size_t	skip_quotes(char *line, size_t i)
 	while (*(line + i) != c && *(line + i) != '\0')
 		i++;
 	return (i);
+}
+
+void	expand_variable(char *word, size_t i)
+{
+	
 }
 
 void	expand_environment_vars(char *word, t_gen *gen)

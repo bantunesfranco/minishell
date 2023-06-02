@@ -6,41 +6,13 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/01 15:01:00 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/02 11:15:18 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "executor.h"
-
-void	executor(t_gen *gen, t_pipeline *pipeline)
-{
-	t_cmd	*cmd;
-	int		id;
-	int		status;
-
-	cmd = pipeline->first_cmd;
-	if (cmd->builtin != NULL)
-	{
-		cmd->builtin(gen, cmd);
-		return ;
-	}
-	id = fork();
-	if (id == 0)
-	{
-		find_path(cmd->cmd, gen);
-		check_access(gen, cmd);
-		execve(cmd->path, cmd->cmd, gen->env);
-		err_msg(NULL, cmd->cmd[0]);
-		_exit(errno);
-	}
-	else
-		waitpid(id, &status, 0);
-	// if (WIFEXITED(status))
-	// 	exit(WEXITSTATUS(status));
-	// exit(1);
-}
 
 void	minishell_loop(t_gen *gen)
 {

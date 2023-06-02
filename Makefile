@@ -9,8 +9,8 @@ END=\033[0m
 NAME = minishell
 SRC_FILES = $(shell find srcs -type f -name "*.c")
 OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)
-OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor \
-obj/input_parser/lexer obj/input_parser/parser obj/input_parser/expansion
+OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser obj/input_parser/expansion
+HEADERS  = $(shell find incs -type f -name "*.h")
 
 # readline flags
 RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline -I $(HOME)/.brew/opt/readline/include
@@ -47,9 +47,9 @@ $(NAME): $(LIBFT) $(OBJ_FILES)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
-obj/%.o: srcs/%.c | $(OBJ_DIR)
+obj/%.o: srcs/%.c $(HEADERS) | $(OBJ_DIR)
 	@echo "${BLUE}Compiling $<${END}"
-	@$(CC) $(INCLUDES) $(OBJ_FLAGS) $(CFLAGS) -c -o $@ $^
+	@$(CC) $(INCLUDES) $(OBJ_FLAGS) $(CFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)

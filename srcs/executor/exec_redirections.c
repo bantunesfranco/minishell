@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 09:35:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 12:26:18 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/01 12:12:37 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	handle_input_redirection(t_redirect *input)
 {
 	t_redirect	*head;
 
-	if (!input)
+	if (!input || !input->name)
 		return (STDIN_FILENO);
 	head = input;
 	while (head)
@@ -29,8 +29,9 @@ int	handle_input_redirection(t_redirect *input)
 			if (head->fd == -1)
 				return (err_msg(NULL, head->name), -1);
 		}
-		if (head->next)
-			close(head->fd);
+		if (!head->next)
+			break ;
+		close(head->fd);
 		head = head->next;
 	}
 	return (head->fd);
@@ -40,7 +41,7 @@ int	handle_output_redirection(t_redirect *output)
 {
 	t_redirect	*head;
 
-	if (!output)
+	if (!output || !output->name)
 		return (STDOUT_FILENO);
 	head = output;
 	while (head)
@@ -53,12 +54,13 @@ int	handle_output_redirection(t_redirect *output)
 		}
 		else if (head->type == APPEND)
 		{
-			head->fd = open(head->name, O_APPEND | O_CREAT | O_RDONLY, 0644);
+			head->fd = open(head->name, O_APPEND | O_CREAT | O_WRONLY, 0644);
 			if (head->fd == -1)
 				return (err_msg(NULL, head->name), -1);
 		}
-		if (head->next)
-			close(head->fd);
+		if (!head->next)
+			break ;
+		close(head->fd);
 		head = head->next;
 	}
 	return (head->fd);
