@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 13:31:57 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/26 16:02:55 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/01 12:22:05 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**copy_env(char **env, char *target, int size)
 	free(env);
 	new_env[i] = dup_target(target);
 	if (!new_env[i])
-		return (NULL);
+		return (err_msg(NULL, "env"), NULL);
 	return (new_env);
 }
 

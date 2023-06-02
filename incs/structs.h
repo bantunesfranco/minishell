@@ -38,6 +38,7 @@ typedef struct s_gen
 {
 	char	**env;
 	char	**path;
+	int		status;
 }			t_gen;
 
 typedef struct s_redirect

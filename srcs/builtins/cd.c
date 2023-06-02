@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 12:23:31 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/01 12:23:25 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**if_unset(char *target, char *cwd, char **env)
 	free(var);
 	if (!new_env)
 		return (err_msg(NULL, "cd"), NULL);
-	return (NULL);
+	return (new_env);
 }
 
 static int	set_env_vars(char *target, char **env)

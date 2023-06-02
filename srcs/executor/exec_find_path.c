@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/22 12:30:34 by codespace     #+#    #+#                 */
-/*   Updated: 2023/05/30 17:19:10 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/01 12:16:07 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,4 @@ void	find_path(char **cmd, t_gen *gen)
 		}
 		i++;
 	}
-	// if (!gen->path)
-	// {
-	// 	errno = 127;
-	// 	err_msg(NULL, cmd[0]);
-	// 	exit (127);
-	// }
 }
