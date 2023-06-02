@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/01 08:47:37 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/01 15:01:00 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	minishell_loop(t_gen *gen)
 			line = ft_strtrim(line2, "\n");
 			free(line2);
 		}
-		input = parse_line(line);
+		input = parse_line(line, gen);
 		free(line);
 		if (input != NULL)
 			executor(gen, input);

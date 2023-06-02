@@ -28,6 +28,7 @@ help_func(){
 	echo "debug - start minishell with fsanitize"
 	echo "sy - run syntax error tests"
 	echo "le - run lexer tests"
+	echo "ex - run expansion tests"
 	echo "help - display this message"
 	echo "exit - exit tester"
 	echo ""
@@ -38,6 +39,7 @@ help_arg(){
 	echo "debug - start minishell with fsanitize"
 	echo "sy - run syntax error tests"
 	echo "le - run lexer tests"
+	echo "ex - run expansion tests"
 	echo "help - display this message"
 	echo ""
 }
@@ -68,6 +70,11 @@ readinput(){
 			echo -e "\n		${BOLD}${GREEN}Testing lexer${RESET}\n"
 			test_lexer
 			help_func
+		elif [[ $option == "ex" ]]
+		then
+			echo -e "\n		${BOLD}${GREEN}Testing expansions${RESET}\n"
+			test_expansion
+			# help_func
 		elif [[ $option == "help" ]]
 		then
 			help_func
@@ -97,6 +104,10 @@ runoption(){
 	then
 		echo -e "\n		${BOLD}${GREEN}Testing lexer${RESET}\n"
 		test_lexer
+	elif [[ $1 == "ex" ]]
+	then
+		echo -e "\n		${BOLD}${GREEN}Testing expansion${RESET}\n"
+		test_expansion
 	elif [[ $1 == "help" ]]
 	then
 		echo -e "\n\n${BOLD}Run ./parsing_test.sh with one of the following arguments or none for interactive input${RESET}"
@@ -141,6 +152,10 @@ test_syntax () {
 
 test_lexer () {
 	./testers_j/lexer_tester.sh
+}
+
+test_expansion () {
+	./testers_j/expansion_tester.sh
 }
 
 # ./minishell
