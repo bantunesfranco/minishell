@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/31 18:03:52 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/03 12:07:58 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	*join_message(char **args, int len)
 	int		size;
 
 	if (len == 0)
-		return (ft_strdup(""));
+		return (NULL);
 	str = (char *)malloc(sizeof(char) * len);
 	if (!str)
 		return (NULL);
@@ -116,9 +116,9 @@ int	echo(t_gen *gen, t_cmd *cmd)
 		i++;
 	}
 	str = join_message(&cmd->cmd[pos], len);
-	if (!str)
-		return (err_msg(NULL, cmd->cmd[0]), -1);
+	if (!str && errno == ENOMEM)
+		return (err_msg(NULL, cmd->cmd[0]), 1);
 	if (write_content(str, cmd->output->fd, opt) == -1)
-		return (free(str), err_msg(cmd->cmd[0], "write error"), -1);
+		return (free(str), err_msg(cmd->cmd[0], "write error"), 1);
 	return (free(str), 0);
 }

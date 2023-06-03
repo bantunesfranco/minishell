@@ -1,0 +1,35 @@
+name: Bultin test
+
+on:
+    pull_request:
+        branches: [ "main" ]
+    workflow_dispatch:
+
+jobs:
+  build:
+    timeout-minutes: 10
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install Dependencies
+        run: |
+          set -x
+          if [ "$RUNNER_OS" == "Linux" ]; then
+              sudo apt-get update -qq
+              sudo apt-get install -y -qq libreadline-dev libreadline8
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+              brew update
+              brew install readline
+          fi
+
+      - name: Build
+        run: make -C ${{github.workspace}}
+

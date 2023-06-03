@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/26 16:03:35 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/03 12:27:24 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	unset(t_gen *gen, t_cmd *cmd)
 		if (is_valid_input(cmd->cmd[i]) && !ft_strchr(cmd->cmd[i], '='))
 		{
 			if (exec_unset(gen, cmd) == -1)
-				return (err_msg(NULL, cmd->cmd[0]), -1);
+				return (err_msg(NULL, cmd->cmd[0]), 1);
 		}
 		else
 			built_err_msg(cmd->cmd[0], cmd->cmd[i], "not a valid identifier\n");
