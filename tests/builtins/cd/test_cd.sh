@@ -6,10 +6,16 @@ MAGENTA='\033[1;35m'
 CYAN='\033[1;36m'
 END='\033[0m'
 
+INCLUDES="-I incs -I libft/incs"
+SRCS="tests/builtins/cd/cd_main.c srcs/builtins/cd.c srcs/builtins/pwd.c \
+srcs/builtins/export2.c srcs/init/ft_arrdup.c srcs/utils.c srcs/error.c libft/libft.a"
+
+CFLAGS="-Wall -Werror -Wextra"
+# CFLAGSD="-Wall -Werror -Wextra -g -fsanitize=address"
+
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/cd/cd_main.c srcs/builtins/cd.c srcs/builtins/pwd.c \
-srcs/ft_arrdup.c srcs/utils.c libft/libft.a -I incs -I libft/incs -g -fsanitize=leak`
+`gcc $CFLAGS $SRCS $INCLUDES -o a.out`
 
 SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
 if [ "$SHELL" == "bash" ]
@@ -214,10 +220,8 @@ $ECHO "${BLUE}Test 1 - 'cd -'\n${END}"
 TEMP=$OLDPWD
 export OLDPWD=$PWD/tests/builtins/cd
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
-
-OUT2=``
+touch res.txt && chmod 777 res.txt
+touch res2.txt && chmod 777 res2.txt
 
 OUT=`./a.out "pwd" "cd -" res.txt > /dev/null && < res.txt cat`
 OUT2=`cd - 2> res2.txt && < res2.txt cat`
