@@ -14,16 +14,10 @@ jobs:
 
     steps:
       - name: Clone repository
-<<<<<<< HEAD
         uses: actions/checkout@v2
         with:
           submodules: recursive
 
-=======
-        uses: actions/checkout@v3
-        with:
-            submodules: 'true'
->>>>>>> main
       - name: Install Dependencies
         run: |
           set -x
