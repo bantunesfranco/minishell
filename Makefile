@@ -7,13 +7,11 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = minishell
+READLINE = $(shell brew --prefix readline)
+HEADERS  = $(shell find incs -type f -name "*.h")
 SRC_FILES = $(shell find srcs -type f -name "*.c")
 OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)
 OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser
-HEADERS  = $(shell find incs -type f -name "*.h")
-
-# readline flags
-RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline -I $(HOME)/.brew/opt/readline/include
 
 # libft variables
 LIBFT = libft/libft.a
@@ -30,8 +28,10 @@ endif
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
+	RL_FLAGS = -lreadline -ltinfo
 	OBJ_FLAGS := $(RL_FLAGS)
 else ifeq ($(UNAME_S), Darwin)
+	RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include
 	OBJ_FLAGS := 
 else
 	$(error OS: $(OS) is not supported!)
