@@ -33,13 +33,12 @@ test_err () {
 	fi
 }
 
-rm -rf minishell
-cc $CFLAGS $INCLUDES -o minishell libft/libft.a $SRC
+make -C testing_files lexer_test
 echo "--------------------------------------------------------------------------"
 echo -e "------------------------------${GREEN}STARTING TESTS${RESET}------------------------------"
 echo "--------------------------------------------------------------------------"	
 sleep 2
-FILE="./testers_j/files/lexer"
+FILE="./testing_files/files/lexer"
 IFS=0
 NL=$'\n'
 KO=0
@@ -51,7 +50,7 @@ do
 		continue
 	else
 		echo -e "	Test for input :\n👉	$line"
-		OUTPUT=$(./minishell $line 2>err_mini)
+		OUTPUT=$(./lexer_test $line 2>err_mini)
 		read -r line
 		test_output $OUTPUT $line
 		test_err err_mini
