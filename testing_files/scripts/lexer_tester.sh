@@ -2,10 +2,6 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
-CFLAGS="-Wall -Werror -Wextra"
-INCLUDES="-I incs -I libft/incs"
-SRC="srcs/input_parser/lexer/* srcs/input_parser/parser_struct_init.c srcs/input_parser/token_list_functions.c \
-testers_j/lexer_tester.c srcs/test_utils.c srcs/error.c"
 
 #!/bin/bash
 
@@ -33,6 +29,8 @@ test_err () {
 	fi
 }
 
+
+# echo -e "\n		${BOLD}${GREEN}Testing lexer${RESET}\n"
 make -C testing_files lexer_test
 echo "--------------------------------------------------------------------------"
 echo -e "------------------------------${GREEN}STARTING TESTS${RESET}------------------------------"
@@ -50,7 +48,7 @@ do
 		continue
 	else
 		echo -e "	Test for input :\n👉	$line"
-		OUTPUT=$(./lexer_test $line 2>err_mini)
+		OUTPUT=$(./testing_files/lexer_test $line 2>err_mini)
 		read -r line
 		test_output $OUTPUT $line
 		test_err err_mini

@@ -2,18 +2,6 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
-CFLAGS="-Wall -Werror -Wextra"
-INCLUDES="-I incs -I libft/incs"
-SRC="srcs/input_parser/lexer/* srcs/input_parser/parser/* \
-srcs/input_parser/parser_struct_init.c srcs/input_parser/token_list_functions.c \
-srcs/input_parser/pipeline_list_functions.c \
-srcs/input_parser/simple_cmd_list_functions.c \
-srcs/input_parser/redirect_list_functions.c \
-srcs/input_parser/subshell_struct_functions.c \
-srcs/input_parser/input_parser.c \
-srcs/test_utils.c srcs/error.c \
-srcs/free_cmd_list.c \
-testers_j/parser_tester.c"
 
 #!/bin/bash
 
@@ -41,13 +29,12 @@ test_err () {
 	fi
 }
 
-rm -rf minishell
-cc $CFLAGS $INCLUDES -o minishell libft/libft.a $SRC
+make -C parser_test
 echo "--------------------------------------------------------------------------"
 echo -e "------------------------------${GREEN}STARTING TESTS${RESET}------------------------------"
 echo "--------------------------------------------------------------------------"	
 sleep 2
-FILE="./testers_j/files/lexer"
+FILE="./testing_files/files/lexer"
 IFS=0
 NL=$'\n'
 KO=0
@@ -59,7 +46,7 @@ do
 		continue
 	else
 		echo -e "	Test for input :\n👉	$line"
-		OUTPUT=$(./minishell $line 2>err_mini)
+		OUTPUT=$(./testing_files/parser_test $line 2>err_mini)
 		read -r line
 		test_output $OUTPUT $line
 		test_err err_mini

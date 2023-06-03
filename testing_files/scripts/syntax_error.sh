@@ -2,10 +2,6 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
-CFLAGS="-Wall -Werror -Wextra"
-INCLUDES="-I incs -I libft/incs"
-SRC="srcs/input_parser/lexer/* srcs/input_parser/parser_struct_init.c srcs/input_parser/token_list_functions.c \
-testers_j/syntax_tester.c srcs/test_utils.c srcs/error.c"
 
 #!/bin/bash
 
@@ -47,13 +43,13 @@ test_code(){
 
 # script
 
-rm -rf minishell
-cc $CFLAGS $INCLUDES -o minishell libft/libft.a $SRC
+echo -e "\n		${BOLD}${GREEN}Testing syntax errors${RESET}\n"
+make -C testing_files syntax_test
 echo "--------------------------------------------------------------------------"
 echo -e "------------------------------${GREEN}STARTING TESTS${RESET}------------------------------"
 echo "--------------------------------------------------------------------------"	
 sleep 2
-FILE="./testers_j/files/syntax_errors"
+FILE="./testing_files/files/syntax_errors"
 IFS=0
 NL=$'\n'
 KO=0
@@ -71,7 +67,7 @@ rm -rf error_args
 			done
 		fi
 		echo -e -n "	Test for input :\n👉	$TEST"
-		./minishell $TEST 2>err_mini >out_mini
+		./testing_files/syntax_test $TEST 2>err_mini >out_mini
 		exit_mini=$?
 		echo -n "$TEST" | bash 2>err_bash >out_bash
 		exit_bash=$?

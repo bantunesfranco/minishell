@@ -2,15 +2,6 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
-CFLAGS="-Wall -Werror -Wextra"
-INCLUDES="-I incs -I libft/incs"
-SRC="srcs/input_parser/expansion/expansion.c \
-testers_j/expansion_test.c \
-libft/libft.a \
-srcs/init/env_init.c \
-srcs/error.c \
-srcs/utils.c \
-srcs/test_utils.c"
 
 #!/bin/bash
 
@@ -38,13 +29,13 @@ test_err () {
 	fi
 }
 
-rm -rf minishell
-cc $CFLAGS $INCLUDES -o minishell libft/libft.a $SRC
+echo -e "\n		${BOLD}${GREEN}Testing expansion${RESET}\n"
+make -C testing_files expansion_test
 # echo "--------------------------------------------------------------------------"
 # echo -e "------------------------------${GREEN}STARTING TESTS${RESET}------------------------------"
 # echo "--------------------------------------------------------------------------"	
 sleep 2
-FILE="./testers_j/files/expansion"
+FILE="./testing_files/files/expansion"
 IFS=0
 NL=$'\n'
 KO=0
@@ -56,7 +47,7 @@ do
 		continue
 	else
 		# echo -e "	Test for input :\n👉	$line"
-		OUTPUT=$(./minishell $line 2>err_mini)
+		OUTPUT=$(./testing_files/expansion_test $line 2>err_mini)
 		echo $OUTPUT
 		# read -r line
 		# test_output $OUTPUT $line
