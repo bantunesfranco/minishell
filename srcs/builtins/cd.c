@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/01 12:23:25 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/03 12:05:44 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ int	cd(t_gen *gen, t_cmd *cmd)
 	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
 	{
 		if (go_to("HOME=", gen) == -1)
-			return (-1);
+			return (1);
 	}
 	else if (!ft_strncmp(cmd->cmd[1], "-", 2))
 	{
 		if (go_to("OLDPWD=", gen) == -1)
-			return (-1);
+			return (1);
 		old = getcwd(NULL, 0);
 		if (write(cmd->output->fd, old, ft_strlen(old)) == -1)
 			return (free(old), err_msg(NULL, cmd->cmd[0]), -1);
@@ -115,6 +115,6 @@ int	cd(t_gen *gen, t_cmd *cmd)
 	}
 	else
 		if (go_to(cmd->cmd[1], gen) == -1)
-			return (-1);
+			return (1);
 	return (0);
 }
