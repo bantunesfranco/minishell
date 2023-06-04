@@ -1,4 +1,4 @@
-name: Bultin test
+name: Builtin Test
 
 on:
     pull_request:
@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 
 jobs:
-  build:
+  test:
     timeout-minutes: 10
     runs-on: ${{ matrix.os }}
     strategy:
@@ -17,19 +17,13 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v2
         with:
-          submodules: recursive
+            submodules: 'true'
 
-      - name: Install Dependencies
+      - name: Test
+        run: bash ./builtin_unit_tester.sh > output.txt
+
+      - name: Check test status
         run: |
-          set -x
-          if [ "$RUNNER_OS" == "Linux" ]; then
-              sudo apt-get update -qq
-              sudo apt-get install -y -qq libreadline-dev libreadline8
-          elif [ "$RUNNER_OS" == "macOS" ]; then
-              brew update
-              brew install readline
+          if grep -q "KO" output.txt; then
+            exit 1
           fi
-
-      - name: Build
-        run: make -C ${{github.workspace}}
-
