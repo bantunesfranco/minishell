@@ -21,12 +21,8 @@ jobs:
             submodules: 'true'
 
       - name: Test
-        env: |
-            if ${{ matrix.os }} == ubunto-latest; then
-                TERM = linux
-            else
-                TERM=xterm
-            fi
+        env: 
+            TERM: xterm-256color
         id: test
         run: |
             ./builtin_unit_tester.sh > output.txt
