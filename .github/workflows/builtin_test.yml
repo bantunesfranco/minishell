@@ -20,8 +20,9 @@ jobs:
             submodules: 'true'
 
       - name: Test
+        id: test
         run: |
-            bash ./builtin_unit_tester.sh > output.txt
+            ./builtin_unit_tester.sh > output.txt
 
       - name: Check test status
         run: |
