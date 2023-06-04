@@ -1,4 +1,4 @@
-name: Bultin test
+name: Build
 
 on:
     pull_request:
