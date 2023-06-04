@@ -5,6 +5,7 @@ on:
         branches: [ "main" ]
     workflow_dispatch:
 
+
 jobs:
   test:
     timeout-minutes: 10
@@ -20,6 +21,12 @@ jobs:
             submodules: 'true'
 
       - name: Test
+        env: |
+            if ${{ matrix.os }} == ubunto-latest; then
+                TERM = linux
+            else
+                TERM=xterm
+            fi
         id: test
         run: |
             ./builtin_unit_tester.sh > output.txt
