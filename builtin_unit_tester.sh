@@ -14,8 +14,11 @@ CFLAGSD="-Wall -Werror -Wextra -g -fsanitize=address"
 
 #!/bin/bash
 
+rm -rf $TESTER_DIR/logs
+mkdir $TESTER_DIR/logs
+
 help_func(){
-	echo -e "\n\nall - run all tests"
+	echo -e "\nall - run all tests"
 	echo "cd - run cd tests"
 	echo "echo - run echo tests"
 	echo "env - run env tests"
@@ -28,7 +31,7 @@ help_func(){
 }
 
 help_arg(){
-	echo -e "\n\nall - run all tests"
+	echo -e "\nall - run all tests"
 	echo "cd - run cd tests"
 	echo "echo - run echo tests"
 	echo "env - run env tests"
@@ -41,7 +44,7 @@ help_arg(){
 
 readinput(){
 	clear
-	echo -e "\nWhat mode would you like to run :${RESET}"
+	echo -e "\nWhich test would you like to run :"
 	help_func
 	echo -e ""
 	while [[ $option != "quit" ]]
@@ -50,42 +53,12 @@ readinput(){
 		if [[ $option == "all" ]]
 		then
 			run_all
-			help_func
-		elif [[ $option == "cd" ]]
+		elif [[ $option =~ ^(cd|echo|env|exit|export|pwd|unset)$ ]]
 		then
-			echo -e "\n		${GREEN}Testing cd${RESET}\n"
-			test_cd
-			help_func
-		elif [[ $option == "echo" ]]
-		then
-			echo -e "\n		${GREEN}Testing echo${RESET}\n"
-			test_echo
-			help_func
-		elif [[ $option == "env" ]]
-		then
-			echo -e "\n		${GREEN}Testing env${RESET}\n"
-			test_env
-			help_func
-		elif [[ $option == "exit" ]]
-		then
-			echo -e "\n		${GREEN}Testing exit${RESET}\n"
-			test_exit
-			help_func
-		elif [[ $option == "export" ]]
-		then
-			echo -e "\n		${GREEN}Testing export${RESET}\n"
-			test_export
-			help_func
-		elif [[ $option == "pwd" ]]
-		then
-			echo -e "\n		${GREEN}Testing pwd${RESET}\n"
-			test_pwd
-			help_func
-		elif [[ $option == "unset" ]]
-		then
-			echo -e "\n		${GREEN}Testing unset${RESET}\n"
-			test_unset
-			help_func
+			echo -en "\n---------------------------------------------"
+			echo -e "\n\t\t${BLUE}Testing $option${RESET}\n"
+			test_$option
+			echo -e "\n---------------------------------------------"
 		elif [[ $option == "help" ]]
 		then
 			help_func
@@ -97,49 +70,20 @@ readinput(){
 			echo "help - for valid options"
 		fi
 		echo ""
+		echo -e "Which test would you like to run :"
 	done
 }
 
-readoption(){
+runoption(){
 	if [[ $1 == "all" ]]
 	then
 		run_all
-		help_func
-	elif [[ $1 == "cd" ]]
+	elif [[ $1 =~ ^(cd|echo|env|exit|export|pwd|unset)$ ]]
 	then
-		echo -e "\n		${GREEN}Testing cd${RESET}\n"
-		test_cd
-		help_func
-	elif [[ $1 == "echo" ]]
-	then
-		echo -e "\n		${GREEN}Testing echo${RESET}\n"
-		test_echo
-		help_func
-	elif [[ $1 == "env" ]]
-	then
-		echo -e "\n		${GREEN}Testing env${RESET}\n"
-		test_env
-		help_func
-	elif [[ $1 == "exit" ]]
-	then
-		echo -e "\n		${GREEN}Testing exit${RESET}\n"
-		test_exit
-		help_func
-	elif [[ $1 == "export" ]]
-	then
-		echo -e "\n		${GREEN}Testing export${RESET}\n"
-		test_export
-		help_func
-	elif [[ $1 == "pwd" ]]
-	then
-		echo -e "\n		${GREEN}Testing pwd${RESET}\n"
-		test_pwd
-		help_func
-	elif [[ $1 == "unset" ]]
-	then
-		echo -e "\n		${GREEN}Testing unset${RESET}\n"
-		test_unset
-		help_func
+		echo -en "\n---------------------------------------------"
+		echo -e "\n\t\t${BLUE}Testing $1${RESET}\n"
+		test_$1
+		echo -e "\n---------------------------------------------"
 	elif [[ $1 == "help" ]]
 	then
 		help_func
@@ -152,28 +96,129 @@ readoption(){
 	fi
 	echo ""
 }
-
+ 
 test_cd () {
-	$(bash $TESTER_DIR/cd/test_cd.sh > $TESTER_DIR/cd_log 2>> $TESTER_DIR/err_log)
-	OK=$(grep "Result:" < $TESTER_DIR/cd_log | grep -c "OK")
-	KO=$(grep "Result:" < $TESTER_DIR/cd_log | grep -c "KO")
+	$(bash $TESTER_DIR/cd/test_cd.sh > $TESTER_DIR/logs/cd_log 2>> $TESTER_DIR/logs/err_log)
+	$(echo "" >> $TESTER_DIR/logs/err_log)
+	OK=$(grep "Result:" < $TESTER_DIR/logs/cd_log | grep -c "OK")
+	KO=$(grep "Result:" < $TESTER_DIR/logs/cd_log | grep -c "KO")
 	TESTS=$(($OK + $KO))
 
 	if [[ $KO == 0 ]]
 	then
-		echo -e "${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
+		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
-		echo -e "${RED}KO - Failed $KO/$TESTS tests${RESET}"
+		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
 	fi
 }
+
+test_echo () {
+	$(bash $TESTER_DIR/echo/test_echo.sh > $TESTER_DIR/logs/echo_log 2>> $TESTER_DIR/logs/err_log)
+	$(echo "" >> $TESTER_DIR/logs/err_log)
+	OK=$(grep "Result:" < $TESTER_DIR/logs/echo_log | grep -c "OK")
+	KO=$(grep "Result:" < $TESTER_DIR/logs/echo_log | grep -c "KO")
+	TESTS=$(($OK + $KO))
+
+	if [[ $KO == 0 ]]
+	then
+		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
+	else
+		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
+	fi
+}
+
+test_env () {
+	$(bash $TESTER_DIR/env/test_env.sh > $TESTER_DIR/logs/env_log 2>> $TESTER_DIR/logs/err_log)
+	$(echo "" >> $TESTER_DIR/logs/err_log)
+	OK=$(grep "Result:" < $TESTER_DIR/logs/env_log | grep -c "OK")
+	KO=$(grep "Result:" < $TESTER_DIR/logs/env_log | grep -c "KO")
+	TESTS=$(($OK + $KO))
+
+	if [[ $KO == 0 ]]
+	then
+		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
+	else
+		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
+	fi
+}
+
+test_exit () {
+	$(bash $TESTER_DIR/exit/test_exit.sh > $TESTER_DIR/logs/exit_log 2>> $TESTER_DIR/logs/err_log)
+	$(echo "" >> $TESTER_DIR/logs/err_log)
+	OK=$(grep "Result:" < $TESTER_DIR/logs/exit_log | grep -c "OK")
+	KO=$(grep "Result:" < $TESTER_DIR/logs/exit_log | grep -c "KO")
+	TESTS=$(($OK + $KO))
+
+	if [[ $KO == 0 ]]
+	then
+		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
+	else
+		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
+	fi
+}
+
+test_export () {
+	$(bash $TESTER_DIR/export/test_export.sh > $TESTER_DIR/logs/export_log 2>> $TESTER_DIR/logs/err_log)
+	$(echo "" >> $TESTER_DIR/logs/err_log)
+	OK=$(grep "Result:" < $TESTER_DIR/logs/export_log | grep -c "OK")
+	KO=$(grep "Result:" < $TESTER_DIR/logs/export_log | grep -c "KO")
+	TESTS=$(($OK + $KO))
+
+	if [[ $KO == 0 ]]
+	then
+		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
+	else
+		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
+	fi
+}
+
+test_pwd () {
+	$(bash $TESTER_DIR/pwd/test_pwd.sh > $TESTER_DIR/logs/pwd_log 2>> $TESTER_DIR/logs/err_log)
+	$(echo "" >> $TESTER_DIR/logs/err_log)
+	OK=$(grep "Result:" < $TESTER_DIR/logs/pwd_log | grep -c "OK")
+	KO=$(grep "Result:" < $TESTER_DIR/logs/pwd_log | grep -c "KO")
+	TESTS=$(($OK + $KO))
+
+	if [[ $KO == 0 ]]
+	then
+		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
+	else
+		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
+	fi
+}
+
+test_unset () {
+	$(bash $TESTER_DIR/unset/test_unset.sh > $TESTER_DIR/logs/unset_log 2>> $TESTER_DIR/logs/err_log)
+	$(echo "" >> $TESTER_DIR/logs/err_log)
+	OK=$(grep "Result:" < $TESTER_DIR/logs/unset_log | grep -c "OK")
+	KO=$(grep "Result:" < $TESTER_DIR/logs/unset_log | grep -c "KO")
+	TESTS=$(($OK + $KO))
+
+	if [[ $KO == 0 ]]
+	then
+		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
+	else
+		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
+	fi
+}
+
+run_all () {
+	OPTIONS=("cd" "echo" "env" "exit" "export" "pwd" "unset")
+	for option in ${OPTIONS[@]}
+	do
+		echo -en "\n---------------------------------------------"
+		echo -e "\n\t\t${BLUE}Testing $option${RESET}\n"
+		test_$option
+	done
+	echo -e "\n---------------------------------------------"
+}
+
 
 main () {
 	if [[ $# == 0 ]]
 	then
-		echo "no input"
 		readinput
 	else
-		echo $1
 		runoption $1
 	fi
 }

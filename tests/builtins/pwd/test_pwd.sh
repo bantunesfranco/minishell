@@ -6,11 +6,18 @@ MAGENTA='\033[1;35m'
 CYAN='\033[1;36m'
 END='\033[0m'
 
+INCLUDES="-I incs -I libft/incs"
+SRCS="tests/builtins/pwd/pwd_main.c srcs/builtins/pwd.c \
+srcs/init/ft_arrdup.c srcs/error.c libft/libft.a"
+
+CFLAGS="-Wall -Werror -Wextra"
+# CFLAGSD="-Wall -Werror -Wextra -g -fsanitize=address"
+
 #!/bin/bash
 
-`gcc -Wall -Wextra -Werror tests/builtins/pwd/pwd_main.c srcs/builtins/pwd.c srcs/utils.c srcs/ft_arrdup.c libft/libft.a -I incs -I libft/incs` #-fsanitize=address`
+gcc $CFLAGS $SRCS $INCLUDES -o a.out
 
-SHELL=`ps -p "$$" | awk 'NR==2{print $4}'`
+SHELL=$(ps -p "$$" | awk 'NR==2{print $4}')
 if [ "$SHELL" == "bash" ]
 then
 	ECHO="echo -e"
@@ -22,8 +29,8 @@ $ECHO "\n	${CYAN}PWD TESTER${END}\n----------------------------"
 
 $ECHO "	${MAGENTA}TO STDOUT${END}\n----------------------------"
 $ECHO "${BLUE}Test 1 - 'pwd'\n${END}"
-OUT=`./a.out "pwd"`
-OUT2=`pwd`
+OUT=$(./a.out "pwd")
+OUT2=$(pwd)
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -38,8 +45,8 @@ fi
 $ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 2 - 'pwd hello\n${END}"
-OUT=`./a.out "pwd hello"`
-OUT2=`pwd hello`
+OUT=$(./a.out "pwd hello")
+OUT2=$(pwd hello)
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -56,11 +63,11 @@ $ECHO "----------------------------"
 $ECHO "	${MAGENTA}TO TXT FILE${END}\n----------------------------"
 $ECHO "${BLUE}Test 1 - 'pwd'\n${END}"
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+$(touch res.txt && chmod 777 res.txt)
+$(touch res2.txt && chmod 777 res2.txt)
 
-OUT=`./a.out "pwd" res.txt > res.txt && cat res.txt`
-OUT2=`pwd > res2.txt && cat res2.txt`
+OUT=$(./a.out "pwd" res.txt > res.txt && cat res.txt)
+OUT2=$(pwd > res2.txt && cat res2.txt)
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -72,18 +79,18 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+rm -rf res.txt
+rm -rf res2.txt
 
 $ECHO "----------------------------"
 
 $ECHO "${BLUE}Test 2 - 'pwd hello\n${END}"
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+$(touch res.txt && chmod 777 res.txt)
+$(touch res2.txt && chmod 777 res2.txt)
 
-OUT=`./a.out "pwd hello" res.txt > res.txt && cat res.txt`
-OUT2=`pwd hello > res2.txt && cat res2.txt`
+OUT=$(./a.out "pwd hello" res.txt > res.txt && cat res.txt)
+OUT2=$(pwd hello > res2.txt && cat res2.txt)
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -95,8 +102,8 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+rm -rf res.txt
+rm -rf res2.txt
 
 $ECHO "----------------------------"
 
@@ -108,13 +115,13 @@ $ECHO "      ${MAGENTA}ERROR HANDELING${END}\n----------------------------"
 
 $ECHO "${BLUE}Test 1 - 'closed stdout'\n${END}"
 
-`touch res.txt && chmod 777 res.txt`
-`touch res2.txt && chmod 777 res2.txt`
+$(touch res.txt && chmod 777 res.txt)
+$(touch res2.txt && chmod 777 res2.txt)
 
-OUT=`exec 3>&1; exec 1<&-; ./a.out "pwd" 2> res.txt; exec 1>&3;\
-< res.txt cat | awk -F ': ' '{sub($1 FS, ""); print}'`
-OUT2=`exec 3>&1; exec 1<&-; pwd 2> res2.txt; exec 1>&3; < res2.txt cat\
-| awk -F ': ' '{sub($1 FS, ""); sub($1 FS, ""); print}'`
+OUT=$(exec 3>&1; exec 1<&-; ./a.out "pwd" 2> res.txt; exec 1>&3;\
+< res.txt cat | awk -F ': ' '{print $NF}')
+OUT2=$(exec 3>&1; exec 1<&-; pwd 2> res2.txt; exec 1>&3; \
+< res2.txt cat | awk -F ': ' '{print $NF}')
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"
@@ -126,9 +133,9 @@ else
 	$ECHO "Result: ${RED}KO${END}"
 fi
 
-`rm -rf res.txt`
-`rm -rf res2.txt`
+rm -rf res.txt
+rm -rf res2.txt
 
 $ECHO "----------------------------"
 
-`rm -rf a.out`
+$(rm -rf a.out)

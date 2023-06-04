@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/03 12:05:44 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/04 11:24:10 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**if_unset(char *target, char *cwd, char **env)
 	return (new_env);
 }
 
-static int	set_env_vars(char *target, char **env)
+static int	set_env_vars(char *target, t_gen *gen)
 {
 	int		i;
 	char	*cwd;
@@ -58,16 +58,16 @@ static int	set_env_vars(char *target, char **env)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (err_msg(NULL, "cd"), -1);
-	while (env[i] && ft_envcmp(env[i], target))
+	while (gen->env[i] && ft_envcmp(gen->env[i], target))
 		i++;
-	if (!env[i])
+	if (!gen->env[i])
 	{
-		env = if_unset(target, cwd, env);
+		gen->env = if_unset(target, cwd, gen->env);
 		return (0);
 	}
-	temp = env[i];
-	env[i] = ft_strjoin(target, cwd);
-	if (!env[i])
+	temp = gen->env[i];
+	gen->env[i] = ft_strjoin(target, cwd);
+	if (!gen->env[i])
 		return (free(cwd), err_msg(NULL, "cd"), -1);
 	free(temp);
 	free(cwd);
@@ -81,11 +81,11 @@ static int	go_to(char *target, t_gen *gen)
 	path = get_target(target, gen->env);
 	if (!path)
 		return (-1);
-	if (set_env_vars("OLDPWD=", gen->env) == -1)
+	if (set_env_vars("OLDPWD=", gen) == -1)
 		return (-1);
 	if (chdir(path) == -1)
 		return (err_msg("cd", path), -1);
-	if (set_env_vars("PWD=", gen->env) == -1)
+	if (set_env_vars("PWD=", gen) == -1)
 		return (-1);
 	return (0);
 }
