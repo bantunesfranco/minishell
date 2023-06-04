@@ -15,12 +15,13 @@ jobs:
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             submodules: 'true'
 
       - name: Test
-        run: bash ./builtin_unit_tester.sh > output.txt
+        run: |
+            bash ./builtin_unit_tester.sh > output.txt
 
       - name: Check test status
         run: |
