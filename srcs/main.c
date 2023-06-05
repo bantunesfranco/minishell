@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/01 12:59:56 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/05 17:32:45 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	minishell_loop(t_gen *gen)
 			if (line == NULL && errno == ENOMEM)
 				err_msg(NULL, "line");
 			else if (line == NULL) //this is here for now as a placeholder until we handle ctrl + D
-				break ;
+			{
+				if (write(STDOUT_FILENO, "exit\n", 5) == -1)
+					err_msg(NULL, "write");
+				exit(0);
+			}
 			if (ft_strlen(line))
 				add_history(line);
 		}
@@ -78,6 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!gen.env)
 		err_msg(NULL, "init");
 	gen.path = NULL;
+	gen.status = 0;
 	minishell_loop(&gen);
 	exit(0);
 }
