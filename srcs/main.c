@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/05 18:00:33 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/05 18:00:58 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	minishell_loop(t_gen *gen)
 			line = readline("minishell$ ");
 			if (line == NULL && errno == ENOMEM)
 				err_msg(NULL, "line");
-			else if (line == NULL) //this is here for now as a placeholder until we handle ctrl + D
+			else if (line == NULL)
 			{
 				if (write(STDOUT_FILENO, "exit\n", 5) == -1)
 					err_msg(NULL, "write");
@@ -39,10 +39,9 @@ void	minishell_loop(t_gen *gen)
 		else
 		{
 			line2 = get_next_line(STDIN_FILENO);
-			// CTRL+D signal handelen. exit
 			if (line2 == NULL)
 				err_msg(NULL, "line");
-			else if (line == NULL) //this is here for now as a placeholder until we handle ctrl + D
+			else if (line == NULL)
 			{
 				if (write(STDOUT_FILENO, "exit\n", 5) == -1)
 					err_msg(NULL, "write");
