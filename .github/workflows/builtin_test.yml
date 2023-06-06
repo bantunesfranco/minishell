@@ -25,7 +25,7 @@ jobs:
             TERM: xterm-256color
         id: test
         run: |
-            ./builtin_unit_tester.sh > output.txt
+            ./builtin_unit_tester.sh all > output.txt
 
       - name: Check test status
         run: |

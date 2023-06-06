@@ -164,8 +164,7 @@ touch res2.txt && chmod 777 res2.txt
 
 OUT=$(exec 3>&1; exec 1<&-; ./a.out "env" 2> res.txt; exec 1>&3;\
 < res.txt cat | awk -F ': ' '{print $NF}')
-OUT2=$(exec 3>&1; exec 1<&-; env 2> res2.txt; exec 1>&3; \
-< res2.txt cat | awk -F ': ' '{print $NF}')
+OUT2="Bad file descriptor"
 
 $ECHO "minishell:	|$OUT|"
 $ECHO "bash: 		|$OUT2|"

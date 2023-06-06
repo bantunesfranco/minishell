@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/04 11:24:10 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/06 08:01:09 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ int	cd(t_gen *gen, t_cmd *cmd)
 	char	*old;
 
 	old = NULL;
-	if (ft_arrlen(cmd->cmd) > 2)
-		return (built_err_msg(cmd->cmd[0], NULL, "too many arguments\n"), -1);
 	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
 	{
 		if (go_to("HOME=", gen) == -1)
