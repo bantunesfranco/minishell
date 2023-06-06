@@ -10,7 +10,7 @@ INCLUDES="-I incs -I libft/incs"
 SRCS="tests/builtins/cd/cd_main.c srcs/builtins/cd.c srcs/builtins/pwd.c \
 srcs/builtins/export2.c srcs/init/ft_arrdup.c srcs/utils.c srcs/error.c libft/libft.a"
 
-CFLAGS="-Wall -Werror -Wextra -g"
+CFLAGS="-Wall -Werror -Wextra -g -fsanitize=address"
 # CFLAGSD="-Wall -Werror -Wextra -g -fsanitize=address"
 
 #!/bin/bash
