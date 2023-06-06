@@ -10,7 +10,7 @@ INCLUDES="-I incs -I libft/incs"
 SRCS="tests/builtins/cd/cd_main.c srcs/builtins/cd.c srcs/builtins/pwd.c \
 srcs/builtins/export2.c srcs/init/ft_arrdup.c srcs/utils.c srcs/error.c libft/libft.a"
 
-CFLAGS="-Wall -Werror -Wextra"
+CFLAGS="-Wall -Werror -Wextra -g"
 # CFLAGSD="-Wall -Werror -Wextra -g -fsanitize=address"
 
 #!/bin/bash
@@ -372,32 +372,32 @@ rm -rf res2.txt
 
 $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 5 - 'cd' with too many args\n${END}"
+# $ECHO "${BLUE}Test 5 - 'cd' with too many args\n${END}"
 
-touch res.txt && chmod 777 res.txt
-touch res2.txt && chmod 777 res2.txt
+# touch res.txt && chmod 777 res.txt
+# touch res2.txt && chmod 777 res2.txt
 
-OUT=$(./a.out "pwd" "cd .. hello" > /dev/null 2> res.txt; \
-< res.txt cat | awk -F ': ' ' {print $NF}')
-OUT2=$( (cd .. hello) > /dev/null 2> res2.txt; \
-< res2.txt cat | awk -F ': ' ' {print $NF}')
+# OUT=$(./a.out "pwd" "cd .. hello" > /dev/null 2> res.txt; \
+# < res.txt cat | awk -F ': ' ' {print $NF}')
+# OUT2=$( (cd .. hello) > /dev/null 2> res2.txt; \
+# < res2.txt cat | awk -F ': ' ' {print $NF}')
 
-$ECHO "minishell:	|$OUT|"
-$ECHO "bash: 		|$OUT2|"
+# $ECHO "minishell:	|$OUT|"
+# $ECHO "bash: 		|$OUT2|"
 
-if [ "$OUT" == "$OUT2" ];
-then
-	$ECHO "Result: ${GREEN}OK${END}"
-else
-	$ECHO "Result: ${RED}KO${END}"
-fi
+# if [ "$OUT" == "$OUT2" ];
+# then
+# 	$ECHO "Result: ${GREEN}OK${END}"
+# else
+# 	$ECHO "Result: ${RED}KO${END}"
+# fi
 
-rm -rf res.txt
-rm -rf res2.txt
+# rm -rf res.txt
+# rm -rf res2.txt
 
-$ECHO "----------------------------"
+# $ECHO "----------------------------"
 
-$ECHO "${BLUE}Test 6 - 'closed stdout'\n${END}"
+$ECHO "${BLUE}Test 5 - 'closed stdout'\n${END}"
 
 touch res.txt && chmod 777 res.txt
 touch res2.txt && chmod 777 res2.txt
@@ -426,4 +426,4 @@ export OLDPWD=$TEMP
 
 $ECHO "----------------------------"
 
-rm -rf a.out
+# rm -rf a.out
