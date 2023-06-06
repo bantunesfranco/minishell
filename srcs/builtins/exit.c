@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/04 11:04:40 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/06 18:49:26 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 {
 	int	exit_code;
 
-	(void)gen;
-	exit_code = 0;
+	exit_code = gen->status;
 	if (write(2, "exit\n", 5) == -1)
 		return (err_msg(cmd->cmd[0], "write error"), 1);
 	if (ft_arrlen(cmd->cmd) > 2)
@@ -63,5 +62,5 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 			exit(255);
 		}
 	}
-	exit (exit_code);
+	exit(exit_code);
 }
