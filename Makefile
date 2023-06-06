@@ -19,7 +19,7 @@ LIBFT_DIR = libft
 
 # compilation variables
 CC = cc
-INCLUDES = -I incs -I libft/incs
+INCLUDES = -I incs -I libft/incs -I $(READLINE)/include
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra
 else
@@ -31,7 +31,7 @@ ifeq ($(UNAME_S), Linux)
 	RL_FLAGS = -lreadline -ltinfo
 	OBJ_FLAGS := $(RL_FLAGS)
 else ifeq ($(UNAME_S), Darwin)
-	RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include
+	RL_FLAGS = -L $(READLINE)/lib -lreadline 
 	OBJ_FLAGS := 
 else
 	$(error OS: $(OS) is not supported!)

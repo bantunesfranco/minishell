@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/05 18:00:58 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/06 15:01:28 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,61 @@
 #include "parsing.h"
 #include "executor.h"
 
+char	*read_tty(void)
+{
+	char	*line;
+
+	line = readline("minishell$ ");
+	if (line == NULL && errno == ENOMEM)
+		err_msg(NULL, "line");
+	else if (line == NULL && errno == 0)
+	{
+		// rl_replace_line("exit", 0);
+		if (write(STDOUT_FILENO, "exit\n", 5) == -1)
+			err_msg(NULL, "write");
+		exit(0);
+	}
+	if (ft_strlen(line))
+		add_history(line);
+	return (line);
+}
+
+char	*read_no_tty(void)
+{
+	char	*line;
+	char	*line2;
+
+	line2 = get_next_line(STDIN_FILENO);
+	if (line2 == NULL)
+		err_msg(NULL, "line");
+	else if (line2 == NULL && errno == 0)
+	{
+		if (write(STDOUT_FILENO, "exit\n", 5) == -1)
+			err_msg(NULL, "write");
+		exit(0);
+	}
+	line = ft_strtrim(line2, "\n");
+	free(line2);
+	return (line);
+}
+
 void	minishell_loop(t_gen *gen)
 {
-	char		*line;
-	char		*line2;
 	t_pipeline	*input;
+	char		*line;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-		{
-			line = readline("minishell$ ");
-			if (line == NULL && errno == ENOMEM)
-				err_msg(NULL, "line");
-			else if (line == NULL)
-			{
-				if (write(STDOUT_FILENO, "exit\n", 5) == -1)
-					err_msg(NULL, "write");
-				exit(0);
-			}
-			if (ft_strlen(line))
-				add_history(line);
-		}
+			line = read_tty();
 		else
-		{
-			line2 = get_next_line(STDIN_FILENO);
-			if (line2 == NULL)
-				err_msg(NULL, "line");
-			else if (line == NULL)
-			{
-				if (write(STDOUT_FILENO, "exit\n", 5) == -1)
-					err_msg(NULL, "write");
-				exit(0);
-			}
-			line = ft_strtrim(line2, "\n");
-			free(line2);
-		}
+			line = read_no_tty();
 		input = parse_line(line);
 		free(line);
 		if (input != NULL)
 			executor(gen, input);
 		free_parsed_structs(input);
+		errno = 0;
 	}
 }
 
