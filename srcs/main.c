@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/07 11:38:47 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/07 14:10:45 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,26 @@ char	*read_no_tty(void)
 
 t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
 {
-	printf("prev_control_operator = %d\n", tmp->prev_control_operator);
-	printf("next_control_operator = %d\n", tmp->next_control_operator);
 	if (!tmp || !tmp->next)
 		return (NULL);
 	while (tmp->next_control_operator == AND && tmp->next && gen->status != 0)
+	{
 		tmp = tmp->next;
+		printf("prev_control_operator = %d\n", tmp->prev_control_operator);
+		printf("next_control_operator = %d\n\n", tmp->next_control_operator);
+	}
 	while (tmp->next_control_operator == OR && tmp->next && gen->status == 0)
+	{
 		tmp = tmp->next;
+		printf("prev_control_operator = %d\n", tmp->prev_control_operator);
+		printf("next_control_operator = %d\n\n", tmp->next_control_operator);
+	}
 	if (tmp->next_control_operator != AND  || tmp->next_control_operator != OR)
+	{
 		tmp = tmp->next;
+		printf("prev_control_operator = %d\n", tmp->prev_control_operator);
+		printf("next_control_operator = %d\n\n", tmp->next_control_operator);
+	}
 	return (tmp);
 }
 void	minishell_loop(t_gen *gen)
@@ -78,7 +88,7 @@ void	minishell_loop(t_gen *gen)
 			line = read_tty();
 		else
 			line = read_no_tty();
-		input = parse_line(line);
+		input = parse_line(line, gen);
 		free(line);
 		tmp = input;
 		while (tmp)
