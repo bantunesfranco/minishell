@@ -5,68 +5,32 @@ BOLD='\033[1m'
 
 #!/bin/bash
 
-help_func(){
-	echo -e "\n\nrun - start minishell"
-	echo "sy - run syntax error tests"
-	echo "le - run lexer tests"
-	echo "ex - run expansion tests"
-	echo "help - display this message"
-	echo "exit - exit tester"
-	echo ""
-}
-
 help_arg(){
-	echo -e "\n\nrun - start minishell"
+	echo -e "\n${BOLD}Run ./tester with one of the following arguments\n${RESET}"
+	echo -e "run - start minishell"
+	echo "unit [option]- run one of the unit tests with an option:"
+	echo "	all - run all unit tests"
+	echo "	sy - run lexer tests"
+	echo "	le - run syntax error tests"
+	echo "	ex - run expansion tests"
+	echo "	pa - run parser tests"
+	echo "clean - cleanup files"
+	echo "help - display this message"
+}
+
+help_unit_arg(){
+	echo -e "\n\n${BOLD}Please input one of the following options${RESET}"
+	echo -e "\n\nall - run all unit tests"
 	echo "sy - run syntax error tests"
 	echo "le - run lexer tests"
 	echo "ex - run expansion tests"
+	echo "pa - run parser tests"
 	echo "help - display this message"
-	echo ""
+	echo "exit - to stop the tester"
 }
 
-readinput(){
-	clear
-	echo -e "\n${BOLD}What mode would you like to run :${RESET}"
-	help_func
-	echo -e ""
-	while [[ $option != "exit" ]]
-	do
-		read option
-		if [[ $option == "run" ]]
-		then
-			run_minishell
-			help_func
-		elif [[ $option == "sy" ]]
-		then
-			test_syntax
-			help_func
-		elif [[ $option == "le" ]]
-		then
-			test_lexer
-			help_func
-		elif [[ $option == "ex" ]]
-		then
-			test_expansion
-			help_func
-		elif [[ $option == "help" ]]
-		then
-			help_func
-		elif [[ $option == "exit" ]]
-		then
-			break ;
-		else
-			echo -e "\nPlease input valid option"
-			echo "help - for valid options"
-		fi
-		echo ""
-	done
-}
-
-runoption(){
-	if [[ $1 == "run" ]]
-	then
-		run_minishell
-	elif [[ $1 == "sy" ]]
+unit_test(){
+	if [[ $1 == "sy" ]]
 	then
 		test_syntax
 	elif [[ $1 == "le" ]]
@@ -75,50 +39,117 @@ runoption(){
 	elif [[ $1 == "ex" ]]
 	then
 		test_expansion
-	elif [[ $1 == "help" ]]
+	elif [[ $1 == "pa" ]]
 	then
-		echo -e "\n\n${BOLD}Run ./parsing_test.sh with one of the following arguments or none for interactive input${RESET}"
-		help_arg
+		test_parser
+	elif [[ $1 == "all" ]]
+	then
+		test_all_unit
+		return
+	elif [[ $1 == "exit" ]]
+	then
+		return
 	else
-		echo -e "\n\n${BOLD}Run ./parsing_test.sh with one of the following arguments or none for interactive input${RESET}"
+		help_unit_arg
+	fi
+	read option
+	unit_test $option
+}
+
+runoption(){
+	if [[ $1 == "run" ]]
+	then
+		run_minishell
+	elif [[ $1 == "unit" ]]
+	then
+		unit_test $2
+	elif [[ $1 == "all" ]]
+	then
+		run_all_tests $2
+	elif [[ $1 == "clean" ]]
+	then
+		# foo=$(make fclean)
+		make -C testing_files fclean
+	else
 		help_arg
-		read option
-		runoption $option
 	fi
 	echo ""
 }
 
 main () {
-	if [[ $# == 0 ]]
-	then
-		readinput
-	else
-		runoption $1
-	fi
+	# if [[ $# == 0 ]]
+	# then
+	# 	help_arg
+	# else
+		runoption $1 $2 $3 $4
+	# fi
 }
 
 run_minishell () {
-	echo hi
-	make -C .
+	foo=$(make -C .)
 	./minishell
 }
 
-test_syntax () {
-	# if all 
-		./testing_files/scripts/syntax_error.sh
-	# else
-	# 	./testing_files/scripts/syntax_error.sh
+test_if_passed(){
+	check=$(echo $1 | grep "TESTS PASSED")
+	if [ -z "$check" ]
+	then
+		echo -e ":${RED}			KO ${RESET}"
+	else
+		echo -e ":${GREEN}			OK ${RESET}"
+	fi
+}
 
+test_if_passed_all(){
+	check=$(echo -e $1 | grep KO)
+	if [ -z "$check" ]
+	then
+		echo -e ":${GREEN}			OK${RESET}"
+	else
+		echo -e ":${RED}			KO${RESET}"
+	fi
+}
+
+run_all_tests() {
+	rm -rf error_args
+	echo -n -e "\nUnit tests"
+	ARG=$(test_all_unit)
+	test_if_passed_all "$ARG"
+}
+
+test_all_unit() {
+	rm -rf error_args
+	echo -n -e "\nTesting syntax errors"
+	ARG=$(./testing_files/scripts/syntax_error.sh)
+	test_if_passed "$ARG"
+	echo -n "Testing lexer	"
+	ARG=$(./testing_files/scripts/lexer_tester.sh)
+	test_if_passed "$ARG"
+	echo -n "Testing expansion"
+	ARG=$(./testing_files/scripts/expansion_tester.sh)
+	test_if_passed "$ARG"
+}
+
+test_parser () {
+	rm -rf error_args
+	./testing_files/scripts/parser_tester.sh
+}
+
+test_syntax () {
+	rm -rf error_args
+	./testing_files/scripts/syntax_error.sh
 }
 
 test_lexer () {
+	rm -rf error_args
 	./testing_files/scripts/lexer_tester.sh
 }
 
 test_expansion () {
+	rm -rf error_args
 	./testing_files/scripts/expansion_tester.sh
 }
 
 # ./minishell
 
-main $1
+main $1 $2

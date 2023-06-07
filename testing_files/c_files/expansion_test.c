@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 15:07:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/03 17:07:34 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/07 08:30:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int	main(int argc, char *argv[], char **envp)
 
 	start_env = ft_arrdup(envp);
 	gen.env = env_init(start_env);
+	gen.status = 0;
 	expand_environment_vars(argv[1], &gen);
 }

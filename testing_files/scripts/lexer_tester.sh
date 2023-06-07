@@ -6,48 +6,41 @@ BOLD='\033[1m'
 #!/bin/bash
 
 test_output () {
-	echo -n "Output :   "
 	if [[ $1 == $2 ]]
 	then
-		echo -e -n "${GREEN}OK🌟   ${RESET}"
+		((OK++))
 	else
-		echo -e -n "${RED}KO🤢   ${RESET}"
 		((KO++))
-		echo -e "different errors for argument: \n$TEST" >> error_args
+		echo -e "different errors for argument: \n$TEST\n with output $1\n" >> error_args
 	fi
 }
 
 test_err () {
-	echo -n "Error :   "
 	if [[ ! -s $1 ]]
 	then
-		echo -e "${GREEN}OK🌟\n${RESET}"
+		((OK++))
 	else
-		echo -e "${RED}KO🤢\n${RESET}"
 		((KO++))
-		echo -e "different errors for argument: \n$TEST" >> error_args
+		echo -e "different errors for argument: \n$TEST\n with output $1\n" >> error_args
 	fi
 }
 
 
-# echo -e "\n		${BOLD}${GREEN}Testing lexer${RESET}\n"
-make -C testing_files lexer_test
 echo "--------------------------------------------------------------------------"
-echo -e "------------------------------${GREEN}STARTING TESTS${RESET}------------------------------"
-echo "--------------------------------------------------------------------------"	
-sleep 2
+echo -e "\n		${BOLD}${GREEN}Testing lexer${RESET}\n"
+make -C testing_files lexer_test > /dev/null
+sleep 1
 FILE="./testing_files/files/lexer"
 IFS=0
 NL=$'\n'
 KO=0
-rm -rf error_args
+OK=0
 while read -r line
 do
 	if [[ $line == "" ]]
 	then
 		continue
 	else
-		echo -e "	Test for input :\n👉	$line"
 		OUTPUT=$(./testing_files/lexer_test $line 2>err_mini)
 		read -r line
 		test_output $OUTPUT $line
@@ -57,9 +50,12 @@ do
 done < "$FILE"
 if [[ $KO == 0 ]]
 then
-	echo -e "\n	👍${GREEN}TESTS PASSED${RESET}\n"
+	echo -n -e "\n		👍${GREEN}TESTS PASSED"
 else
-	echo -e "\n	🤮${RED}${KO} TESTS FAILED${RESET}\n"
+	echo -n -e "\n		🤮${RED}${KO} TESTS FAILED"
 fi
+total=$((OK + KO))
+echo -e " $OK/$total\n${RESET}"
+echo "--------------------------------------------------------------------------"
 rm err_mini
 

@@ -8,24 +8,20 @@ BOLD='\033[1m'
 # functions comparing output, error and error code
 
 test_output(){
-	echo -n "Output :   "
 	if ! diff -q $1 $2 >/dev/null
 	then
-		echo -e -n  "${RED}KO🤢   ${RESET}"
 		((KO++))
 		echo -e "different outputs for argument: \n$TEST" >> error_args
 	else
-		echo -e -n "${GREEN}OK🌟   ${RESET}"
+		((OK++))
 	fi
 }
 
 test_err(){
-	echo -n "Error :   "
 	if [[ -s $1 && -s $2 ]] || [[ ! -s $1 && ! -s $2 ]]
 	then
-		echo -e "${GREEN}OK🌟\n${RESET}"
+		((OK++))
 	else
-		echo -e "${RED}KO🤢\n${RESET}"
 		((KO++))
 		echo -e "different errors for argument: \n$TEST" >> error_args
 	fi
@@ -43,44 +39,44 @@ test_code(){
 
 # script
 
-echo -e "\n		${BOLD}${GREEN}Testing syntax errors${RESET}\n"
-make -C testing_files syntax_test
 echo "--------------------------------------------------------------------------"
-echo -e "------------------------------${GREEN}STARTING TESTS${RESET}------------------------------"
-echo "--------------------------------------------------------------------------"	
-sleep 2
+echo -e "\n		${BOLD}${GREEN}Testing syntax errors${RESET}\n"
+make -C testing_files syntax_test > /dev/null
+sleep 1
 FILE="./testing_files/files/syntax_errors"
 IFS=0
 NL=$'\n'
 KO=0
-rm -rf error_args
-	while read -r line
-	do
-		if [[ $line == "" ]]
-		then
-			continue
-		else
-			while [[ $line != "" ]]
-			do
-				TEST+="$line$NL"
-				read -r line
-			done
-		fi
-		echo -e -n "	Test for input :\n👉	$TEST"
-		./testing_files/syntax_test $TEST 2>err_mini >out_mini
-		exit_mini=$?
-		echo -n "$TEST" | bash 2>err_bash >out_bash
-		exit_bash=$?
-		test_output out_mini out_bash
-		test_err err_mini err_bash
-		# test_code $exit_mini $exit_bash
-		TEST=""
-	done < "$FILE"
+OK=0
+while read -r line
+do
+	if [[ $line == "" ]]
+	then
+		continue
+	else
+		while [[ $line != "" ]]
+		do
+			TEST+="$line$NL"
+			read -r line
+		done
+	fi
+	./testing_files/syntax_test $TEST 2>err_mini >out_mini
+	exit_mini=$?
+	echo -n "$TEST" | bash 2>err_bash >out_bash
+	exit_bash=$?
+	test_output out_mini out_bash
+	test_err err_mini err_bash
+	# test_code $exit_mini $exit_bash
+	TEST=""
+done < "$FILE"
 if [[ $KO == 0 ]]
 then
-	echo -e "\n	👍${GREEN}TESTS PASSED${RESET}\n"
+	echo -n -e "\n		👍${GREEN}TESTS PASSED"
 else
-	echo -e "\n	🤮${RED}${KO} TESTS FAILED${RESET}\n"
+	echo -n -e "\n		🤮${RED}${KO} TESTS FAILED"
 fi
+total=$((OK + KO))
+echo -e " $OK/$total\n${RESET}"
+echo "--------------------------------------------------------------------------"
 rm -f err_*
 rm -f out_*

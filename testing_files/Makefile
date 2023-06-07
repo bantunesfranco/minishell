@@ -8,7 +8,7 @@ END=\033[0m
 
 NAME = lexer_test syntax_test parser_test expansion_test
 SRC_FILES = $(shell find ../srcs -type f -name "*.c")
-OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)
+OBJ_FILES = $(SRC_FILES:../srcs/%.c=../obj/%.o)
 OBJ_DIR = ../obj ../obj/input_parser ../obj/builtins ../obj/init ../obj/executor ../obj/input_parser/lexer ../obj/input_parser/parser ../obj/input_parser/expansion
 HEADERS  = $(shell find ../incs -type f -name "*.h")
 
@@ -46,7 +46,8 @@ COM_SYNTAX = ../obj/input_parser/lexer/* ../obj/input_parser/parser_struct_init.
 c_files/syntax_tester.c ../obj/test_utils.o ../obj/error.o
 
 COM_PARSING = ../obj/input_parser/lexer/* ../obj/input_parser/parser/* \
-obj/input_parser/*.o ../obj/test_utils.o ../obj/error.o ../obj/free_cmd_list.o \
+../obj/input_parser/*.o ../obj/test_utils.o ../obj/error.o ../obj/free_cmd_list.o \
+../obj/builtins/*.o ../obj/utils.o ../obj/init/* \
 c_files/parser_tester.c
 
 COM_EXPANSION = ../obj/input_parser/expansion/expansion.o ../obj/init/* ../obj/error.o ../obj/utils.o \
@@ -76,7 +77,7 @@ $(LIBFT):
 
 comfiles: $(LIBFT) $(OBJ_FILES)
 
-obj/%.o: srcs/%.c $(HEADERS) | $(OBJ_DIR)
+../obj/%.o: ../srcs/%.c $(HEADERS) | $(OBJ_DIR)
 	@$(CC) $(INCLUDES) $(OBJ_FLAGS) $(CFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
@@ -87,4 +88,5 @@ clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@rm -rf $(LIBFT)
+	@echo "${RED}Removing binaries${END}"
+	@rm -rf $(LIBFT) $(NAME)
