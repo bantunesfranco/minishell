@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:47:19 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/03 12:27:14 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/06 14:10:22 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	pwd(t_gen *gen, t_cmd *cmd)
 	ft_memmove(pwd, path, len);
 	pwd[len] = '\n';
 	pwd[len + 1] = '\0';
-	if (write(fd, pwd, len + 2) == -1)
+	if (write(fd, pwd, len + 1) == -1)
 		return (err_msg(cmd->cmd[0], "write error"), 1);
 	free(path);
 	free(pwd);

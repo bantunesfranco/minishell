@@ -37,3 +37,43 @@ else
 fi
 rm -f err_*
 rm -f out_*
+
+
+
+# readinput(){
+# 	clear
+# 	echo -e "\n${BOLD}What mode would you like to run :${RESET}"
+# 	help_func
+# 	echo -e ""
+# 	while [[ $option != "exit" ]]
+# 	do
+# 		read option
+# 		if [[ $option == "run" ]]
+# 		then
+# 			run_minishell
+# 			help_func
+# 		elif [[ $option == "sy" ]]
+# 		then
+# 			test_syntax
+# 			help_func
+# 		elif [[ $option == "le" ]]
+# 		then
+# 			test_lexer
+# 			help_func
+# 		elif [[ $option == "ex" ]]
+# 		then
+# 			test_expansion
+# 			help_func
+# 		elif [[ $option == "help" ]]
+# 		then
+# 			help_func
+# 		elif [[ $option == "exit" ]]
+# 		then
+# 			break ;
+# 		else
+# 			echo -e "\nPlease input valid option"
+# 			echo "help - for valid options"
+# 		fi
+# 		echo ""
+# 	done
+# }

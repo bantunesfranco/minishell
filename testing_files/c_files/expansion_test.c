@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser_tester.c                                    :+:    :+:            */
+/*   expansion_test.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/05/30 10:47:26 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/30 10:48:23 by jmolenaa      ########   odam.nl         */
+/*   Created: 2023/06/01 15:07:27 by jmolenaa      #+#    #+#                 */
+/*   Updated: 2023/06/07 08:30:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "expander.h"
 #include "minishell.h"
-#include "parsing.h"
-#include "lexer.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char **envp)
 {
 	(void)argc;
-	(void)argv;
+	t_gen	gen;
+	char	**start_env;
 
-	printf("works\n");
+	start_env = ft_arrdup(envp);
+	gen.env = env_init(start_env);
+	gen.status = 0;
+	expand_environment_vars(argv[1], &gen);
 }

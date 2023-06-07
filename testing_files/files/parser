@@ -1,0 +1,15 @@
+echo || cat
+start: echo || cat
+
+echo < lol >p >>l <<r | <s
+start: echo < lol << r > p >> l | < s
+
+echo<lol|<s echo hi>p
+start: echo < lol | echo hi < s > p
+
+echo hi hello huh no what
+start: echo hi hello huh no what
+
+echo | (cat hi)
+start: echo | ( - 1 0 cat hi )
+

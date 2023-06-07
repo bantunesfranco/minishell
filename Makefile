@@ -11,7 +11,10 @@ READLINE = $(shell brew --prefix readline)
 HEADERS  = $(shell find incs -type f -name "*.h")
 SRC_FILES = $(shell find srcs -type f -name "*.c")
 OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)
-OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser
+OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser obj/input_parser/expansion
+
+# readline flags
+RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline -I $(HOME)/.brew/opt/readline/include
 
 # libft variables
 LIBFT = libft/libft.a
