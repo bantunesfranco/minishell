@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/02 08:58:55 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/07 20:58:09 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	err_msg(char *msg, char *msg2)
 {
+	write(2, "minishell: ", 11);
 	if (msg)
 	{
 		write(2, msg, ft_strlen(msg));

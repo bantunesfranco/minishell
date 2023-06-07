@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/07 14:10:45 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/07 20:49:54 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,57 @@ char	*read_no_tty(void)
 	return (line);
 }
 
+t_pipeline	*goto_close_operator(t_pipeline *tmp)
+{
+	int		open;
+	int		close;
+	
+	open = 1;
+	close = 0;
+	while (tmp && open - close != 0)
+	{
+		tmp = tmp->next;
+		if (!tmp)
+			break ;
+		if (tmp->next_control_operator == OPEN)
+			open++;
+		if (tmp->next_control_operator == CLOSE)
+			close++;
+	}
+	if (tmp && tmp->next_control_operator == CLOSE)
+		tmp = tmp->next;
+	return (tmp);
+}
+
 t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
 {
-	if (!tmp || !tmp->next)
-		return (NULL);
-	while (tmp->next_control_operator == AND && tmp->next && gen->status != 0)
+	if (tmp->prev_control_operator == AND && gen->status != 0)
 	{
-		tmp = tmp->next;
-		printf("prev_control_operator = %d\n", tmp->prev_control_operator);
-		printf("next_control_operator = %d\n\n", tmp->next_control_operator);
+		while (tmp)
+		{
+			if (tmp->next && tmp->next_control_operator == OPEN)
+				tmp = goto_close_operator(tmp->next);
+			else
+				tmp = tmp->next;
+			if (tmp && tmp->prev_control_operator == CLOSE)
+				break ;
+		}
 	}
-	while (tmp->next_control_operator == OR && tmp->next && gen->status == 0)
+	else if (tmp->prev_control_operator == OR && gen->status == 0)
 	{
-		tmp = tmp->next;
-		printf("prev_control_operator = %d\n", tmp->prev_control_operator);
-		printf("next_control_operator = %d\n\n", tmp->next_control_operator);
-	}
-	if (tmp->next_control_operator != AND  || tmp->next_control_operator != OR)
-	{
-		tmp = tmp->next;
-		printf("prev_control_operator = %d\n", tmp->prev_control_operator);
-		printf("next_control_operator = %d\n\n", tmp->next_control_operator);
+		while (tmp)
+		{
+			if (tmp->next && tmp->next_control_operator == OPEN)
+				tmp = goto_close_operator(tmp->next);
+			else
+				tmp = tmp->next;
+			if (tmp && tmp->prev_control_operator == CLOSE)
+				break ;
+		}
 	}
 	return (tmp);
 }
+
 void	minishell_loop(t_gen *gen)
 {
 	t_pipeline	*input;
@@ -94,7 +121,10 @@ void	minishell_loop(t_gen *gen)
 		while (tmp)
 		{
 			executor(gen, tmp);
-			tmp = check_control_operators(gen, tmp);
+			if (tmp->next)
+				tmp = check_control_operators(gen, tmp->next);
+			else
+				break ;
 		}
 		free_parsed_structs(input);
 		errno = 0;
