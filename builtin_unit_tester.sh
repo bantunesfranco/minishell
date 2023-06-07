@@ -109,7 +109,7 @@ test_cd () {
 		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
 		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
-		exit 1
+		echo -e "\n" && exit 1
 	fi
 }
 
@@ -125,7 +125,7 @@ test_echo () {
 		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
 		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
-		exit 1
+		echo -e "\n" && exit 1
 	fi
 }
 
@@ -141,7 +141,7 @@ test_env () {
 		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
 		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
-		exit 1
+		echo -e "\n" && exit 1
 	fi
 }
 
@@ -157,7 +157,7 @@ test_exit () {
 		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
 		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
-		exit 1
+		echo -e "\n" && exit 1
 	fi
 }
 
@@ -173,7 +173,7 @@ test_export () {
 		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
 		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
-		exit 1
+		echo -e "\n" && exit 1
 	fi
 }
 
@@ -189,7 +189,7 @@ test_pwd () {
 		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
 		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
-		exit 1
+		echo -e "\n" && exit 1
 	fi
 }
 
@@ -205,7 +205,7 @@ test_unset () {
 		echo -en "\t${GREEN}OK - Passed $OK/$TESTS tests${RESET}"
 	else
 		echo -en "\t${RED}KO - Failed $KO/$TESTS tests${RESET}"
-		exit 1
+		echo -e "\n" && exit 1
 	fi
 }
 

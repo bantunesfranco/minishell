@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/06 15:01:28 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/07 11:35:24 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,24 @@ char	*read_no_tty(void)
 	return (line);
 }
 
+t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
+{
+	printf("prev_control_operator = %d\n", tmp->prev_control_operator);
+	printf("next_control_operator = %d\n", tmp->next_control_operator);
+	if (!tmp || !tmp->next)
+		return (NULL);
+	while (tmp->next_control_operator == AND && tmp->next && gen->status != 0)
+		tmp = tmp->next;
+	while (tmp->next_control_operator == OR && tmp->next && gen->status == 0)
+		tmp = tmp->next;
+	if (tmp->next_control_operator != AND  || tmp->next_control_operator != OR)
+		tmp = tmp->next;
+	return (tmp);
+}
 void	minishell_loop(t_gen *gen)
 {
 	t_pipeline	*input;
+	t_pipeline	*tmp;
 	char		*line;
 
 	while (1)
@@ -65,8 +80,12 @@ void	minishell_loop(t_gen *gen)
 			line = read_no_tty();
 		input = parse_line(line);
 		free(line);
-		if (input != NULL)
-			executor(gen, input);
+		tmp = input;
+		while (tmp)
+		{
+			executor(gen, tmp);
+			tmp = check_control_operators(gen, tmp);
+		}
 		free_parsed_structs(input);
 		errno = 0;
 	}
