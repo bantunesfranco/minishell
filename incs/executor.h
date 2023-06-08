@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/22 12:31:23 by codespace     #+#    #+#                 */
-/*   Updated: 2023/06/03 10:35:17 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/08 17:19:22 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ int		pipe_and_fork(t_cmd *cmd, int *p);
 void	close_pipes(t_cmd *cmd, int *p, int pipe_rd);
 void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd);
 void	executor(t_gen *gen, t_pipeline *pipeline);
+
+char	*read_here_doc(char *delimiter);
 
 #endif
