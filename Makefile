@@ -14,7 +14,7 @@ OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)
 OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser obj/input_parser/expansion
 
 # readline flags
-RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline -I $(HOME)/.brew/opt/readline/include
+RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include
 
 # libft variables
 LIBFT = libft/libft.a
@@ -22,7 +22,7 @@ LIBFT_DIR = libft
 
 # compilation variables
 CC = cc
-INCLUDES = -I incs -I libft/incs
+INCLUDES = -I incs -I libft/incs -I $(READLINE)/include
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra
 else
@@ -34,7 +34,7 @@ ifeq ($(UNAME_S), Linux)
 	RL_FLAGS = -lreadline -ltinfo
 	OBJ_FLAGS := $(RL_FLAGS)
 else ifeq ($(UNAME_S), Darwin)
-	RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include
+	RL_FLAGS = -L $(READLINE)/lib -lreadline 
 	OBJ_FLAGS := 
 else
 	$(error OS: $(OS) is not supported!)

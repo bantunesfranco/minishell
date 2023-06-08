@@ -36,11 +36,12 @@ KO=0
 OK=0
 while read -r line
 do
-	if [[ $line == "" ]]
+	if [[ $line == "" ]] || [[ $line == \#* ]]
 	then
 		continue
 	else
-		OUTPUT=$(./testing_files/expansion_test $line 2>err_mini)
+		# OUTPUT=$(./testing_files/expansion_test $line 2>err_mini)
+		echo $line
 		./testing_files/expansion_test $line
 		# echo $OUTPUT
 		# read -r line
@@ -59,5 +60,5 @@ done < "$FILE"
 # echo -e " $OK/$total\n${RESET}"
 # echo "--------------------------------------------------------------------------"
 
-rm err_mini
+rm -rf err_mini
 

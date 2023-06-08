@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/02 16:51:08 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/07 14:02:24 by codespace     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int	is_builtin(t_gen *gen, t_cmd *cmd)
 {
+	if (!cmd)
+		return (0);
 	cmd->input->fd = handle_input_redirection(cmd->input);
 	cmd->output->fd = handle_output_redirection(cmd->output);
 	if (!cmd->next)
@@ -81,6 +83,8 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	int		p[2];
 	int		id;
 
+	if (pipeline->subshell)
+		return ;
 	cmd = pipeline->first_cmd;
 	if (is_builtin(gen, cmd) == 1)
 		return ;

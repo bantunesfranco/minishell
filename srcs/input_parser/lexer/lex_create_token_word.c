@@ -6,11 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 11:05:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 13:22:16 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/08 19:41:00 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "parsing.h"
 #include "libft.h"
 
 /*	loops through string until it encounters one of the metacharacters

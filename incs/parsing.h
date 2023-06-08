@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/01 15:01:16 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/08 19:40:08 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ t_pipeline	*find_curr_pipeline(t_pipeline *curr_pipeline);
 void		close_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token);
 char		**create_cmd_array(t_token *temp, t_token *first_token);
 void		malloc_failure();
+size_t		skip_quotes(char *line, size_t i);
 
 #endif

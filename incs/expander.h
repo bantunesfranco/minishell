@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 14:05:12 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/01 16:46:38 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/08 17:55:41 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 // 	DOUBLE
 // }			t_qt;
 
-void	expand_environment_vars(char *word, t_gen *gen);
+char	*expand_environment_vars(char *word, t_gen *gen);
 
 #endif

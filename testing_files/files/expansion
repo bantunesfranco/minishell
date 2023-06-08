@@ -1,1 +1,27 @@
+$
+
 $HOME
+
+$add_history
+
+$cat"lol"
+
+'$asd'
+
+"$cat"
+
+$SHELL
+
+asd$HOME
+
+asd"$HOME"
+
+'$HOME'
+
+asd" .  $HOME" 
+
+asd" .  asdas"$HOME
+
+$?
+
+ads"$HOM"E'asd$HOME'$HOM"E"

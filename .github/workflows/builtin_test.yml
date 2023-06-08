@@ -1,35 +1,47 @@
-name: Bultin test
+name: Builtin Test
 
 on:
     pull_request:
         branches: [ "main" ]
     workflow_dispatch:
 
+
 jobs:
-  build:
+  test:
     timeout-minutes: 10
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          submodules: recursive
+            submodules: 'true'
+        env: 
+            TERM: xterm-256color
 
-      - name: Install Dependencies
+      - name: Test cd
         run: |
-          set -x
-          if [ "$RUNNER_OS" == "Linux" ]; then
-              sudo apt-get update -qq
-              sudo apt-get install -y -qq libreadline-dev libreadline8
-          elif [ "$RUNNER_OS" == "macOS" ]; then
-              brew update
-              brew install readline
-          fi
+            ./builtin_unit_tester.sh cd
+      - name: Test echo
+        run: |
+            ./builtin_unit_tester.sh echo
+      - name: Test env
+        run: |
+            ./builtin_unit_tester.sh env
+      - name: Test exit
+        run: |
+            ./builtin_unit_tester.sh exit
+      - name: Test export
+        run: |
+            ./builtin_unit_tester.sh export
+      - name: Test pwd
+        run: |
+            ./builtin_unit_tester.sh pwd
+      - name: Test unset
+        run: |
+            ./builtin_unit_tester.sh unset
 
-      - name: Build
-        run: make -C ${{github.workspace}}
 
