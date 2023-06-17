@@ -1,27 +1,29 @@
-$
+# $
 
-$HOME
+# $HOME
 
-$add_history
+asdasdw$awae$awe
 
-$cat"lol"
+# $add_history
 
-'$asd'
+# $cat"lol"
 
-"$cat"
+# '$asd'
 
-$SHELL
+# "$cat"
 
-asd$HOME
+# $SHELL
 
-asd"$HOME"
+# asd$HOME
 
-'$HOME'
+# asd"$HOME"
 
-asd" .  $HOME" 
+# '$HOME'
 
-asd" .  asdas"$HOME
+# asd" .  $HOME" 
 
-$?
+# asd" .  asdas"$HOME
 
-ads"$HOM"E'asd$HOME'$HOM"E"
+# $?
+
+# ads"$HOM"E'asd$HOME'$HOM"E"

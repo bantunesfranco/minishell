@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 14:05:12 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/08 17:55:41 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/17 14:06:24 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 // 	DOUBLE
 // }			t_qt;
 
-char	*expand_environment_vars(char *word, t_gen *gen);
+// char	*expand_environment_vars(char *word, t_gen *gen);
+char	*expand_environment_vars(char *word, t_gen *gen, int heredoc);
+char	**split_word(const char *str);
 
 #endif

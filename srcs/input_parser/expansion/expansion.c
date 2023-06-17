@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 14:51:40 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/08 19:40:41 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/17 14:10:55 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,20 @@ char	*expand_str_with_var_value(char *var_value, char **word, int start_of_var, 
 	char	*new_str;
 	char	*temp;
 
+	// printf("%zu %s\n", ft_strlen(var_value), var_value);
+	// printf("%zu %s\n", ft_strlen(*word), *word);
 	new_str = ft_substr(*word, 0, start_of_var - 1);
 	if (new_str == NULL)
 		err_msg(NULL, "expander");
+	// printf("%zu %s\n", ft_strlen(new_str), new_str);
 	temp = ft_strjoin_free(new_str, var_value);
 	if (temp == NULL)
 		err_msg(NULL, "expander");
+	// printf("%zu %s\n", ft_strlen(temp), temp);
 	new_str = ft_strjoin(temp, *word + end_of_var);
 	if (new_str == NULL)
 		err_msg(NULL, "expander");
+	// printf("%zu %s\n", ft_strlen(new_str), new_str);
 	free(temp);
 	free(*word);
 	return (new_str);
@@ -89,7 +94,7 @@ size_t	expand_variable(char **word, size_t start_of_var, t_gen *gen)
 
 	end_of_var = find_end_of_var(*word, start_of_var);
 	if (end_of_var == start_of_var)
-		return (0);
+		return (start_of_var);
 	var_name = get_var_name(*word + start_of_var, end_of_var - start_of_var);
 	// printf("%s\n", var_name);
 	var_value = compare_with_env(var_name, gen);
@@ -102,6 +107,7 @@ size_t	expand_variable(char **word, size_t start_of_var, t_gen *gen)
 	// printf("%s\n", var_value);
 	// printf("%s\n", *word);
 	// printf("%zd %zd\n",return_value, start_of_var);
+	// printf("%c\n", *(*word + return_value));
 	return (return_value);
 }
 
@@ -118,13 +124,15 @@ char	*expand_environment_vars(char *word, t_gen *gen, int heredoc)
 		if (*(word + i) == '$')
 		{
 			i = expand_variable(&word, i + 1, gen);
+			continue ;
 			// printf("%zu\n", i);
 			// printf("%c\n", *(word + i));
 		}
 		if (*(word + i) == '\'' && heredoc == 0)
 			i = skip_quotes(word, i);
-		if (*(word + i) == '\0')
-			break ;
+		// if (*(word + i) == '\0')
+		// 	break ;
+		// printf("%d\n", *(word + i));
 		i++;
 	}
 	return (word);

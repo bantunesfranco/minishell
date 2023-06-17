@@ -6,96 +6,107 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 18:44:53 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/08 19:43:21 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/10 16:50:29 by janmolenaar   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
+#include "parsing.h"
 
-// char	**split_word(char *word)
-// {
-// 	(void)word;
-// }
+void	free_arr(char **arr)
+{
+	int	i;
 
-// static char	**free_arr(char **arr)
-// {
-// 	int	i;
+	if (!arr)
+		err_msg(NULL, "expander");
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
+	err_msg(NULL, "expander");
+}
 
-// 	if (!arr)
-// 		return (NULL);
-// 	i = 0;
-// 	while (arr[i])
-// 	{
-// 		free(arr[i]);
-// 		arr[i] = NULL;
-// 		i++;
-// 	}
-// 	free(arr);
-// 	return (NULL);
-// }
+static int	get_word_end(char *str, int i)
+{
+	while (*(str + i) != ' ' && *(str + i) != '\t' && \
+			*(str + i) != '\n' && *(str + i) != '\0')
+	{
+		if (*(str + i) == '"' || *(str + i) == '\'')
+			i = skip_quotes(str, i);
+		i++;
+	}
+	return (i);
+}
 
-// static int	get_word_end(const char *str, char sep, int i)
-// {
-// 	while (str[i] && str[i] != sep)
-// 		i++;
-// 	return (i);
-// }
+static int	split_str(char **split_word, char *str)
+{
+	size_t	i;
+	int		j;
+	int		word_end;
 
-// static int	get_arr(char **arr, const char *str, char sep)
-// {
-// 	int	i;
-// 	int	word_end;
+	j = 0;
+	i = 0;
+	while (*(str + i))
+	{
+		if (*(str + i) != ' ' && *(str + i) != '\t' && *(str + i) != '\n')
+		{
+			word_end = get_word_end(str, i);
+			*(split_word + j) = ft_substr(str, i, word_end - i);
+			if (*(split_word + j) == NULL)
+				return (0);
+			j++;
+			i = word_end - 1;
+		}
+		i++;
+	}
+	return (1);
+}
 
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] != sep)
-// 		{
-// 			word_end = get_word_end(str, sep, i);
-// 			*arr = ft_calloc(sizeof(**arr), word_end - i + 1);
-// 			if (!*arr)
-// 				return (0);
-// 			ft_memcpy(*arr, str + i, word_end - i);
-// 			arr++;
-// 			i = word_end - 1;
-// 		}
-// 		i++;
-// 	}
-// 	return (1);
-// }
+static int	count_words(char *str)
+{
+	size_t	i;
+	int		word_count;
 
-// static int	count_words(const char *str)
-// {
-// 	size_t	i;
-// 	int		word_count;
+	i = 0;
+	word_count = 0;
+	while (*(str + i) != '\0')
+	{
+		if (*(str + i) != ' ' && *(str + i) != '\t' && *(str + i) != '\n')
+		{
+			word_count++;
+			while (*(str + i) != ' ' && *(str + i) != '\t' && \
+					*(str + i) != '\n' && *(str + i) != '\0')
+			{
+				if (*(str + i) == '"' || *(str + i) == '\'')
+					i = skip_quotes(str, i);
+				i++;
+			}
+		}
+		if (*(str + i) != '\0')
+			i++;
+	}
+	return (word_count);
+}
 
-// 	i = 0;
-// 	word_count = 0;
-// 	while (*(str + i) != '\0')
-// 	{
-// 		if (*(str + i) != ' ' && *(str + i) != '\t' && *(str + i) != '\n')
-// 		{
-// 			word_count++;
-// 			while (str[i] && str[i] != sep)
-// 				i++;
-// 		}
-// 		if (str[i])
-// 			i++;
-// 	}
-// 	return (word_count);
-// }
+char	**split_word(char *str)
+{
+	char	**split_word;
+	int		word_count;
 
-// char	**ft_split(const char *str)
-// {
-// 	char	**arr;
-
-// 	if (!str)
-// 		return (NULL);
-// 	arr = ft_calloc(sizeof(*arr), count_words(str, sep) + 1);
-// 	if (!arr)
-// 		return (NULL);
-// 	if (!get_arr(arr, str, sep))
-// 		return (free_arr(arr));
-// 	return (arr);
-// }
+	if (!str)
+		return (NULL);
+	word_count = count_words(str);
+	// if (word_count == 0)
+	// 	return (NULL)
+	split_word = ft_calloc(sizeof(char *), word_count + 1);
+	if (!split_word)
+		err_msg(NULL, "expander");
+	if (split_str(split_word, str) == 0)
+		free_arr(split_word);
+	return (split_word);
+}

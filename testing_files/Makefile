@@ -50,8 +50,8 @@ COM_PARSING = ../obj/input_parser/lexer/* ../obj/input_parser/parser/* \
 ../obj/builtins/*.o ../obj/utils.o ../obj/init/* \
 c_files/parser_tester.c
 
-COM_EXPANSION = ../obj/input_parser/expansion/expansion.o ../obj/init/* ../obj/error.o ../obj/utils.o \
-c_files/expansion_test.c
+COM_EXPANSION = ../obj/input_parser/expansion/* ../obj/init/* ../obj/error.o ../obj/utils.o \
+c_files/expansion_test.c ../obj/input_parser/input_parser_utils.o ../obj/test_utils.o
 
 # all: $(NAME)
 
