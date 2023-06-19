@@ -6,13 +6,14 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 14:51:40 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/17 18:07:24 by janmolenaar   ########   odam.nl         */
+/*   Updated: 2023/06/19 11:10:32 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 	// #include "structs.h"
 	// #include "libft.h"
 #include "parsing.h"
+#include "expander.h"
 #include "minishell.h"
 #include "libft.h"
 
@@ -111,13 +112,13 @@ size_t	expand_variable(char **word, size_t start_of_var, t_gen *gen)
 	return (return_value);
 }
 
-char	*expand_environment_vars(char *word, t_gen *gen, int heredoc)
+char	*expand_environment_vars(char *word, t_gen *gen, int heredoc, t_quote_mark **head)
 {
-	(void)word;
-	(void)gen;
 	size_t	i;
+	int		double_quoted;
 
 	i = 0;
+	double_quoted = 0;
 	// printf("hi\n");
 	while (*(word + i) != '\0')
 	{
@@ -128,8 +129,18 @@ char	*expand_environment_vars(char *word, t_gen *gen, int heredoc)
 			// printf("%zu\n", i);
 			// printf("%c\n", *(word + i));
 		}
-		if (*(word + i) == '\'' && heredoc == 0)
-			i = skip_quotes(word, i);
+		if (*(word + i) == '\'' && heredoc == 0 && double_quoted == 0)
+		{
+			// printf("%c\n", *(word + i));
+			i = handle_quotes(word, i, head);
+			// i = skip_quotes(word, i);
+			// printf("%c\n", *(word + i));
+		}
+		if (*(word + i) == '"' && heredoc == 0)
+		{
+			i = handle_quotes(word, i, head);
+			double_quoted = (double_quoted + 1) % 2;
+		}
 		// if (*(word + i) == '\0')
 		// 	break ;
 		// printf("%d\n", *(word + i));

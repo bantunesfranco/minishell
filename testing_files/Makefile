@@ -25,7 +25,7 @@ INCLUDES = -I ../incs -I ../libft/incs
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra
 else
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 endif
 
 UNAME_S := $(shell uname -s)
