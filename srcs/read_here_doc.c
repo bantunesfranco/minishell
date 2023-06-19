@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/08 15:05:26 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/19 14:58:32 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*read_here_doc(char *delimiter)
 	char	*str;
 
 	errno = 0;
-	line = NULL;
 	str = ft_strdup("");
 	if (!str)
 		err_msg(NULL, "here_doc");
@@ -48,8 +47,8 @@ int	main(void)
 {
 	char	*str;
 
-	str = read_here_doc("asdasd\"\"");
-	printf("%zd\n", write(1, "jtydjtyjty", 0));
+	str = read_here_doc("\"EOF\"");
+	// printf("%zd\n", write(1, "jtydjtyjty", 0));
 	printf("str: %s", str);
 	return (0);
 }
