@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 14:24:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/01 08:39:52 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/19 15:03:23 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	check_if_builtin(t_cmd *current_cmd)
 		current_cmd->builtin = pwd;
 	else if (ft_strncmp(current_cmd->cmd[0], "unset", 6) == 0)
 		current_cmd->builtin = unset;
-
 }
 
 static void	add_standard_in_out_nodes(t_cmd *current_cmd)

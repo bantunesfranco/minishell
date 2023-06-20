@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 18:44:53 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/19 13:17:07 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/20 08:42:38 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	count_words(char *str, t_quote_mark *head)
 	return (word_count);
 }
 
-char	**split_word(char *str, t_quote_mark *head)
+char	**word_splitting(char *str, t_quote_mark *head)
 {
 	char	**split_word;
 	int		word_count;

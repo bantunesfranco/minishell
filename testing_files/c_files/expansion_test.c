@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 15:07:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/19 14:53:33 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/20 08:42:20 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char *argv[], char **envp)
 	// print_quotes(head);
 	printf("%s\n\n", word);
 	// split_vars = split_word(word);
-	split_vars = split_word(word, head);
+	split_vars = word_splitting(word, head);
 	// free(word);
 	// printf("%p\n")
 	// printf("printing array\n");

@@ -9,7 +9,7 @@ END=\033[0m
 NAME = lexer_test syntax_test parser_test expansion_test
 SRC_FILES = $(shell find ../srcs -type f -name "*.c")
 OBJ_FILES = $(SRC_FILES:../srcs/%.c=../obj/%.o)
-OBJ_DIR = ../obj ../obj/input_parser ../obj/builtins ../obj/init ../obj/executor ../obj/input_parser/lexer ../obj/input_parser/parser ../obj/input_parser/expansion
+OBJ_DIR = ../obj ../obj/input_parser ../obj/builtins ../obj/init ../obj/executor ../obj/input_parser/lexer ../obj/input_parser/parser ../obj/executor/expansion
 HEADERS  = $(shell find ../incs -type f -name "*.h")
 
 # readline flags
@@ -25,7 +25,7 @@ INCLUDES = -I ../incs -I ../libft/incs
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra
 else
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 endif
 
 UNAME_S := $(shell uname -s)
@@ -40,17 +40,17 @@ endif
 # compilation files for all the various tests
 
 COM_LEXER = ../obj/input_parser/lexer/* ../obj/input_parser/parser_struct_init.o ../obj/input_parser/token_list_functions.o \
-c_files/lexer_tester.c ../obj/test_utils.o ../obj/error.o
+c_files/lexer_tester.c ../obj/test_utils.o ../obj/error.o ../obj/input_parser/input_parser_utils.o
 
 COM_SYNTAX = ../obj/input_parser/lexer/* ../obj/input_parser/parser_struct_init.o ../obj/input_parser/token_list_functions.o \
-c_files/syntax_tester.c ../obj/test_utils.o ../obj/error.o
+c_files/syntax_tester.c ../obj/test_utils.o ../obj/error.o ../obj/input_parser/input_parser_utils.o
 
 COM_PARSING = ../obj/input_parser/lexer/* ../obj/input_parser/parser/* \
 ../obj/input_parser/*.o ../obj/test_utils.o ../obj/error.o ../obj/free_cmd_list.o \
 ../obj/builtins/*.o ../obj/utils.o ../obj/init/* \
 c_files/parser_tester.c
 
-COM_EXPANSION = ../obj/input_parser/expansion/* ../obj/init/* ../obj/error.o ../obj/utils.o \
+COM_EXPANSION = ../obj/executor/expansion/* ../obj/init/* ../obj/error.o ../obj/utils.o \
 c_files/expansion_test.c ../obj/input_parser/input_parser_utils.o ../obj/test_utils.o
 
 # all: $(NAME)

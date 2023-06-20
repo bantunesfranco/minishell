@@ -6,12 +6,13 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/07 14:02:24 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/20 09:57:01 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
+#include "expander.h"
 
 int	is_builtin(t_gen *gen, t_cmd *cmd)
 {
@@ -86,6 +87,7 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	if (pipeline->subshell)
 		return ;
 	cmd = pipeline->first_cmd;
+	// expand_pipeline(cmd, gen);
 	if (is_builtin(gen, cmd) == 1)
 		return ;
 	id = cmd_loop(gen, cmd, p);
