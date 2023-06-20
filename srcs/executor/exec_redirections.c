@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 09:35:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/19 15:28:47 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/20 17:09:09 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	handle_input_redirection(t_redirect *input)
 		{
 			head->fd = open(head->name, O_RDONLY);
 			if (head->fd == -1)
+			{
 				return (err_msg(NULL, head->name), -1);
+			}
 		}
 		// if (head->type == HEREDOC)
 		// 	head->fd = open_here_doc(head);

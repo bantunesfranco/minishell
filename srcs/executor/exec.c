@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 09:57:01 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/20 17:08:43 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,22 @@ int	is_builtin(t_gen *gen, t_cmd *cmd)
 {
 	if (!cmd)
 		return (0);
-	cmd->input->fd = handle_input_redirection(cmd->input);
-	cmd->output->fd = handle_output_redirection(cmd->output);
-	if (!cmd->next)
+	if (cmd->builtin && !cmd->next)
 	{
-		if (cmd->builtin)
+		cmd->input->fd = handle_input_redirection(cmd->input);
+		if (cmd->input->fd == -1)
 		{
-			gen->status = cmd->builtin(gen, cmd);
+			gen->status = 1;
 			return (1);
 		}
+		cmd->output->fd = handle_output_redirection(cmd->output);
+		if (cmd->output->fd == -1)
+		{
+			gen->status = 1;
+			return (1);
+		}
+		gen->status = cmd->builtin(gen, cmd);
+		return (1);
 	}
 	return (0);
 }
@@ -36,9 +43,15 @@ void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
 	if (cmd->next)
 		close(p[0]);
 	cmd->input->fd = handle_input_redirection(cmd->input);
+	if (cmd->input->fd == -1)
+		_exit (1);
 	cmd->output->fd = handle_output_redirection(cmd->output);
+	if (cmd->output->fd == -1)
+		_exit (1);
 	handle_dups(cmd, p, pipe_rd);
-	if (cmd->builtin)
+	if (cmd->cmd == NULL)
+		_exit(EXIT_SUCCESS);
+	else if (cmd->builtin)
 		_exit(cmd->builtin(gen, cmd));
 	else
 	{
@@ -87,13 +100,19 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	if (pipeline->subshell)
 		return ;
 	cmd = pipeline->first_cmd;
-	// expand_pipeline(cmd, gen);
+	expand_pipeline(cmd, gen);
 	if (is_builtin(gen, cmd) == 1)
 		return ;
 	id = cmd_loop(gen, cmd, p);
 	if (id == -1)
 		return ;
 	waitpid(id, &gen->status, 0);
+	if (WIFEXITED(gen->status))
+		gen->status = WEXITSTATUS(gen->status);
+	else if (WIFSIGNALED(gen->status))
+		gen->status = 128 + WTERMSIG(gen->status);
+
+	// printf("%d\n", gen->status);
 	while (1)
 		if (wait(NULL) == -1)
 			break ;

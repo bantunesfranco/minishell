@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/07 20:49:54 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/20 19:45:53 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	minishell_loop(t_gen *gen)
 
 	while (1)
 	{
+		setup_signal_handlers();
 		if (isatty(STDIN_FILENO))
 			line = read_tty();
 		else

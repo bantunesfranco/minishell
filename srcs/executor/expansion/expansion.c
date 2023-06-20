@@ -6,12 +6,11 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 14:51:40 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/19 11:10:32 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/20 18:59:11 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 	// #include "structs.h"
-	// #include "libft.h"
 #include "parsing.h"
 #include "expander.h"
 #include "minishell.h"
@@ -21,8 +20,8 @@ size_t	find_end_of_var(char *word, size_t start_of_var)
 {
 	if (*(word + start_of_var) == '?')
 		return (start_of_var + 1);
-	if (ft_isdigit(*(word + start_of_var)))
-		return (start_of_var);
+	// if (ft_isdigit(*(word + start_of_var)))
+	// 	return (start_of_var);
 	while (ft_isalnum(*(word + start_of_var)) || *(word + start_of_var) == '_')
 		start_of_var++;
 	return (start_of_var);

@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/19 15:26:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/20 09:54:01 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/20 16:16:42 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ size_t	expand_single_word(char ***cmd_array, size_t i, t_gen *gen)
 	// printf("%p\n", *split_word);
 	insert_into_array(split_word, cmd_array, i);
 	i = i + get_sizeof_array(split_word);
-	// free(split_word);
-	// free(word);
-	// free_quote_list(head);
+	free(split_word);
+	free(word);
+	free_quote_list(head);
 	return (i);
 	// print_array(split_word);
 	// printf("after %p\n", word);
@@ -134,19 +134,19 @@ void	expand_pipeline(t_cmd *cmd, t_gen *gen)
 	size_t	i;
 
 	i = 0;
-	printf("lol\n");
+	// printf("lol\n");
 	while (cmd != NULL)
 	{
-		printf("hi\n");
+		// printf("hi\n");
 		if (cmd->cmd == NULL)
 			return ;
 		while (*(cmd->cmd + i) != NULL)
 		{
-			printf("huh\n");
+			// printf("huh\n");
 			// printf("hi\n");
 			// print_array(cmd->cmd);
 			i = expand_single_word(&(cmd->cmd), i, gen);
-			printf("%zu\n", i);
+			// printf("%zu\n", i);
 			if (*cmd->cmd == NULL)
 			{
 				free(cmd->cmd);

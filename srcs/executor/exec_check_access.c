@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/01 12:39:45 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/20 18:48:14 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	can_access(char *path, t_cmd *cmd)
 		return (err_msg(NULL, "check path"), 0);
 	if (!access(cmd->path, F_OK) && !access(cmd->path, X_OK))
 		return (1);
-	else if (errno != ENOENT)
+	else if (errno != ENOENT && errno != ENOTDIR)
 	{
 		free(cmd->path);
 		err_msg(NULL, cmd->cmd[0]);
