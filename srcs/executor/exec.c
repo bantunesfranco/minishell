@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/21 13:53:22 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 16:21:30 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
 		_exit(EXIT_SUCCESS);
 	else if (cmd->builtin)
 	{
-		printf("yeah\n");
+		// printf("yeah\n");
 		_exit(cmd->builtin(gen, cmd));
 	}
 	else
@@ -107,10 +107,9 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	check_pipeline_for_builtins(cmd);
 	if (is_builtin(gen, cmd) == 1)
 	{
-		printf("yeah\n");
+		// printf("yeah\n");
 		return ;
 	}
-	setup_signal_handlers_and_terminal_non_interactive();
 	id = cmd_loop(gen, cmd, p);
 	if (id == -1)
 		return ;
@@ -124,5 +123,4 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	while (1)
 		if (wait(NULL) == -1)
 			break ;
-	setup_signal_handlers_and_terminal_interactive();
 }

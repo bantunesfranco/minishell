@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 08:21:53 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 15:15:18 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void	err_msg(char *msg, char *msg2)
 		write(2, ": command not found\n", 21);
 	}
 	else
+	{
+		if (msg2 && *msg2 == '\0')
+			write(2, ": ", 2);
 		perror(msg2);
+	}
 	if (errno == ENOMEM)
 	{
 		unset_echoctl();

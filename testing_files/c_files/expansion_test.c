@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/01 15:07:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/20 08:42:20 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 18:40:51 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	main(int argc, char *argv[], char **envp)
 	t_quote_mark	*head;
 	char	**split_vars;
 	// int		i;
-	atexit(lks);
+	// atexit(lks);
 	head = NULL;
-	printf("\n\n\nNEW THINGY\n\n\n");
+	// printf("\n\n\nNEW THINGY\n\n\n");
 	// i = 0;
 	start_env = ft_arrdup(envp);
 	gen.env = env_init(start_env);
@@ -50,6 +50,10 @@ int	main(int argc, char *argv[], char **envp)
 	printf("%s\n\n", word);
 	// split_vars = split_word(word);
 	split_vars = word_splitting(word, head);
+	int	i;
+	i = 0;
+	// while
+	// wildcards(split_vars);
 	// free(word);
 	// printf("%p\n")
 	// printf("printing array\n");
@@ -58,9 +62,9 @@ int	main(int argc, char *argv[], char **envp)
 	quote_removal(split_vars, head);
 	free_quote_list(head);
 	//realloc of cmd array
-	printf("printing array\n");
-	print_array(split_vars);
-	printf("done\n\n");
+	// printf("printing array\n");
+	// print_array(split_vars);
+	// printf("done\n\n");
 	// while (*(split_vars + i) != NULL)
 	// {
 	// 	quote_removal(*(split_vars + i));

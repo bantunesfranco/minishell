@@ -41,8 +41,8 @@ do
 		continue
 	else
 		# OUTPUT=$(./testing_files/expansion_test $line 2>err_mini)
-		echo $line
-		./testing_files/expansion_test $line
+		echo "$line"
+		./testing_files/expansion_test "$line"
 		# echo $OUTPUT
 		# read -r line
 		# test_output $OUTPUT $line

@@ -8,6 +8,7 @@ END=\033[0m
 
 NAME = minishell
 READLINE = $(shell brew --prefix readline)
+# READLINE = /Users/jmolenaa/.brew/Cellar/readline/8.2.1/
 HEADERS  = $(shell find incs -type f -name "*.h")
 SRC_FILES = $(shell find srcs -type f -name "*.c")
 OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)

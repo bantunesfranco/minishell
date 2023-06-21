@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/21 13:23:30 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 18:42:56 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*read_loop(char *del)
 		line = readline("> ");
 		if (line == NULL && errno == ENOMEM)
 			err_msg(NULL, "here_doc");
+		else if (g_kill_switch == 1)
+			return (free(line), free(str), NULL);
 		else if (line == NULL && errno == 0)
 			return (str);
 		if (!ft_strncmp(line, del, ft_strlen(del) + 1))
@@ -81,7 +83,6 @@ void	read_here_doc(t_token *current_node, char *delimiter)
 {
 	char	*new_delimiter;
 
-	(void)current_node;
 	errno = 0;
 	new_delimiter = ft_strdup(delimiter);
 	if (!remove_quotes(new_delimiter))
@@ -89,21 +90,24 @@ void	read_here_doc(t_token *current_node, char *delimiter)
 		free(new_delimiter);
 		return ;
 	}
-	// printf("new_del: |%s|\n", new_delimiter);
 	current_node->str = read_loop(new_delimiter);
 	free(new_delimiter);
-	// return (str);
 }
 
 void	read_heredocs(t_token *first_token, t_token *error_token)
 {
 	t_token	*temp;
 
+	g_kill_switch = 0;
+	// setup_signal_handlers_and_terminal_interactive();
+	signal(SIGINT, heredoc_handler);
 	temp = first_token;
 	while (temp != error_token)
 	{
 		if (temp->type == LESS_LESS)
 			read_here_doc(temp, temp->next->word);
+		if (g_kill_switch == 1)
+			return ;
 		temp = temp->next;
 	}
 }

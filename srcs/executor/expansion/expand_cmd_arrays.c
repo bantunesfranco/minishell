@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/19 15:26:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/20 16:16:42 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 15:22:59 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,11 @@ void	expand_pipeline(t_cmd *cmd, t_gen *gen)
 {
 	size_t	i;
 
-	i = 0;
 	// printf("lol\n");
 	while (cmd != NULL)
 	{
 		// printf("hi\n");
+		i = 0;
 		if (cmd->cmd == NULL)
 			return ;
 		while (*(cmd->cmd + i) != NULL)
