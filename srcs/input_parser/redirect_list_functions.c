@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:19:24 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/01 08:35:20 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 11:41:32 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_redirect	*make_new_redirect_node(char *name, t_redirect_type type, int fd)
 	new_node->fd = fd;
 	new_node->name = name;
 	new_node->type = type;
+	new_node->str = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }

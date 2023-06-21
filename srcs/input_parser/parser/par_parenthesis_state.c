@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 15:00:55 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/01 08:40:50 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 11:43:13 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_token	*add_redirection(t_subshell *new_subshell, t_token *temp, t_token **firs
 	t_token		*next_token;
 
 	new_redirect = make_new_redirect_node(temp->next->word, temp->type - 5, -1);
+	new_redirect->str = temp->str;
 	if (new_redirect->type == HEREDOC || new_redirect->type == INPUT)
 		add_redirect_back(&(new_subshell->input), new_redirect);
 	else

@@ -6,11 +6,11 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/07 20:58:09 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/21 08:21:53 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 #include "parsing_structs.h"
 
 void	err_msg(char *msg, char *msg2)
@@ -29,7 +29,10 @@ void	err_msg(char *msg, char *msg2)
 	else
 		perror(msg2);
 	if (errno == ENOMEM)
+	{
+		unset_echoctl();
 		exit(errno);
+	}
 }
 
 void	child_err_msg(char *msg, char *msg2)

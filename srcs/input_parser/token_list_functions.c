@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:56:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/29 14:17:09 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 11:51:58 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	free_token_list(t_token *first_token)
 		temp = first_token;
 		first_token = first_token->next;
 		free(temp->word);
+		free(temp->str);
 		free(temp);
 	}
 }
@@ -53,6 +54,7 @@ t_token	*make_new_token(char *word, t_token_type type)
 		err_msg(NULL, "parser");
 	new->word = word;
 	new->type = type;
+	new->str = NULL;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);

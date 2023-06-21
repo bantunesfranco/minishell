@@ -6,12 +6,13 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 14:07:05 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 17:34:50 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 11:16:15 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <limits.h>
+#include <termios.h>
 
 int	ft_envcmp(char *s1, char *s2)
 {
@@ -48,4 +49,32 @@ int	is_valid_input(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	unset_echoctl(void)
+{
+	struct termios	termios;
+
+	if (tcgetattr(0, &termios) == -1)
+	{
+		err_msg(NULL, "set echoctl");
+		return ;
+	}
+	termios.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(0, 0, &termios) == -1)
+		err_msg(NULL, "set echoctl");
+}
+
+void	set_echoctl(void)
+{
+	struct termios	termios;
+
+	if (tcgetattr(0, &termios) == -1)
+	{
+		err_msg(NULL, "unset echoctl");
+		return ;
+	}
+	termios.c_lflag |= ECHOCTL;
+	if (tcsetattr(0, 0, &termios) == -1)
+		err_msg(NULL, "unset echoctl");
 }

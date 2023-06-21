@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 17:08:43 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 13:53:22 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	is_builtin(t_gen *gen, t_cmd *cmd)
 		return (0);
 	if (cmd->builtin && !cmd->next)
 	{
-		cmd->input->fd = handle_input_redirection(cmd->input);
+		cmd->input->fd = handle_input_redirection(cmd->input, gen);
 		if (cmd->input->fd == -1)
 		{
 			gen->status = 1;
 			return (1);
 		}
-		cmd->output->fd = handle_output_redirection(cmd->output);
+		cmd->output->fd = handle_output_redirection(cmd->output, gen);
 		if (cmd->output->fd == -1)
 		{
 			gen->status = 1;
@@ -42,17 +42,20 @@ void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
 {
 	if (cmd->next)
 		close(p[0]);
-	cmd->input->fd = handle_input_redirection(cmd->input);
+	cmd->input->fd = handle_input_redirection(cmd->input, gen);
 	if (cmd->input->fd == -1)
 		_exit (1);
-	cmd->output->fd = handle_output_redirection(cmd->output);
+	cmd->output->fd = handle_output_redirection(cmd->output, gen);
 	if (cmd->output->fd == -1)
 		_exit (1);
 	handle_dups(cmd, p, pipe_rd);
 	if (cmd->cmd == NULL)
 		_exit(EXIT_SUCCESS);
 	else if (cmd->builtin)
+	{
+		printf("yeah\n");
 		_exit(cmd->builtin(gen, cmd));
+	}
 	else
 	{
 		close_pipes(cmd, p, pipe_rd);
@@ -101,8 +104,13 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 		return ;
 	cmd = pipeline->first_cmd;
 	expand_pipeline(cmd, gen);
+	check_pipeline_for_builtins(cmd);
 	if (is_builtin(gen, cmd) == 1)
+	{
+		printf("yeah\n");
 		return ;
+	}
+	setup_signal_handlers_and_terminal_non_interactive();
 	id = cmd_loop(gen, cmd, p);
 	if (id == -1)
 		return ;
@@ -116,4 +124,5 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	while (1)
 		if (wait(NULL) == -1)
 			break ;
+	setup_signal_handlers_and_terminal_interactive();
 }

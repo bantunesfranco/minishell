@@ -45,7 +45,7 @@ typedef struct s_redirect
 {
 	int					fd;
 	char				*name;
-	// int					ambiguous; maybe
+	char				*str;
 	t_redirect_type		type;
 	struct s_redirect	*next;
 }						t_redirect;

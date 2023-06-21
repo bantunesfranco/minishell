@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 19:04:51 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 08:27:56 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	token_order_error(t_token *temp, int open_brackets);
 
 void	free_parsed_structs(t_pipeline *first_pipeline);
 
-void	setup_signal_handlers(void);
+void	setup_signal_handlers_and_terminal_non_interactive(void);
+void	setup_signal_handlers_and_terminal_interactive(void);
+void	set_echoctl(void);
+void	unset_echoctl(void);
 
 #endif

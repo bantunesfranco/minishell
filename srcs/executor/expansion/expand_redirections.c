@@ -6,24 +6,43 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 07:04:39 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/20 07:05:09 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 11:10:04 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
+#include "expander.h"
 
-// void	epand_redirect(char *name)
-// {
-// 	expand(name)
-// 	result = wordsplit()
-// 	if (Result != 1)
-// 		ambiguous
-// 	quote_remove
-// 	free(result)
-// 	free(name);
-// 	return (*result);
-// }
+bool	expand_redirect(char **name, t_gen *gen)
+{
+	t_quote_mark	*head;
+	char			*word;
+	char			**split_word;
+	char			*save;
+
+	head = NULL;
+	save = ft_strdup(*name);
+	if (save == NULL)
+		err_msg(NULL, "expander");
+	word = expand_environment_vars(*name, gen, 0, &head);
+	split_word = word_splitting(word, head);
+	if (ft_arrlen(split_word) != 1)
+	{
+		*name = save;
+		free(word);
+		ft_free_arr(split_word);
+		free_quote_list(head);
+		return (false);
+	}
+	quote_removal(split_word, head);
+	free(word);
+	*name = *split_word;
+	free(split_word);
+	free(save);
+	free_quote_list(head);
+	return (true);
+}
 
 // void	expand_heredoc(char *str, char *delim)
 // {

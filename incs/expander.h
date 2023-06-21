@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 14:05:12 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 08:42:28 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 10:59:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "structs.h"
 # include "stdlib.h"
+# include <stdbool.h>
 
 typedef struct s_quote_mark
 {
@@ -25,6 +26,7 @@ typedef struct s_quote_mark
 }						t_quote_mark;
 
 void	expand_pipeline(t_cmd *cmd, t_gen *gen);
+bool	expand_redirect(char **name, t_gen *gen);
 void	free_quote_list(t_quote_mark *head);
 char	*expand_environment_vars(char *word, t_gen *gen, int heredoc, t_quote_mark **head);
 char	**word_splitting(char *str, t_quote_mark *head);

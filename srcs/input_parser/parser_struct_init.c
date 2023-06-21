@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:32:47 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/05/26 07:52:42 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 11:50:33 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	init_struct(t_parsing_info *p_info)
 	setup_meta_characters(p_info->metacharacters);
 	setup_token_array(p_info->token_array);
 	p_info->syntax_error = 0;
+	p_info->error_token = NULL;
 }

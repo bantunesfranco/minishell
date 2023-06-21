@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:16:12 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/06/20 16:09:13 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 11:36:41 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,12 @@ typedef enum e_token_group
 	WORD
 }	t_token_group;
 
-typedef enum e_redirect_option
-{
-	NIKS,
-	AMBIGUIOYS,
-	HERE_NO_EXP
-}	t_redirect_option;
-
 typedef struct s_token
 {
 	char				*word;
 	t_token_type		type;
 	t_token_group		token_group;
-	t_redirect_option	option;
+	char				*str;
 	struct s_token		*next;
 	struct s_token		*prev;
 }					t_token;

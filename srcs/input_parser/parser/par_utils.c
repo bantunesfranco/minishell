@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 14:24:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/19 15:03:23 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/21 13:47:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,25 @@ t_pipeline	*find_curr_pipeline(t_pipeline *first_pipeline)
 	return (temp);
 }
 
-void	check_if_builtin(t_cmd *current_cmd)
-{
-	if (current_cmd->cmd == NULL)
-		return ;
-	if (ft_strncmp(current_cmd->cmd[0], "cd", 3) == 0)
-		current_cmd->builtin = cd;
-	else if (ft_strncmp(current_cmd->cmd[0], "echo", 5) == 0)
-		current_cmd->builtin = echo;
-	else if (ft_strncmp(current_cmd->cmd[0], "env", 4) == 0)
-		current_cmd->builtin = env;
-	else if (ft_strncmp(current_cmd->cmd[0], "exit", 5) == 0)
-		current_cmd->builtin = mini_exit;
-	else if (ft_strncmp(current_cmd->cmd[0], "export", 7) == 0)
-		current_cmd->builtin = export;
-	else if (ft_strncmp(current_cmd->cmd[0], "pwd", 4) == 0)
-		current_cmd->builtin = pwd;
-	else if (ft_strncmp(current_cmd->cmd[0], "unset", 6) == 0)
-		current_cmd->builtin = unset;
-}
+// void	check_if_builtin(t_cmd *current_cmd)
+// {
+// 	if (current_cmd->cmd == NULL)
+// 		return ;
+// 	if (ft_strncmp(current_cmd->cmd[0], "cd", 3) == 0)
+// 		current_cmd->builtin = cd;
+// 	else if (ft_strncmp(current_cmd->cmd[0], "echo", 5) == 0)
+// 		current_cmd->builtin = echo;
+// 	else if (ft_strncmp(current_cmd->cmd[0], "env", 4) == 0)
+// 		current_cmd->builtin = env;
+// 	else if (ft_strncmp(current_cmd->cmd[0], "exit", 5) == 0)
+// 		current_cmd->builtin = mini_exit;
+// 	else if (ft_strncmp(current_cmd->cmd[0], "export", 7) == 0)
+// 		current_cmd->builtin = export;
+// 	else if (ft_strncmp(current_cmd->cmd[0], "pwd", 4) == 0)
+// 		current_cmd->builtin = pwd;
+// 	else if (ft_strncmp(current_cmd->cmd[0], "unset", 6) == 0)
+// 		current_cmd->builtin = unset;
+// }
 
 static void	add_standard_in_out_nodes(t_cmd *current_cmd)
 {
@@ -75,7 +75,7 @@ void	close_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **first_
 		curr_pipeline->first_cmd = current_cmd;
 	}
 	current_cmd->cmd = create_cmd_array(temp, *first_token);
-	check_if_builtin(current_cmd);
+	// check_if_builtin(current_cmd);
 	add_standard_in_out_nodes(current_cmd);
 	remove_tokens(temp, first_token);
 }
