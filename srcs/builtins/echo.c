@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/03 12:07:58 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/22 15:34:14 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ static int	write_content(char *content, int fd, int opt)
 	{
 		if (opt)
 		{
-			if (write(fd, "\0", 1) == -1)
-				return (-1);
+			return (0);
+			// if (write(fd, "", 0) == -1)
+			// 	return (-1);
 		}
 		else
 		{

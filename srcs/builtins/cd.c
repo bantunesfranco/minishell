@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/06 08:01:09 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/22 16:29:50 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static int	set_env_vars(char *target, t_gen *gen)
 	i = 0;
 	temp = NULL;
 	cwd = getcwd(NULL, 0);
+	if (!cwd && errno == ENOENT)
+		cwd = ft_strdup("");
 	if (!cwd)
 		return (err_msg(NULL, "cd"), -1);
 	while (gen->env[i] && ft_envcmp(gen->env[i], target))

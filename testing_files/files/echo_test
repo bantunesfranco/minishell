@@ -39,3 +39,13 @@ echo $asdasdasdasdasd
 echo --n asd
 
 echo n asd
+
+echo "asd"
+
+echo 'asdasd'
+
+echo '$HOME'
+
+echo "$HOME"
+
+echo "'"
