@@ -1,0 +1,69 @@
+pwd
+cd
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd incs
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd .
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd
+pwd
+cd -
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd incs
+cd ..
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd ..
+pwd
+echo $PWD
+echo $OLDPWD
+
+echo $PWD
+echo $OLDPWD
+pwd
+cd
+echo $PWD
+echo $OLDPWD
+pwd
+
+cd asdsadasd
+
+cd /////
+
+cd "."
+
+pwd
+cd $HOME
+pwd
+
+cd '$HOME'
+
+cd ..
+cd $OLDPWD
+pwd
+
+cd $PWD
+pwd
+
+cd '$PWD'
+
+cd asdasdasdas

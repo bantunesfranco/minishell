@@ -1,3 +1,41 @@
 echo hello
 
-echo
+echo -n
+
+echo -n -nnnnnnn -n -nnn -nnnnn -n-n
+
+echo -n -nnnnnnn -n -nnn -nnnnn -n-n asd
+
+echo -nnnnnnnnnnn
+
+echo -nnnnnnnnnnn -nnnnnnnnnnnn
+
+echo -nnnnnnnnnnn -nnnnnnnnnnnn asd
+
+echo -n asd
+
+echo -nnnnnnnnn asd
+
+echo -nnnna asd
+
+echo -na asd
+
+echo -n -n -n asd
+
+echo asd -n -n -n
+
+echo - asd
+
+echo -a -e asd
+
+echo echo
+
+echo $USER
+
+echo $PATH
+
+echo $asdasdasdasdasd
+
+echo --n asd
+
+echo n asd

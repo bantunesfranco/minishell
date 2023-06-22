@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/22 09:11:50 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/22 10:00:12 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parsing.h"
 #include "executor.h"
 
-char	*read_tty(void)
+char	*read_tty(t_gen *gen)
 {
 	char	*line;
 
@@ -26,14 +26,14 @@ char	*read_tty(void)
 		if (write(STDOUT_FILENO, "exit\n", 5) == -1)
 			err_msg(NULL, "write");
 		unset_echoctl();
-		exit(0);
+		exit(gen->status);
 	}
 	if (ft_strlen(line))
 		add_history(line);
 	return (line);
 }
 
-char	*read_no_tty(void)
+char	*read_no_tty(t_gen *gen)
 {
 	char	*line;
 	char	*line2;
@@ -47,7 +47,7 @@ char	*read_no_tty(void)
 		// if (write(STDOUT_FILENO, "exit\n", 5) == -1)
 		// 	err_msg(NULL, "write");
 		// unset_echoctl();
-		exit(0);
+		exit(gen->status);
 	}
 	line = ft_strtrim(line2, "\n");
 	free(line2);
@@ -115,9 +115,9 @@ void	minishell_loop(t_gen *gen)
 	{
 		setup_signal_handlers_and_terminal_interactive();
 		if (isatty(STDIN_FILENO))
-			line = read_tty();
+			line = read_tty(gen);
 		else
-			line = read_no_tty();
+			line = read_no_tty(gen);
 		setup_signal_handlers_and_terminal_non_interactive();
 		input = parse_line(line, gen);
 		free(line);
@@ -162,5 +162,5 @@ int	main(int argc, char **argv, char **envp)
 	gen.path = NULL;
 	gen.status = 0;
 	minishell_loop(&gen);
-	exit(0);
+	exit(gen.status);
 }

@@ -9,11 +9,14 @@ BOLD='\033[1m'
 help(){
 	echo -e "\n${BOLD}Run with one of the following arguments\n${RESET}"
 	echo "all - run all tests"
-	echo "clean - cleanup files"
+	echo "echo - run echo tests"
+	echo "cd - run cd tests"
 	echo -e "help - display this message\n"
 }
 
 test_output(){
+	# cat $1
+	# cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -24,6 +27,9 @@ test_output(){
 }
 
 test_err(){
+	# echo error
+	# cat $1
+	# cat $2
 	if [[ -s $1 && -s $2 ]] || [[ ! -s $1 && ! -s $2 ]]
 	then
 		((OK++))
@@ -68,7 +74,7 @@ test_file(){
 	rm -rf error_args
 		while read -r line
 		do
-			if [[ $line == "" ]]
+			if [[ $line == "" ]] || [[ $line == \#* ]]
 			then
 				continue
 			else
@@ -105,18 +111,38 @@ test_echo(){
 	echo "----------------------------------------------------"
 }
 
+test_cd(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING CD TESTS${RESET}"
+	test_file "testing_files/files/cd_test"
+	echo "----------------------------------------------------"
+}
+
 run_all(){
 	test_echo
+	test_cd
+}
+
+read_input(){
+	help
+	read option
+	main $option
 }
 
 main(){
 	if [[ $1 == "all" ]]
 	then
 		run_all
+	elif [[ $1 == "echo" ]]
+	then
+		test_echo
+		read_input
+	elif [[ $1 == "cd" ]]
+	then
+		test_cd
+		read_input
 	else
-		help
-		read option
-		main $option
+		read_input
 	fi
 }
 
