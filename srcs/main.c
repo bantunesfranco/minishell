@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/21 16:56:55 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/22 09:11:50 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ char	*read_no_tty(void)
 	char	*line;
 	char	*line2;
 
+	errno = 0;
 	line2 = get_next_line(STDIN_FILENO);
 	if (line2 == NULL && errno == ENOMEM)
 		err_msg(NULL, "line");
 	else if (line2 == NULL && errno == 0)
 	{
-		if (write(STDOUT_FILENO, "exit\n", 5) == -1)
-			err_msg(NULL, "write");
-		unset_echoctl();
+		// if (write(STDOUT_FILENO, "exit\n", 5) == -1)
+		// 	err_msg(NULL, "write");
+		// unset_echoctl();
 		exit(0);
 	}
 	line = ft_strtrim(line2, "\n");

@@ -60,6 +60,9 @@ runoption(){
 	if [[ $1 == "run" ]]
 	then
 		run_minishell
+	elif [[ $1 == "gen" ]]
+	then
+		general_test $2
 	elif [[ $1 == "unit" ]]
 	then
 		unit_test $2
@@ -77,12 +80,12 @@ runoption(){
 }
 
 main () {
-	# if [[ $# == 0 ]]
-	# then
-	# 	help_arg
-	# else
-		runoption $1 $2 $3 $4
-	# fi
+	runoption $1 $2 $3 $4
+}
+
+general_test() {
+	rm -rf error_args
+	./testing_files/scripts/general_tester.sh $1
 }
 
 run_minishell () {
