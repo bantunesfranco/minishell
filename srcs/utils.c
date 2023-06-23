@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 14:07:05 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/22 08:36:32 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/23 10:02:45 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	is_valid_input(char *str)
 	int	i;
 
 	i = 0;
-	// !ft_isalpha(str[0]) && 
-	if (!ft_isalnum(str[0]) && (str[0] == '_' && str[1] == '\0'))
+	if ((!ft_isalnum(str[0]) && str[0] != '_' ) \
+	|| (str[0] == '_' && str[1] == '\0'))
 		return (0);
 	i++;
 	while (str[i] && str[i] != '=')

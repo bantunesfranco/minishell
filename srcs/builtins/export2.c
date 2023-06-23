@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 13:31:57 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/01 12:22:05 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/23 11:39:07 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,24 @@ char	*dup_target(char *target)
 {
 	int		i;
 	int		j;
+	char	*var;
 	char	*str;
 
-	i = 0;
+	i = ft_strlen(target);
 	j = 0;
-	while (target[i])
-	{
-		if (target[i] == '+')
-			i++;
-		j++;
-		i++;
-	}
-	str = ft_calloc(j + 1, sizeof(char));
+	var = get_target(target, &j);
+	if (!var)
+		return (NULL);
+	if (ft_strchr(var, '+'))
+		j = 1;
+	str = ft_calloc(i - j + 1, sizeof(char));
 	if (!str)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (target[i])
-	{
-		if (target[i] == '+')
-			i++;
-		str[j++] = target[i++];
-	}
+	j = ft_strlen(var) - j - 1;
+	ft_memmove(str, var, j);
+	str[j] = '=';
+	ft_memmove(str + j, ft_strchr(target, '='), i - j + 1);
+	free(var);
 	return (str);
 }
 
@@ -110,7 +106,7 @@ int	export2(t_gen *gen, char *cmd, int add, int size)
 	i = 0;
 	join = 0;
 	target = get_target(cmd, &join);
-	if (!target)
+	if (!target || ft_strlen(target) == 1)
 		return (-1);
 	if (!add)
 	{

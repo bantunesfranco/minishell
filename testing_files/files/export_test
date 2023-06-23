@@ -14,6 +14,14 @@ export yyyyyy="123124--++'''' ''][[[\]]]"
 env | grep yyyyyy
 echo $yyyyyy
 
+export yyyyyy="123124--++''''+= ''][[[\]]]"
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy="123124--++''''+=+= ''][[[\]]]"
+env | grep yyyyyy
+echo $yyyyyy
+
 export yyyyyy=""
 env | grep yyyyyy
 echo $yyyyyy
@@ -55,7 +63,7 @@ export ___yyyyyy=123
 env | grep yyyyyy
 echo $yyyyyy
 
-export --TEST=123
+# export --TEST=123
 
 export ''=''
 
