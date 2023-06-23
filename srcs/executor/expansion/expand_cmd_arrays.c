@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/19 15:26:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 15:22:59 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/23 16:06:47 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	insert_into_array(char **split_word, char ***cmd_array, size_t i)
 	int		word_count;
 	char	**new_cmd_array;
 	size_t	j;
-	size_t	k;
+	// size_t	k;
 
 	word_count = count_words(split_word, *cmd_array);
 	new_cmd_array = ft_calloc((word_count + 1), sizeof(char *));
@@ -76,7 +76,7 @@ void	insert_into_array(char **split_word, char ***cmd_array, size_t i)
 		*(new_cmd_array + j) = *(*cmd_array + j);
 		j++;
 	}
-	k = 0;
+	// k = 0;
 	j = j + copy_array(new_cmd_array + j, split_word);
 	j = j + copy_array(new_cmd_array + j, *cmd_array + i + 1);
 	// while (*(split_word + k) != NULL)
