@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 17:32:16 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/23 09:19:12 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,26 @@ static int	print_export_env(char **env, int fd)
 	return (0);
 }
 
-int	export(t_gen *gen, t_cmd *cmd)
+static int	set_variable(t_gen *gen, t_cmd *cmd, int i, int *ret)
 {
 	int		size;
 	int		add;
+
+	if (ft_strchr(cmd->cmd[i], '='))
+	{
+		size = get_size(gen->env, cmd->cmd[i], &add) + add;
+		if (export2(gen, cmd->cmd[i], add, size) == -1)
+			return (err_msg(NULL, cmd->cmd[0]), 1);
+	}
+	*ret = 0;
+	return (0);
+}
+
+
+int	export(t_gen *gen, t_cmd *cmd)
+{
 	int		i;
+	int		ret;
 
 	i = 0;
 	if (!cmd->cmd[1])
@@ -61,15 +76,14 @@ int	export(t_gen *gen, t_cmd *cmd)
 		// 	i++;
 		if (is_valid_input(cmd->cmd[i]))
 		{
-			if (ft_strchr(cmd->cmd[i], '='))
-			{
-				size = get_size(gen->env, cmd->cmd[i], &add) + add;
-				if (export2(gen, cmd->cmd[i], add, size) == -1)
-					return (err_msg(NULL, cmd->cmd[0]), 1);
-			}
+			if (set_variable(gen, cmd, i, &ret))
+				return (1);
 		}
 		else
+		{
+			ret = 1;
 			built_err_msg(cmd->cmd[0], cmd->cmd[i], "not a valid identifier\n");
+		}
 	}
-	return (0);
+	return (ret);
 }
