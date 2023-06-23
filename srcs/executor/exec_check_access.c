@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 18:48:14 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/22 19:18:41 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ static int	can_access(char *path, t_cmd *cmd)
 
 void	check_access(t_gen *gen, t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (!check_abs_path(cmd))
@@ -96,6 +97,13 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 			return ;
 		i++;
 	}
+	tmp = ft_strjoin("./", cmd->cmd[0]);
+	if (!tmp)
+		child_err_msg(NULL, "check access");
+	free(cmd->cmd[0]);
+	cmd->cmd[0] = tmp;
+	if (!check_rel_path(cmd))
+		return ;
 	errno = 127;
 	err_msg(NULL, cmd->cmd[0]);
 	_exit(127);
@@ -113,15 +121,13 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 // 	t_gen	gen;
 // 	pid_t	id;
 // 	int		status;
-// 	int		i;
 
 // 	(void)argc;
 // 	// atexit(lks);
 // 	cmd.cmd = ft_split(argv[1], ' ');
 // 	gen.env = ft_arrdup(envp);
-// 	gen.path = find_path(cmd.cmd, gen.env);
-// 	i = check_access(&gen, &cmd);
-// 	printf("Can acces?\t%s\n", i ? "False\n":"True\n");
+// 	find_path(cmd.cmd, &gen);
+// 	check_access(&gen, &cmd);
 // 	id = fork();
 // 	if (id == 0)
 // 	{
