@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 09:19:12 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/23 12:47:01 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	set_variable(t_gen *gen, t_cmd *cmd, int i, int *ret)
 	{
 		size = get_size(gen->env, cmd->cmd[i], &add) + add;
 		if (export2(gen, cmd->cmd[i], add, size) == -1)
-			return (err_msg(NULL, cmd->cmd[0]), 1);
+			return (err_msg(NULL, cmd->cmd[0]), -1);
 	}
 	*ret = 0;
 	return (0);
@@ -72,11 +72,11 @@ int	export(t_gen *gen, t_cmd *cmd)
 			return (err_msg(cmd->cmd[0], "write error"), 1);
 	while (cmd->cmd[++i])
 	{
-		// if (!ft_strncmp(cmd->cmd[i], "_", 2))
-		// 	i++;
+		if (!ft_strncmp(cmd->cmd[i], "_", 2))
+			continue ;
 		if (is_valid_input(cmd->cmd[i]))
 		{
-			if (set_variable(gen, cmd, i, &ret))
+			if (set_variable(gen, cmd, i, &ret) == -1)
 				return (1);
 		}
 		else

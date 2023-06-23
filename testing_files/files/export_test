@@ -134,3 +134,23 @@ echo $yyyy
 export yyyy=asd yyyy+=asd yyyy+=asd yyyy+=asd
 env | grep yyyy
 echo $yyyy
+
+export yyyy=asd aaaa+=asd bbbb+=asd bbbb+=asd
+env | grep yyyy
+echo $yyyy
+echo $aaaa
+echo $bbbb
+
+export yyyy=asd aaaa+="asd" bbbb+='asd' bbbb+='asd'
+env | grep yyyy
+echo $yyyy
+echo $aaaa
+echo $bbbb
+
+export bbbb="" bbbb+="$HOME" bbbb+='$HOME' bbbb+=$HOME
+env | grep yyyy
+echo $bbbb
+
+export bbbb="" bbbb+="$HOME"$USER bbbb+=banana$? bbbb+=$HOME
+env | grep yyyy
+echo $bbbb

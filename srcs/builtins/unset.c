@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/06/03 12:27:24 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/23 12:43:39 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static char	**copy_env2(char **env, char *target, int size)
 	return (new_env);
 }
 
-static int	exec_unset(t_gen *gen, t_cmd *cmd)
+static int	exec_unset(t_gen *gen, char *cmd, int *ret)
 {
 	char	**new_env;
 	char	*target;
 	int		delete;
 	int		size;
 
-	target = ft_strjoin(cmd->cmd[1], "=");
+	target = ft_strjoin(cmd, "=");
 	if (!target)
 		return (-1);
 	size = get_size(gen->env, target, &delete) - delete;
@@ -72,26 +72,30 @@ static int	exec_unset(t_gen *gen, t_cmd *cmd)
 	if (!new_env)
 		return (free(target), -1);
 	gen->env = new_env;
+	*ret = 0;
 	return (0);
 }
 
 int	unset(t_gen *gen, t_cmd *cmd)
 {
 	int		i;
+	int		ret;
 
-	i = 1;
-	while (cmd->cmd[i])
+	i = 0;
+	while (cmd->cmd[++i])
 	{
 		if (!ft_strncmp(cmd->cmd[i], "_", 2))
-			i++;
+			continue ;
 		if (is_valid_input(cmd->cmd[i]) && !ft_strchr(cmd->cmd[i], '='))
 		{
-			if (exec_unset(gen, cmd) == -1)
+			if (exec_unset(gen, cmd->cmd[i], &ret) == -1)
 				return (err_msg(NULL, cmd->cmd[0]), 1);
 		}
 		else
+		{
+			ret = 1;
 			built_err_msg(cmd->cmd[0], cmd->cmd[i], "not a valid identifier\n");
-		i++;
+		}
 	}
-	return (0);
+	return (ret);
 }
