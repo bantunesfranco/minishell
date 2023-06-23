@@ -120,3 +120,28 @@ unset bbbb
 env | grep bbbb
 echo $bbbb
 
+unset
+
+unset ""
+
+unset ''
+
+unset "'"
+
+unset $
+
+unset TE*ST
+
+unset TES#T
+
+unset TES@T
+
+unset TES!T
+
+unset ============
+
+echo $HOME
+unset HOME
+echo $HOME
+
+unset ________

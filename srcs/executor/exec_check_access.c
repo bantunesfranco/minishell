@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/22 19:18:41 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/23 14:21:49 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "executor.h"
 #include <sys/wait.h>
 
-static int	check_rel_path(t_cmd *cmd)
+static int	check_rel_path(t_cmd *cmd, int p)
 {
 	char	*tmp;
 
-	if (!ft_strchr(cmd->cmd[0], '/') || cmd->cmd[0][0] == '/')
+	if ((!ft_strchr(cmd->cmd[0], '/') || cmd->cmd[0][0] == '/') && p == 1)
 		return (1);
 	cmd->path = getcwd(NULL, 1);
 	if (!cmd->path)
@@ -84,12 +84,13 @@ static int	can_access(char *path, t_cmd *cmd)
 void	check_access(t_gen *gen, t_cmd *cmd)
 {
 	int		i;
-	char	*tmp;
-
+	// char	*tmp;
+	// char	*tmp2
+	
 	i = 0;
 	if (!check_abs_path(cmd))
 		return ;
-	if (!check_rel_path(cmd))
+	if (!check_rel_path(cmd, 1))
 		return ;
 	while (gen->path && gen->path[i])
 	{
@@ -97,13 +98,18 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 			return ;
 		i++;
 	}
-	tmp = ft_strjoin("./", cmd->cmd[0]);
-	if (!tmp)
-		child_err_msg(NULL, "check access");
-	free(cmd->cmd[0]);
-	cmd->cmd[0] = tmp;
-	if (!check_rel_path(cmd))
+	if (!gen->path && !check_rel_path(cmd, 0))
 		return ;
+	// if (!gen->path)
+	// {
+	// 	tmp = ft_strjoin("./", cmd->cmd[0]);
+	// 	if (!tmp)
+	// 		child_err_msg(NULL, "check access");
+	// 	tmp2 = cmd->cmd[0];
+	// 	cmd->cmd[0] = tmp;
+	// 	if (!check_rel_path(cmd))
+	// 		return ;
+	// }
 	errno = 127;
 	err_msg(NULL, cmd->cmd[0]);
 	_exit(127);

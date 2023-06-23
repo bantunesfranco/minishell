@@ -154,3 +154,6 @@ echo $bbbb
 export bbbb="" bbbb+="$HOME"$USER bbbb+=banana$? bbbb+=$HOME
 env | grep yyyy
 echo $bbbb
+
+export yyyyyyyyy=asd yyy-=adsasdasd yyyyy=asd
+env | grep yyy

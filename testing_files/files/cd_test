@@ -113,9 +113,6 @@ pwd
 echo $PWD
 echo $OLDPWD
 
-cd '/etc' 
-pwd
-
 cd ../../..
 pwd
 echo $PWD

@@ -35,7 +35,6 @@ test_err(){
 	ERROR_BASH=$(cat $2)
 	ERROR_BASH=${ERROR_BASH#*:*: }
 	# echo error
-	# cat $1
 	if [[ $ERROR_MINI == $ERROR_BASH ]]
 	then
 		# echo yeah
@@ -112,6 +111,7 @@ test_file(){
 		echo -n -e "	👍${GREEN}TESTS PASSED"
 	else
 		echo -n -e "	🤮${RED}${KO_ALL} TESTS FAILED"
+		TEST_FAILED=1
 	fi
 	total=$((OK_ALL + KO_ALL))
 	echo -e " $OK_ALL/$total\n${RESET}"
@@ -155,8 +155,12 @@ test_export(){
 }
 
 run_all(){
+	TEST_FAILED=0
 	test_echo
 	test_cd
+	test_export
+	test_unset
+	exit $((TEST_FAILED))
 }
 
 read_input(){

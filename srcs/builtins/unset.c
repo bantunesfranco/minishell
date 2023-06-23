@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/06/23 12:43:39 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/23 13:47:04 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	unset(t_gen *gen, t_cmd *cmd)
 	int		i;
 	int		ret;
 
+	ret = 0;
 	i = 0;
 	while (cmd->cmd[++i])
 	{

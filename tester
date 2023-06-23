@@ -86,6 +86,8 @@ main () {
 general_test() {
 	rm -rf error_args
 	./testing_files/scripts/general_tester.sh $1
+	EXIT_CODE=$?
+	exit $((EXIT_CODE))
 }
 
 run_minishell () {

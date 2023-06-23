@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 13:11:12 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/23 13:47:43 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	export(t_gen *gen, t_cmd *cmd)
 	int		i;
 	int		ret;
 
+	ret = 0;
 	i = 0;
 	if (!cmd->cmd[1])
 		if (print_export_env(gen->env, cmd->output->fd) == -1)
