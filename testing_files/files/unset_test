@@ -66,11 +66,6 @@ export TES$?T=123
 unset 
 env | grep TES
 
-echo $?
-unset 
-export ?=hallo
-echo $?
-
 export HELLO42=T=""
 unset HELLO42
 echo $HELLO42
@@ -124,3 +119,4 @@ export bbbb="" bbbb+="$HOME"$USER bbbb+=banana$? bbbb+=$HOME
 unset bbbb
 env | grep bbbb
 echo $bbbb
+

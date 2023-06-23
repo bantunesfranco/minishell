@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 12:47:01 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/23 13:11:12 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	export(t_gen *gen, t_cmd *cmd)
 			return (err_msg(cmd->cmd[0], "write error"), 1);
 	while (cmd->cmd[++i])
 	{
-		if (!ft_strncmp(cmd->cmd[i], "_", 2))
+		if (!ft_strncmp(cmd->cmd[i], "_=", 2))
 			continue ;
 		if (is_valid_input(cmd->cmd[i]))
 		{
