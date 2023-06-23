@@ -1,0 +1,111 @@
+different outputs for argument: 
+export yyyyyy="123124--++'''' ''][[[\]]]"
+env | grep yyyyyy
+echo $yyyyyy
+
+different errors for argument: 
+export =asd
+
+different error codes for argument: 
+export =asd
+	1 
+different outputs for argument: 
+export =asd
+env | grep asd
+
+different errors for argument: 
+export =asd
+env | grep asd
+
+different error codes for argument: 
+export =asd
+env | grep asd
+	1 
+different error codes for argument: 
+export 12@=asd
+	1 
+different errors for argument: 
+export ''=''
+
+different error codes for argument: 
+export ''=''
+	1 
+different errors for argument: 
+export ''=''
+
+different error codes for argument: 
+export ''=''
+	1 
+different errors for argument: 
+export --TEST=123
+
+different error codes for argument: 
+export --TEST=123
+	2 
+different errors for argument: 
+export ''=''
+
+different error codes for argument: 
+export ''=''
+	1 
+different errors for argument: 
+export "="="="
+
+different error codes for argument: 
+export "="="="
+	1 
+different errors for argument: 
+export '='='='
+
+different error codes for argument: 
+export '='='='
+	1 
+different error codes for argument: 
+export TE+S=T=""
+	1 
+different error codes for argument: 
+export TES.T=123
+	1 
+different error codes for argument: 
+export TES.T=123
+	1 
+different error codes for argument: 
+export TES+T=123
+	1 
+different error codes for argument: 
+export TES}T=123
+	1 
+different error codes for argument: 
+export TES{T=123
+	1 
+different error codes for argument: 
+export TES-T=123
+	1 
+different error codes for argument: 
+export TE*ST=123
+	1 
+different error codes for argument: 
+export TES#T=123
+	1 
+different error codes for argument: 
+export TES@T=123
+	1 
+different error codes for argument: 
+export TES!T=123
+	1 
+different errors for argument: 
+export +=asd
+
+different error codes for argument: 
+export +=asd
+	1 
+different outputs for argument: 
+echo $?
+export ?=hallo
+echo $?
+
+different errors for argument: 
+echo $?
+export ?=hallo
+echo $?
+

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/22 17:54:15 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/23 08:38:41 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	main(int argc, char **argv, char **envp)
 
 	// atexit(leaks);
 	(void)argv;
-	rl_getc_function = getc;
+	// rl_getc_function = getc;
 	if (argc != 1)
 	{
 		ft_putendl_fd("minishell: too many args", 2);
