@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/21 18:42:56 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/22 17:41:58 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parsing_structs.h"
 #include "parsing.h"
 #include "minishell.h"
+#include <readline/readline.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,11 +95,30 @@ void	read_here_doc(t_token *current_node, char *delimiter)
 	free(new_delimiter);
 }
 
+void	count_heredocs(t_token *first_token, t_token *error_token)
+{
+	int	i;
+
+	i = 0;
+	while (first_token != error_token)
+	{
+		if (first_token->type == LESS_LESS)
+			i++;
+		if (i > 16)
+		{
+			write(2, "minishell: maximum here-document count exceeded\n", 48);
+			exit (2);
+		}
+		first_token = first_token->next;
+	}
+}
+
 void	read_heredocs(t_token *first_token, t_token *error_token)
 {
 	t_token	*temp;
 
 	g_kill_switch = 0;
+	count_heredocs(first_token, error_token);
 	// setup_signal_handlers_and_terminal_interactive();
 	signal(SIGINT, heredoc_handler);
 	temp = first_token;

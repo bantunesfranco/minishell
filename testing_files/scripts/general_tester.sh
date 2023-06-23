@@ -11,6 +11,9 @@ help(){
 	echo "all - run all tests"
 	echo "echo - run echo tests"
 	echo "cd - run cd tests"
+	echo "un - run unset tests"
+	echo "ex - run export tests"
+	echo "exit - exit"
 	echo -e "help - display this message\n"
 }
 
@@ -27,16 +30,28 @@ test_output(){
 }
 
 test_err(){
+	ERROR=$(cat $1)
+	ERROR_MINI=${ERROR#*: }
+	ERROR_BASH=$(cat $2)
+	ERROR_BASH=${ERROR_BASH#*:*: }
 	# echo error
 	# cat $1
-	# cat $2
-	if [[ -s $1 && -s $2 ]] || [[ ! -s $1 && ! -s $2 ]]
+	if [[ $ERROR_MINI == $ERROR_BASH ]]
 	then
+		# echo yeah
 		((OK++))
 	else
+		# echo nah
 		((KO++))
 		echo -e "different errors for argument: \n$TEST" >> error_args
 	fi
+	# if [[ -s $1 && -s $2 ]] || [[ ! -s $1 && ! -s $2 ]]
+	# then
+	# 	((OK++))
+	# else
+	# 	((KO++))
+	# 	echo -e "different errors for argument: \n$TEST" >> error_args
+	# fi
 }
 
 test_code(){
@@ -96,7 +111,7 @@ test_file(){
 	then
 		echo -n -e "	👍${GREEN}TESTS PASSED"
 	else
-		echo -n -e "	🤮${RED}${KO} TESTS FAILED"
+		echo -n -e "	🤮${RED}${KO_ALL} TESTS FAILED"
 	fi
 	total=$((OK_ALL + KO_ALL))
 	echo -e " $OK_ALL/$total\n${RESET}"
@@ -115,6 +130,27 @@ test_cd(){
 	echo "----------------------------------------------------"	
 	echo -e "\n	👍${MAGENTA}RUNNING CD TESTS${RESET}"
 	test_file "testing_files/files/cd_test"
+	echo "----------------------------------------------------"
+}
+
+test_env(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING env TESTS${RESET}"
+	test_file "testing_files/files/env_test"
+	echo "----------------------------------------------------"
+}
+
+test_unset(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING UNSET TESTS${RESET}"
+	test_file "testing_files/files/unset_test"
+	echo "----------------------------------------------------"
+}
+
+test_export(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING EXPORT TESTS${RESET}"
+	test_file "testing_files/files/export_test"
 	echo "----------------------------------------------------"
 }
 
@@ -141,6 +177,21 @@ main(){
 	then
 		test_cd
 		read_input
+	elif [[ $1 == "env" ]]
+	then
+		test_env
+		read_input
+	elif [[ $1 == "un" ]]
+	then
+		test_unset
+		read_input
+	elif [[ $1 == "ex" ]]
+	then
+		test_export
+		read_input
+	elif [[ $1 == "exit" ]]
+	then
+		return
 	else
 		read_input
 	fi

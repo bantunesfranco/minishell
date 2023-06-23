@@ -24,6 +24,8 @@ echo -n -n -n asd
 
 echo asd -n -n -n
 
+echo -n -n -nasd
+
 echo - asd
 
 echo -a -e asd
@@ -49,3 +51,59 @@ echo '$HOME'
 echo "$HOME"
 
 echo "'"
+
+echo -n" -n" asd
+
+echo ''
+
+echo ""
+
+echo """"$HOME""'$HOME'
+
+echo "$HOME"'""""""""""""""""$HOME"""'
+
+echo echo
+
+echo "'$USER'"
+
+echo " '$USER' "
+
+echo text"$USER"
+
+echo text"'$USER'" ' $USER '
+
+echo "cat lol.c | cat > lol.c"
+
+echo '$='
+
+echo '$ '
+
+echo "$?"
+
+echo '$?'
+
+echo "'$?'"
+
+echo "$ "
+
+echo '"$USER"'
+
+echo "'$USER'"
+
+echo ""'$USER'""
+
+echo '"'$USER'"'
+
+echo "''$USER''"
+
+echo "'"'$USER'"'"
+
+echo '"'"$USER"'"'
+
+echo "'totally logical'"
+
+echo 'totally logical'
+
+echo ''totally logical''
+
+echo ""'totally logical'""

@@ -6,13 +6,14 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 18:42:52 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/22 17:48:40 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "minishell.h"
 #include <termios.h>
+#include <readline/readline.h>
 // #include <term.h>
 // #include <curses.h>
 
