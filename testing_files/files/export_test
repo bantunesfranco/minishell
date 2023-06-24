@@ -2,6 +2,8 @@ export lo-=asd
 env | grep lo
 echo $lo
 
+export as--=asd we-=po
+
 export asd="lolol aaaa po"
 env | grep asd
 echo $asd
@@ -157,3 +159,5 @@ echo $bbbb
 
 export yyyyyyyyy=asd yyy-=adsasdasd yyyyy=asd
 env | grep yyy
+
+export asad-=qweqw awea-=asdasd as@asd=asdasd aw#p=asdasd _=asdasd wae%=asdasd

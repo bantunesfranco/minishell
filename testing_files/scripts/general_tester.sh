@@ -18,8 +18,6 @@ help(){
 }
 
 test_output(){
-	# cat $1
-	# cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -30,31 +28,18 @@ test_output(){
 }
 
 test_err(){
-	ERROR=$(cat $1)
-	ERROR_MINI=${ERROR#*: }
-	ERROR_BASH=$(cat $2)
-	ERROR_BASH=${ERROR_BASH#*:*: }
-	# echo error
+	ERROR_MINI=$(cut -f2- -d ' ' $1)
+	ERROR_BASH=$(cut -f4- -d ' ' $2)
 	if [[ $ERROR_MINI == $ERROR_BASH ]]
 	then
-		# echo yeah
 		((OK++))
 	else
-		# echo nah
 		((KO++))
 		echo -e "different errors for argument: \n$TEST" >> error_args
 	fi
-	# if [[ -s $1 && -s $2 ]] || [[ ! -s $1 && ! -s $2 ]]
-	# then
-	# 	((OK++))
-	# else
-	# 	((KO++))
-	# 	echo -e "different errors for argument: \n$TEST" >> error_args
-	# fi
 }
 
 test_code(){
-	# echo $1 $2
 	if [[ $1 == $2 ]]
 	then
 		((OK++))
@@ -162,12 +147,14 @@ test_exit(){
 }
 
 run_all(){
-	TEST_FAILED=0
 	test_echo
 	test_cd
 	test_export
 	test_unset
-	exit $((TEST_FAILED))
+	if [[ $TEST_FAILED == "1" ]]
+	then
+		exit $((TEST_FAILED))
+	fi
 }
 
 read_input(){
