@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 14:21:49 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/24 12:53:00 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ static int	check_rel_path(t_cmd *cmd, int p)
 	if ((!ft_strchr(cmd->cmd[0], '/') || cmd->cmd[0][0] == '/') && p == 1)
 		return (1);
 	cmd->path = getcwd(NULL, 1);
-	if (!cmd->path)
-		err_msg(NULL, "check path");
+	if (!cmd->path && errno == ENOMEM)
+		return (err_msg(NULL, "check path"), 1);
+	else if (!cmd->path)
+		return (1);
 	tmp = ft_strjoin(cmd->path, "/");
 	free(cmd->path);
 	if (!tmp)
@@ -100,16 +102,6 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 	}
 	if (!gen->path && !check_rel_path(cmd, 0))
 		return ;
-	// if (!gen->path)
-	// {
-	// 	tmp = ft_strjoin("./", cmd->cmd[0]);
-	// 	if (!tmp)
-	// 		child_err_msg(NULL, "check access");
-	// 	tmp2 = cmd->cmd[0];
-	// 	cmd->cmd[0] = tmp;
-	// 	if (!check_rel_path(cmd))
-	// 		return ;
-	// }
 	errno = 127;
 	err_msg(NULL, cmd->cmd[0]);
 	_exit(127);
@@ -132,6 +124,7 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 // 	// atexit(lks);
 // 	cmd.cmd = ft_split(argv[1], ' ');
 // 	gen.env = ft_arrdup(envp);
+// 	gen.path = NULL;
 // 	find_path(cmd.cmd, &gen);
 // 	check_access(&gen, &cmd);
 // 	id = fork();

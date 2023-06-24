@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 14:42:48 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/24 10:47:44 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*read_tty(t_gen *gen)
 		unset_echoctl();
 		exit(gen->status);
 	}
-	if (ft_strlen(line))
+	if (line && ft_strlen(line))
 		add_history(line);
 	return (line);
 }
