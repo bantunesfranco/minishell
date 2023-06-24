@@ -154,6 +154,13 @@ test_export(){
 	echo "----------------------------------------------------"
 }
 
+test_exit(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING EXIT TESTS${RESET}"
+	test_file "testing_files/files/exit_test"
+	echo "----------------------------------------------------"
+}
+
 run_all(){
 	TEST_FAILED=0
 	test_echo
@@ -194,6 +201,10 @@ main(){
 		test_export
 		read_input
 	elif [[ $1 == "exit" ]]
+	then
+		test_exit
+		read_input
+	elif [[ $1 == "quit" ]]
 	then
 		return
 	else

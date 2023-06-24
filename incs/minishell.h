@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/21 15:51:35 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/23 16:06:29 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "parsing_structs.h"
 # include "structs.h"
 
-sig_atomic_t	g_kill_switch;
+volatile int	g_kill_switch;
 
 char	**env_init(char **env);
 char	**ft_split_args(char *str, char sep);

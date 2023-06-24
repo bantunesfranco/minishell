@@ -1,0 +1,167 @@
+exit
+echo $?
+
+exit 0
+echo $?
+
+exit 1
+echo $?
+
+exit 10
+echo $?
+
+exit 100
+echo $?
+
+exit 255
+echo $?
+
+exit 256
+echo $?
+
+exit 300
+echo $?
+
+exit 1000
+echo $?
+
+exit 111111
+echo $?
+
+exit 99999999
+echo $?
+
+exit -1
+echo $?
+
+exit -10
+echo $?
+
+exit -100
+echo $?
+
+exit -255
+echo $?
+
+exit -256
+echo $?
+
+exit -300
+echo $?
+
+exit -1000
+echo $?
+
+exit -111111
+echo $?
+
+exit -99999999
+echo $?
+
+exit +1
+echo $?
+
+exit +10
+echo $?
+
+exit +100
+echo $?
+
+exit +255
+echo $?
+
+exit +256
+echo $?
+
+exit +300
+echo $?
+
+exit +1000
+echo $?
+
+exit +111111
+echo $?
+
+exit +99999999
+echo $?
+
+exit ++1
+echo $?
+
+exit ++10
+echo $?
+
+exit ++100
+echo $?
+
+exit ++255
+echo $?
+
+exit ++256
+echo $?
+
+exit ++300
+echo $?
+
+exit ++1000
+echo $?
+
+exit ++111111
+echo $?
+
+exit ++99999999
+echo $?
+
+exit --1
+echo $?
+
+exit --10
+echo $?
+
+exit --100
+echo $?
+
+exit --255
+echo $?
+
+exit --256
+echo $?
+
+exit --300
+echo $?
+
+exit --1000
+echo $?
+
+exit --111111
+echo $?
+
+exit --99999999
+echo $?
+
+exit -+1
+echo $?
+
+exit -+10
+echo $?
+
+exit -+100
+echo $?
+
+exit -+255
+echo $?
+
+exit -+256
+echo $?
+
+exit -+300
+echo $?
+
+exit -+1000
+echo $?
+
+exit -+111111
+echo $?
+
+exit -+99999999
+echo $?
