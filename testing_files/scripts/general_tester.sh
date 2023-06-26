@@ -13,7 +13,10 @@ help(){
 	echo "cd - run cd tests"
 	echo "un - run unset tests"
 	echo "ex - run export tests"
-	echo "exit - exit"
+	echo "exit - run exit tests"
+	echo "env - run env tests"
+	echo "pip - run pipeline or and tests"
+	echo "quit - exit"
 	echo -e "help - display this message\n"
 }
 
@@ -28,8 +31,13 @@ test_output(){
 }
 
 test_err(){
-	ERROR_MINI=$(cut -f2- -d ' ' $1)
-	ERROR_BASH=$(cut -f4- -d ' ' $2)
+	if [[ $1 == minishell:* ]]
+	then
+		ERROR_MINI=$(cut -f2- -d ' ' $1)
+		ERROR_BASH=$(cut -f4- -d ' ' $2)
+	fi
+	# ERROR_MINI=$(cut -f2- -d ' ' $1)
+	# ERROR_BASH=$(cut -f4- -d ' ' $2)
 	if [[ $ERROR_MINI == $ERROR_BASH ]]
 	then
 		((OK++))
@@ -83,7 +91,7 @@ test_file(){
 					read -r line
 				done
 			fi
-			# echo $TEST
+			# echo "$TEST"
 			echo -n "$TEST" | ./minishell 2>err_mini >out_mini
 			exit_mini=$?
 			echo -n "$TEST" | bash 2>err_bash >out_bash
@@ -146,6 +154,13 @@ test_exit(){
 	echo "----------------------------------------------------"
 }
 
+test_pipeline_or_and(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING PIPELINE OR AND TESTS${RESET}"
+	test_file "testing_files/files/pipeline_or_and_test"
+	echo "----------------------------------------------------"
+}
+
 run_all(){
 	test_echo
 	test_cd
@@ -190,6 +205,10 @@ main(){
 	elif [[ $1 == "exit" ]]
 	then
 		test_exit
+		read_input
+	elif [[ $1 == "pip" ]]
+	then
+		test_pipeline_or_and
 		read_input
 	elif [[ $1 == "quit" ]]
 	then
