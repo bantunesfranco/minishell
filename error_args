@@ -1,3 +1,0 @@
-different outputs for argument: 
-echo hello || (ls && ls && ls) || echo hi && echo por
-

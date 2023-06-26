@@ -1,0 +1,68 @@
+# $HOME
+
+cat $$
+
+# echo $HOME
+
+# echo "$HOME"
+
+# echo '$HOME'
+
+# echo '"$HOME"'
+
+# echo "'$HOME'"
+
+# echo """"""$HOME"'"'"'"'"""
+
+# echo ''''''$HOME''''''
+
+# echo ''$HOME""$HOME'$HOME'"""'$HOME"""
+
+# echo '"""""'"$HOME'''"'"''$HOME"""""'$HOME"'"
+
+# echo $
+
+# echo $H'OME'
+
+# echo $H"OME"
+
+# echo $HOM$HOME
+
+# echo $'$$'$"$$$"$$$$$"$$"'$$$$'"
+
+# echo '$'
+
+# cat $HOME
+
+# cat "$HOME"
+
+# cat '$HOME'
+
+# cat '"$HOME"'
+
+# cat "'$HOME'"
+
+# cat """"""$HOME"'"'"'"'"""
+
+# cat ''''''$HOME''''''
+
+# cat ''$HOME""$HOME'$HOME'"""'$HOME"""
+
+# cat '"""""'"$HOME'''"'"''$HOME"""""'$HOME"'"
+
+# cat $
+
+# cat $$
+
+# cat $H'OME'
+
+# cat $H"OME"
+
+# cat $$$$$$$$$$$$$$$$$$$$$$
+
+# cat $HOM$HOME
+
+# cat $'$$'$"$$$"$$$$$"$$"'$$$$'"
+
+# cat '$'
+

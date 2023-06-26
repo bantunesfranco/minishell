@@ -31,10 +31,15 @@ test_output(){
 }
 
 test_err(){
+	# cat $1
+	# cat $2
 	if [[ $1 == minishell:* ]]
 	then
 		ERROR_MINI=$(cut -f2- -d ' ' $1)
 		ERROR_BASH=$(cut -f4- -d ' ' $2)
+	else
+		ERROR_MINI=$(cat $1)
+		ERROR_BASH=$(cat $1)
 	fi
 	# ERROR_MINI=$(cut -f2- -d ' ' $1)
 	# ERROR_BASH=$(cut -f4- -d ' ' $2)
@@ -161,11 +166,20 @@ test_pipeline_or_and(){
 	echo "----------------------------------------------------"
 }
 
+test_expansions(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING EXPANSION TESTS${RESET}"
+	test_file "testing_files/files/expansion_test"
+	echo "----------------------------------------------------"
+}
+
 run_all(){
 	test_echo
 	test_cd
 	test_export
 	test_unset
+	test_exit
+	test_pipeline_or_and
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))
@@ -209,6 +223,10 @@ main(){
 	elif [[ $1 == "pip" ]]
 	then
 		test_pipeline_or_and
+		read_input
+	elif [[ $1 == "exp" ]]
+	then
+		test_expansions
 		read_input
 	elif [[ $1 == "quit" ]]
 	then
