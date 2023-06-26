@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 15:15:18 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/26 19:30:34 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	err_msg(char *msg, char *msg2)
 	}
 	if (errno == ENOMEM)
 	{
-		unset_echoctl();
+		// unset_echoctl();
 		exit(errno);
 	}
 }
