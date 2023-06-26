@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/24 10:47:44 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/26 13:50:47 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,32 +78,52 @@ t_pipeline	*goto_close_operator(t_pipeline *tmp)
 
 t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
 {
-	if (tmp->prev_control_operator == AND && gen->status != 0)
+	if (tmp->prev_control_operator == CLOSE || tmp->prev_control_operator == OPEN)
+		return (tmp);
+	while (tmp)
 	{
-		while (tmp)
-		{
-			if (tmp->next && tmp->next_control_operator == OPEN)
-				tmp = goto_close_operator(tmp->next);
-			else
-				tmp = tmp->next;
-			if (tmp && tmp->prev_control_operator == CLOSE)
-				break ;
-		}
-	}
-	else if (tmp->prev_control_operator == OR && gen->status == 0)
-	{
-		while (tmp)
-		{
-			if (tmp->next && tmp->next_control_operator == OPEN)
-				tmp = goto_close_operator(tmp->next);
-			else
-				tmp = tmp->next;
-			if (tmp && tmp->prev_control_operator == CLOSE)
-				break ;
-		}
+		if (tmp->prev_control_operator == AND && gen->status == 0)
+			return (tmp);
+		else if (tmp->prev_control_operator == OR && gen->status != 0)
+			return (tmp);
+		else if (tmp->next && tmp->next_control_operator == OPEN)
+			tmp = goto_close_operator(tmp);
+		else
+			tmp = tmp->next;
+		if (tmp && tmp->prev_control_operator == CLOSE)
+			break ;
 	}
 	return (tmp);
 }
+
+// t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
+// {
+// 	if (tmp->prev_control_operator == AND && gen->status != 0)
+// 	{
+// 		while (tmp)
+// 		{
+// 			if (tmp->next && tmp->next_control_operator == OPEN)
+// 				tmp = goto_close_operator(tmp->next);
+// 			else
+// 				tmp = tmp->next;
+// 			if (tmp && tmp->prev_control_operator == CLOSE)
+// 				break ;
+// 		}
+// 	}
+// 	else if (tmp->prev_control_operator == OR && gen->status == 0)
+// 	{
+// 		while (tmp)
+// 		{
+// 			if (tmp->next && tmp->next_control_operator == OPEN)
+// 				tmp = goto_close_operator(tmp->next);
+// 			else
+// 				tmp = tmp->next;
+// 			if (tmp && tmp->prev_control_operator == CLOSE)
+// 				break ;
+// 		}
+// 	}
+// 	return (tmp);
+// }
 
 void	minishell_loop(t_gen *gen)
 {

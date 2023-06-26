@@ -10,8 +10,8 @@ echo $?
 exit 10
 echo $?
 
-exit 100
-echo $?
+# exit 100
+# echo $?
 
 exit 255
 echo $?
@@ -64,8 +64,8 @@ echo $?
 exit +10
 echo $?
 
-exit +100
-echo $?
+# exit +100
+# echo $?
 
 exit +255
 echo $?
@@ -165,3 +165,7 @@ echo $?
 
 exit -+99999999
 echo $?
+
+exit asd 100
+
+exit 100 asd

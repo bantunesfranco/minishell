@@ -1,0 +1,122 @@
+echo hello | cat
+
+echo hi | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat 
+
+echo hi | ls | ls | ls | ls
+
+ls | echo
+
+ls | echo -n
+
+ls | cat
+
+ls | ls | ls | ls | ls | ls | ls
+
+env | grep PWD | ls | sort | head -n 5 | cat
+
+export LOL=123 | env | grep LOL
+
+export wow=123 asd=reeeee uu+r=po | env | grep wow
+
+echo asd | grep asd
+
+cd .. | echo hi
+pwd
+
+unset HOME | echo hi | env | grep HOME
+echo $HOME
+
+exit 1 | echo huh
+
+cate | echo hi
+
+cate | cate | cate | cate | cate | cate | cate | cate | cate | cate | ls
+
+ls | ls | ls | cate
+
+env | grep SHLVL
+
+echo noooooooooooo | cat -e | cat -e | cat -e
+
+ls -la ../../ | grep .
+
+echo hi > tmp_lol.c | cat
+rm -rf tmp_lol.c
+
+echo hi > tmp_lol.c | cat tmp_lol.c
+rm -rf tmp_lol.c
+
+cat < tmp_lol.c | cat > tmp_lol.c
+rm -rf tmp_lol.c
+
+echo hi > tmp_lol.c
+cat < tmp_lol.c | cat > tmp_lol.c
+rm -rf tmp_lol.c
+
+echo hi > tmp_lol.c
+cat tmp_lol.c | cat >> tmp_lol.c
+rm -rf tmp_lol.c
+
+ifconfig | cat | awk -v count=20 -v RS=" " 'NR==1, NR==10 {print $0} END{count="active"} END{print count}'
+
+echo hi && echo hello
+
+echo hi || echo hello
+
+echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi && echo hi
+
+echo hi && echo hi && echo hi && echo hi || echo hi && echo hi && echo hi && echo hi && echo hi && echo hi || echo hi && echo hi && echo hi && echo hi && echo hi || echo hi || echo hi
+
+cate && echo hi
+
+cate || echo hi
+
+cat < non_existant && echo hi
+
+cat < non_existant || echo hi
+
+echo hi | cat | cat | ls || cate | echo hi && echo hello
+
+echo | cate || ls | waeaweaweawe || ls && echo hi
+
+export hi=asd && echo $hi
+
+unset HOME && echo $HOME && env| grep HOME
+
+echo hi && exit && echo dont show
+
+echo hi || export asd=wer && echo $asd
+
+echo hi && export huh=lrrr || echo $huh
+echo $huh
+
+export hi=asd | echo hello && echo $hi
+
+awk -v '{print $0}' && echo hi
+
+awk -v '{print $0}' || echo hi
+
+echo hello && (ls)
+
+echo hello || (ls)
+
+echo hello || (ls && ls && ls) || echo hi && echo por
+
+echo hello || (echo hi && (echo hello || (ls) && ls) || echo hi | wc)
+
+echo hello && (echo hi && (echo hello || (ls) && ls) || echo hi | wc)
+
+echo hi | echo hello || (echo huh)
+
+( ( ( ( ( ( ( ( ( ( ( (echo hi) ) ) ) ) )  ) ) ) ) ) )
+
+( ( ( ( ( ( ( echo hi) && echo hi) || echo huh) || echo hy) && echoa) && echo lol) || echo p)
+
+( (echo hi) ) || echo lol && ls || (echo tree && echo yy || echo u) && (echo hytr || (echo ki && ls && (echo pol) || echo hyy) || echo 8888 && echoaa) || echo yyy && echoaaaaa ree || (echo t || (echo tr && ls && ls &&( (echo hi)  || echo hu) ) ) && ls
+
+echo hi||ls&&ls|ls|cat|cat|cat||ls||ls&&ls|cat||cat|ls
+
+ls&&ls&&ls||ls||lssaa&&cat
+
+export or='||' && export and='&&' && echo 42 $and echo 43 $or echo 43
+
