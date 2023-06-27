@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 16:04:56 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/27 10:36:42 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*read_loop(char *del)
 {
 	char	*line;
 	char	*str;
-	char	*tmp;
+	// char	*tmp;
 
 	errno = 0;
 	str = ft_strdup("");
@@ -34,26 +34,68 @@ char	*read_loop(char *del)
 		err_msg(NULL, "here_doc");
 	while (1)
 	{
-		line = readline("> ");
+		write(0, "> ", 2);
+		// system("leaks -q minishell");
+		line = get_next_line(0);
 		if (line == NULL && errno == ENOMEM)
 			err_msg(NULL, "here_doc");
 		else if (g_kill_switch == 1)
 			return (free(line), free(str), NULL);
 		else if (line == NULL && errno == 0)
+		{
+			// printf("hi\n");
+			// system("leaks -q minishell");
 			return (str);
+		}
+		// *(line + ft_strlen(line) - 1) = '\0';
 		if (!ft_strncmp(line, del, ft_strlen(del) + 1))
 			break ;
-		tmp = line;
-		line = ft_strjoin(tmp, "\n");
-		free(tmp);
-		if (line == NULL)
-			err_msg(NULL, "here_doc");
+		// *(line + ft_strlen(line)) = '\n';
+		// tmp = line;
+		// line = ft_strjoin(tmp, "\n");
+		// free(tmp);
+		// if (line == NULL)
+		// 	err_msg(NULL, "here_doc");
 		str = ft_strjoin_free(str, line);
 		if (!str)
 			err_msg(NULL, "here_doc");
 	}
+	free(line);
 	return (str);
 }
+
+// char	*read_loop(char *del)
+// {
+// 	char	*line;
+// 	char	*str;
+// 	char	*tmp;
+
+// 	errno = 0;
+// 	str = ft_strdup("");
+// 	if (!str)
+// 		err_msg(NULL, "here_doc");
+// 	while (1)
+// 	{
+// 		line = readline("> ");
+// 		if (line == NULL && errno == ENOMEM)
+// 			err_msg(NULL, "here_doc");
+// 		else if (g_kill_switch == 1)
+// 			return (free(line), free(str), NULL);
+// 		else if (line == NULL && errno == 0)
+// 			return (str);
+// 		if (!ft_strncmp(line, del, ft_strlen(del) + 1))
+// 			break ;
+// 		tmp = line;
+// 		line = ft_strjoin(tmp, "\n");
+// 		free(tmp);
+// 		if (line == NULL)
+// 			err_msg(NULL, "here_doc");
+// 		str = ft_strjoin_free(str, line);
+// 		if (!str)
+// 			err_msg(NULL, "here_doc");
+// 	}
+// 	return (str);
+// }
 
 bool	remove_quotes(char *new_del)
 {
@@ -86,13 +128,16 @@ void	read_here_doc(t_token *current_node, char *delimiter)
 	char	*new_delimiter;
 
 	errno = 0;
-	new_delimiter = ft_strdup(delimiter);
+	new_delimiter = ft_strjoin(delimiter, "\n");
+	if (new_delimiter == NULL)
+		err_msg(NULL, "here_doc");
 	if (!remove_quotes(new_delimiter))
 	{
 		free(new_delimiter);
 		return ;
 	}
 	current_node->str = read_loop(new_delimiter);
+	// system("leaks -q minishell");
 	free(new_delimiter);
 }
 
@@ -131,6 +176,7 @@ void	read_heredocs(t_token *first_token, t_token *error_token)
 			return ;
 		temp = temp->next;
 	}
+	// system("leaks -q minishell");
 }
 
 // int	main(void)

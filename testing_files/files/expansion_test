@@ -1,68 +1,179 @@
-# $HOME
+$USER
 
-cat $$
+echo $HOME
 
-# echo $HOME
+echo "$HOME"
 
-# echo "$HOME"
+echo '$HOME'
 
-# echo '$HOME'
+echo '"$HOME"'
 
-# echo '"$HOME"'
+echo "'$HOME'"
 
-# echo "'$HOME'"
+echo """"""$HOME"'"'"'"'"""
 
-# echo """"""$HOME"'"'"'"'"""
+echo ''''''$HOME''''''
 
-# echo ''''''$HOME''''''
+echo ''$HOME""$HOME'$HOME'"""'$HOME"""
 
-# echo ''$HOME""$HOME'$HOME'"""'$HOME"""
+echo '"""""'"$HOME'''"'"''$HOME"""""'$HOME"'"
 
-# echo '"""""'"$HOME'''"'"''$HOME"""""'$HOME"'"
+echo $
 
-# echo $
+echo $H'OME'
 
-# echo $H'OME'
+echo $H"OME"
 
-# echo $H"OME"
+echo $HOM$HOME
 
-# echo $HOM$HOME
+echo $'$$'$"$$$"$$$$$"$$"'$$$$'"
 
-# echo $'$$'$"$$$"$$$$$"$$"'$$$$'"
+echo '$'
 
-# echo '$'
+cat $HOME
 
-# cat $HOME
+cat "$HOME"
 
-# cat "$HOME"
+cat '$HOME'
 
-# cat '$HOME'
+cat '"$HOME"'
 
-# cat '"$HOME"'
+cat "'$HOME'"
 
-# cat "'$HOME'"
+cat """"""$HOME"'"'"'"'"""
 
-# cat """"""$HOME"'"'"'"'"""
+cat ''''''$HOME''''''
 
-# cat ''''''$HOME''''''
+cat ''$HOME""$HOME'$HOME'"""'$HOME"""
 
-# cat ''$HOME""$HOME'$HOME'"""'$HOME"""
+cat '"""""'"$HOME'''"'"''$HOME"""""'$HOME"'"
 
-# cat '"""""'"$HOME'''"'"''$HOME"""""'$HOME"'"
+cat $H'OME'
 
-# cat $
+cat $H"OME"
 
-# cat $$
+cat $$$$$$$$$$$$$$$$$$$$$$
 
-# cat $H'OME'
+cat $HOM$HOME
 
-# cat $H"OME"
+cat $'$$'$"$$$"$$$$$"$$"'$$$$'"
 
-# cat $$$$$$$$$$$$$$$$$$$$$$
+cat '$'
 
-# cat $HOM$HOME
+echo $?
 
-# cat $'$$'$"$$$"$$$$$"$$"'$$$$'"
+cate
+echo $?
 
-# cat '$'
+echo ""$?""
 
+echo '$?'
+
+echo "'$?'"
+
+export asd=reeeee
+echo $asd
+
+export asd="ls"
+echo $asd
+$asd
+
+export asd=$HOME
+echo $asd
+
+export asd=""
+echo asd
+
+export asd
+echo $asd
+
+export asd=
+echo $asd
+
+export asd="'"
+echo $asd
+
+export asd="' '' 'lol'''''''"
+echo $asd
+cat $asd
+
+export asd="asd asd"
+echo $asd
+cat $asd
+cat "$asd"
+
+export asd="'asd asd'"
+echo $asd
+cat $asd
+cat "$asd"
+
+export asd="'asd asd ' asd 'lol"
+echo $asd
+cat $asd
+cat "$asd"
+
+export asd="asd asd" asd2="'asd asd'"
+echo as$asd"$asd"$asd2"$asd2"
+cat as$asd"$asd"$asd2"$asd2"
+cat "as$asd"$asd"$asd2"$asd2""
+
+export asd="'"
+echo as'$asd'$asd"  $asd $asd' $asd"
+cat as'$asd'$asd"  $asd $asd' $asd"
+
+echo "$""$"
+
+cat $asdasdasd doesntexits
+
+cat "$asdasdasd" doesnexit
+
+cat '$asdasd' doesntexist
+
+export ads=echo
+$asd lol
+$asd -n -nnnnn -n $asd
+
+export asd="  A  B  "
+/bin/echo "1"$asd'2'
+
+export asd=" A  B  "
+/bin/echo "1"$asd'2'
+
+export asd="A  B  "
+/bin/echo "1"$asd'2'
+
+export asd="  A  B "
+/bin/echo "1"$asd'2'
+
+export asd="  A  B"
+/bin/echo "1"$asd'2'
+
+export asd="  A B  "
+/bin/echo "1"$asd'2'
+
+export asd="  AB  "
+/bin/echo "1"$asd'2'
+
+export asd="  A  B  "
+/bin/echo $asd'2'
+
+export asd="  A  B  "
+/bin/echo $asd"1"
+
+export asd=""
+/bin/echo "1"$asd'2'
+
+export asd=" "
+/bin/echo "1"$asd'2'
+
+export asd="   "
+/bin/echo "1"$asd'2'
+
+export asd="  A  B  "
+/bin/echo ?$asd'2'
+
+export asd="  A  B  "
+/bin/echo "1"$asd?
+
+export asd="  A  B  "
+/bin/echo "1"$asd2?

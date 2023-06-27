@@ -16,11 +16,17 @@ help(){
 	echo "exit - run exit tests"
 	echo "env - run env tests"
 	echo "pip - run pipeline or and tests"
+	echo "exp - run expansion tests"
+	echo "red - run redirect tests"
 	echo "quit - exit"
 	echo -e "help - display this message\n"
 }
 
 test_output(){
+	echo minishell
+	cat $1
+	echo bash
+	cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -31,8 +37,10 @@ test_output(){
 }
 
 test_err(){
-	# cat $1
-	# cat $2
+	echo minishell_err
+	cat $1
+	echo bash_Err
+	cat $2
 	if [[ $1 == minishell:* ]]
 	then
 		ERROR_MINI=$(cut -f2- -d ' ' $1)
@@ -53,6 +61,8 @@ test_err(){
 }
 
 test_code(){
+	echo  minishell $1
+	echo  bash $2
 	if [[ $1 == $2 ]]
 	then
 		((OK++))
@@ -173,6 +183,16 @@ test_expansions(){
 	echo "----------------------------------------------------"
 }
 
+test_redirect(){
+	touch file
+	echo this is a file > file
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING REDIRECT TESTS${RESET}"
+	test_file "testing_files/files/redirect_test"
+	echo "----------------------------------------------------"
+	rm file
+}
+
 run_all(){
 	test_echo
 	test_cd
@@ -180,6 +200,8 @@ run_all(){
 	test_unset
 	test_exit
 	test_pipeline_or_and
+	test_expansions
+	test_redirect
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))
@@ -227,6 +249,10 @@ main(){
 	elif [[ $1 == "exp" ]]
 	then
 		test_expansions
+		read_input
+	elif [[ $1 == "red" ]]
+	then
+		test_redirect
 		read_input
 	elif [[ $1 == "quit" ]]
 	then

@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 09:58:21 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/30 10:14:43 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/27 10:26:08 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_redirect_list(t_redirect *first_redirect)
 		temp = first_redirect;
 		first_redirect = first_redirect->next;
 		free(temp->name);
+		free(temp->str);
 		free(temp);
 	}
 }
