@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/26 14:48:03 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/27 08:05:40 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 	int	exit_code;
 
 	exit_code = gen->status;
-	if (cmd->next == NULL)
+	if (cmd->next == NULL && cmd->prev == NULL)
 		if (write(2, "exit\n", 5) == -1)
 			return (err_msg(cmd->cmd[0], "write error"), 1);
 	if (cmd->cmd[1])
