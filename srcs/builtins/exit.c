@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/06 18:49:26 by codespace     ########   odam.nl         */
+/*   Updated: 2023/06/27 08:05:40 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,9 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 	int	exit_code;
 
 	exit_code = gen->status;
-	if (write(2, "exit\n", 5) == -1)
-		return (err_msg(cmd->cmd[0], "write error"), 1);
-	if (ft_arrlen(cmd->cmd) > 2)
-	{
-		built_err_msg(cmd->cmd[0], NULL, "too many arguments\n");
-		exit(1);
-	}
+	if (cmd->next == NULL && cmd->prev == NULL)
+		if (write(2, "exit\n", 5) == -1)
+			return (err_msg(cmd->cmd[0], "write error"), 1);
 	if (cmd->cmd[1])
 	{
 		exit_code = atoi_exit(cmd->cmd[1]);
@@ -60,6 +56,11 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 		{
 			built_err_msg(cmd->cmd[0], NULL, "numeric argument required\n");
 			exit(255);
+		}
+		if (ft_arrlen(cmd->cmd) > 2)
+		{
+			built_err_msg(cmd->cmd[0], NULL, "too many arguments\n");
+			exit(1);
 		}
 	}
 	exit(exit_code);
