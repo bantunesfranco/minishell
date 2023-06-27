@@ -23,10 +23,10 @@ help(){
 }
 
 test_output(){
-	echo minishell
-	cat $1
-	echo bash
-	cat $2
+	# echo minishell
+	# cat $1
+	# echo bash
+	# cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -37,10 +37,10 @@ test_output(){
 }
 
 test_err(){
-	echo minishell_err
-	cat $1
-	echo bash_Err
-	cat $2
+	# echo minishell_err
+	# cat $1
+	# echo bash_Err
+	# cat $2
 	if [[ $1 == minishell:* ]]
 	then
 		ERROR_MINI=$(cut -f2- -d ' ' $1)
@@ -61,8 +61,8 @@ test_err(){
 }
 
 test_code(){
-	echo  minishell $1
-	echo  bash $2
+	# echo  minishell $1
+	# echo  bash $2
 	if [[ $1 == $2 ]]
 	then
 		((OK++))

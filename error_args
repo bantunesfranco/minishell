@@ -1,0 +1,8 @@
+different outputs for argument: 
+echo hi >> temp
+echo hello >> temp
+echo huh >> temp
+echo lol >> temp
+cat temp
+rm temp
+
