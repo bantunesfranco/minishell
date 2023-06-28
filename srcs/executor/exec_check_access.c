@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/28 14:42:58 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/28 14:56:59 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ void	is_dir(char *cmd)
 	write(2, "minishell: ", 11);
 	write(2, cmd, ft_strlen(cmd));
 	write(2, ": is a directory\n", 18);
-	// errno = 21;
-	// perror(cmd);
 	closedir(dir);
 	_exit(126);
-	// child_err_msg(NULL, cmd);
 }
 
 static int	check_rel_path(t_cmd *cmd, int p)
@@ -57,7 +54,7 @@ static int	check_rel_path(t_cmd *cmd, int p)
 		err_msg(NULL, cmd->cmd[0]);
 		if (errno == 13)
 			_exit(126);
-		_exit(errno);
+		_exit(127);
 	}
 	return (0);
 }
@@ -72,7 +69,7 @@ static int	check_abs_path(t_cmd *cmd)
 		err_msg(NULL, cmd->cmd[0]);
 		if (errno == 13)
 			_exit(126);
-		_exit(errno);
+		_exit(127);
 	}
 	cmd->path = ft_strdup(cmd->cmd[0]);
 	if (!cmd->path)
@@ -97,7 +94,7 @@ static int	can_access(char *path, t_cmd *cmd)
 	{
 		free(cmd->path);
 		err_msg(NULL, cmd->cmd[0]);
-		_exit(errno);
+		_exit(127);
 	}
 	free(cmd->path);
 	return (0);
@@ -116,7 +113,6 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 		return ;
 	while (gen->path && gen->path[i])
 	{
-		printf("huh\n");
 		if (can_access(gen->path[i], cmd) == 1)
 			return ;
 		i++;
