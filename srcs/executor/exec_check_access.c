@@ -6,13 +6,31 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/24 12:53:00 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/28 14:35:36 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
+#include <dirent.h>
 #include <sys/wait.h>
+
+void	is_dir(char *cmd)
+{
+	DIR	*dir;
+
+	dir = opendir(cmd);
+	if (dir == NULL)
+		return ;
+	write(2, "minishell: ", 11);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": is a directory\n", 18);
+	// errno = 21;
+	// perror(cmd);
+	closedir(dir);
+	_exit(126);
+	// child_err_msg(NULL, cmd);
+}
 
 static int	check_rel_path(t_cmd *cmd, int p)
 {
@@ -20,6 +38,7 @@ static int	check_rel_path(t_cmd *cmd, int p)
 
 	if ((!ft_strchr(cmd->cmd[0], '/') || cmd->cmd[0][0] == '/') && p == 1)
 		return (1);
+	is_dir(cmd->cmd[0]);
 	cmd->path = getcwd(NULL, 1);
 	if (!cmd->path && errno == ENOMEM)
 		return (err_msg(NULL, "check path"), 1);
@@ -47,6 +66,7 @@ static int	check_abs_path(t_cmd *cmd)
 {
 	if (cmd->cmd[0][0] != '/')
 		return (1);
+	is_dir(cmd->cmd[0]);
 	if (access(cmd->cmd[0], F_OK) || access(cmd->cmd[0], X_OK))
 	{
 		err_msg(NULL, cmd->cmd[0]);
@@ -88,7 +108,7 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 	int		i;
 	// char	*tmp;
 	// char	*tmp2
-	
+
 	i = 0;
 	if (!check_abs_path(cmd))
 		return ;
