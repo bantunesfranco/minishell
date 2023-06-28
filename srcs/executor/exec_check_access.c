@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/24 12:53:00 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/28 13:52:12 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	check_access(t_gen *gen, t_cmd *cmd)
 		return ;
 	while (gen->path && gen->path[i])
 	{
+		printf("huh\n");
 		if (can_access(gen->path[i], cmd) == 1)
 			return ;
 		i++;

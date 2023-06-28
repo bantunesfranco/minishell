@@ -1,8 +1,19 @@
-different outputs for argument: 
-echo hi >> temp
-echo hello >> temp
-echo huh >> temp
-echo lol >> temp
-cat temp
-rm temp
-
+different error codes for argument: 
+/bin/bro.sh
+	2 127
+different error codes for argument: 
+unset PATH
+env | grep USER
+	2 127
+different error codes for argument: 
+unset PATH
+cat bro.sh
+	2 127
+different error codes for argument: 
+cat bro.sh
+unset PATH
+cat bro.sh
+	2 127
+different error codes for argument: 
+""
+	13 127

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/27 10:36:42 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/28 13:31:38 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <signal.h>
 // #include "readline.h"
 
-char	*read_loop(char *del)
+char	*read_loop(char *del, int p)
 {
 	char	*line;
 	char	*str;
@@ -37,8 +37,11 @@ char	*read_loop(char *del)
 		write(0, "> ", 2);
 		// system("leaks -q minishell");
 		line = get_next_line(0);
-		if (line == NULL && errno == ENOMEM)
+		if (line == NULL && errno != 0)
+		{
 			err_msg(NULL, "here_doc");
+			exit(errno);
+		}
 		else if (g_kill_switch == 1)
 			return (free(line), free(str), NULL);
 		else if (line == NULL && errno == 0)
@@ -123,11 +126,11 @@ bool	remove_quotes(char *new_del)
 	return (true);
 }
 
-void	read_here_doc(t_token *current_node, char *delimiter)
+void	child_heredoc(char *delimiter, int p[2])
 {
 	char	*new_delimiter;
 
-	errno = 0;
+	close(p[0]);
 	new_delimiter = ft_strjoin(delimiter, "\n");
 	if (new_delimiter == NULL)
 		err_msg(NULL, "here_doc");
@@ -136,9 +139,36 @@ void	read_here_doc(t_token *current_node, char *delimiter)
 		free(new_delimiter);
 		return ;
 	}
-	current_node->str = read_loop(new_delimiter);
-	// system("leaks -q minishell");
+	read_loop(new_delimiter, p[1]);
 	free(new_delimiter);
+	_exit(0);
+}
+
+int	parent_heredoc(t_token *current_node)
+{
+
+}
+
+int	read_heredoc(t_token *current_node, char *delimiter)
+{
+	int		id;
+	int		p[2];
+
+	if (pipe(p) == -1)
+	{
+		err_msg(NULL, "here_doc");
+		return (-1);
+	}
+	id = fork();
+	if (id == -1)
+	{
+		err_msg(NULL, "here_doc");
+		return (-1);
+	}
+	if (id == 0)
+		child_heredoc(delimiter, p);
+	return (parent_heredoc(current_node));
+	// current_node->str = read_loop(new_delimiter);
 }
 
 void	count_heredocs(t_token *first_token, t_token *error_token)
@@ -171,7 +201,7 @@ void	read_heredocs(t_token *first_token, t_token *error_token)
 	while (temp != error_token)
 	{
 		if (temp->type == LESS_LESS)
-			read_here_doc(temp, temp->next->word);
+			read_heredoc(temp, temp->next->word);
 		if (g_kill_switch == 1)
 			return ;
 		temp = temp->next;

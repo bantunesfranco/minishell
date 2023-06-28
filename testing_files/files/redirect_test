@@ -1,3 +1,6 @@
+ls >"./ with spaces"
+rm -rf " with spaces"
+
 cat < file
 
 cat < testing_files/file_perm/nore
@@ -200,6 +203,102 @@ $USER
 '$USER'
 "$USER"
 lol
+
+cat << hi << k << l << p << s << w
+$USER
+asd
+hi
+k
+l
+lol
+pp
+p
+weeeee
+s
+REEEEEEE
+w
+
+cat << hi << l < file
+asd
+www
+hi
+what is
+l
+
+cat << hi << y < file << we
+asdasd
+hi
+we
+y
+qqqq
+wwwww
+we
+
+cat << l >tmp
+asd
+r
+l
+cat tmp
+rm tmp
+
+cat <<l<<w<<s | cate <<k | wc << p | cat
+asdasd
+l
+wwwwwww
+qqqq
+asd
+spaces
+w
+pppp
+s
+123
+k
+$USER
+p
+
+cat << pol << s || echo hi << l << p && cat << l
+asd
+pol
+wwwwwww
+s
+123
+-----
+l
+qqqqq
+qqqq
+p
+wwwww
+l
+
+cat << k << l | cat << s | cat < file > tmp | wceeeeee << t || cat << k && cat <<pol
+asdasdasd
+awwe
+ee
+ew
+eq
+k
+asdasd
+waeaweaweawe
+l
+asd
+waeaweaweawe123
+1
+4
+s
+-0-0-
+$HOME
+'asdasdasd'
+''
+"
+t
+qqqq
+&&&&
+$
+k
+][][][]
+pol
+
+
 
 
 

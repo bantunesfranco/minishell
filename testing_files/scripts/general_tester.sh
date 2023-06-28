@@ -18,6 +18,7 @@ help(){
 	echo "pip - run pipeline or and tests"
 	echo "exp - run expansion tests"
 	echo "red - run redirect tests"
+	echo "oth - run other (like unset PATH) tests"
 	echo "quit - exit"
 	echo -e "help - display this message\n"
 }
@@ -193,6 +194,23 @@ test_redirect(){
 	rm file
 }
 
+test_other(){
+	touch bro.sh
+	echo '#!/bin/bash' > bro.sh
+	echo "echo hi" >> bro.sh
+	chmod +x bro.sh
+	touch ls
+	echo '#!/bin/bash' > ls
+	echo "echo hi" >> ls
+	chmod +x ls
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING OTHER TESTS${RESET}"
+	test_file "testing_files/files/other_test"
+	echo "----------------------------------------------------"
+	rm ls
+	rm bro.sh
+}
+
 run_all(){
 	test_echo
 	test_cd
@@ -202,6 +220,7 @@ run_all(){
 	test_pipeline_or_and
 	test_expansions
 	test_redirect
+	test_other
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))
@@ -253,6 +272,10 @@ main(){
 	elif [[ $1 == "red" ]]
 	then
 		test_redirect
+		read_input
+	elif [[ $1 == "oth" ]]
+	then
+		test_other
 		read_input
 	elif [[ $1 == "quit" ]]
 	then
