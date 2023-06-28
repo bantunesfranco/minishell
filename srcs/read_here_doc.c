@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/28 13:31:38 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/28 14:41:26 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*read_loop(char *del, int p)
 	char	*str;
 	// char	*tmp;
 
+	(void)p;
 	errno = 0;
 	str = ft_strdup("");
 	if (!str)
@@ -144,30 +145,32 @@ void	child_heredoc(char *delimiter, int p[2])
 	_exit(0);
 }
 
-int	parent_heredoc(t_token *current_node)
-{
+// int	parent_heredoc(t_token *current_node)
+// {
 
-}
+// }
 
 int	read_heredoc(t_token *current_node, char *delimiter)
 {
-	int		id;
+	// int		id;
 	int		p[2];
+	(void)current_node;
 
-	if (pipe(p) == -1)
-	{
-		err_msg(NULL, "here_doc");
-		return (-1);
-	}
-	id = fork();
-	if (id == -1)
-	{
-		err_msg(NULL, "here_doc");
-		return (-1);
-	}
-	if (id == 0)
+	// if (pipe(p) == -1)
+	// {
+	// 	err_msg(NULL, "here_doc");
+	// 	return (-1);
+	// }
+	// id = fork();
+	// if (id == -1)
+	// {
+	// 	err_msg(NULL, "here_doc");
+	// 	return (-1);
+	// }
+	// if (id == 0)
 		child_heredoc(delimiter, p);
-	return (parent_heredoc(current_node));
+	return(1);
+	// return (parent_heredoc(current_node));
 	// current_node->str = read_loop(new_delimiter);
 }
 
