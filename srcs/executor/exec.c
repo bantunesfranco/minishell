@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/26 12:50:00 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/28 14:35:13 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
 		find_path(cmd->cmd, gen);
 		check_access(gen, cmd);
 		execve(cmd->path, cmd->cmd, gen->env);
+		errno = 127;
 		child_err_msg(NULL, cmd->cmd[0]);
 	}
 }
