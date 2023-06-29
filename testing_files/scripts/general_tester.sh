@@ -16,11 +16,18 @@ help(){
 	echo "exit - run exit tests"
 	echo "env - run env tests"
 	echo "pip - run pipeline or and tests"
+	echo "exp - run expansion tests"
+	echo "red - run redirect tests"
+	echo "oth - run other (like unset PATH) tests"
 	echo "quit - exit"
 	echo -e "help - display this message\n"
 }
 
 test_output(){
+	# echo minishell
+	# cat $1
+	# echo bash
+	# cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -31,11 +38,33 @@ test_output(){
 }
 
 test_err(){
-	if [[ $1 == minishell:* ]]
+	if [[ $HEREDOC == 1 ]]
+	then
+		# echo huh
+		return
+	fi
+	NEW=$(cat $1 | awk '{ if ($0 == "exit") next; else print $0}')
+	echo $NEW > $1
+	# echo HERE
+	# cat $1
+	# echo do
+	# echo minishell_err
+	# cat $1
+	# echo bash_Err
+	# cat $2
+	# echo `cat $1 | grep -v 'exit'`
+	if [[ `cat $1` == minishell:* ]]
 	then
 		ERROR_MINI=$(cut -f2- -d ' ' $1)
 		ERROR_BASH=$(cut -f4- -d ' ' $2)
+	else
+		ERROR_MINI=$(cat $1)
+		ERROR_BASH=$(cat $2)
 	fi
+	# echo mini
+	# echo $ERROR_MINI
+	# echo bash
+	# echo $ERROR_BASH
 	# ERROR_MINI=$(cut -f2- -d ' ' $1)
 	# ERROR_BASH=$(cut -f4- -d ' ' $2)
 	if [[ $ERROR_MINI == $ERROR_BASH ]]
@@ -48,6 +77,12 @@ test_err(){
 }
 
 test_code(){
+	# echo  minishell $1
+	# echo  bash $2
+	if [[ $HEREDOC == 1 ]]
+	then
+		return
+	fi
 	if [[ $1 == $2 ]]
 	then
 		((OK++))
@@ -78,11 +113,14 @@ test_file(){
 	NL=$'\n'
 	KO_ALL=0
 	OK_ALL=0
-	rm -rf error_args
 		while read -r line
 		do
 			if [[ $line == "" ]] || [[ $line == \#* ]]
 			then
+				continue
+			elif [[ $line == "HERE" ]]
+			then
+				HEREDOC=1
 				continue
 			else
 				while [[ $line != "" ]]
@@ -98,6 +136,7 @@ test_file(){
 			exit_bash=$?
 			compare out_mini out_bash err_mini err_bash $exit_mini $exit_bash
 			TEST=""
+			HEREDOC=0
 		done < "$FILE"
 	if [[ $KO_ALL == 0 ]]
 	then
@@ -161,11 +200,50 @@ test_pipeline_or_and(){
 	echo "----------------------------------------------------"
 }
 
+test_expansions(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING EXPANSION TESTS${RESET}"
+	test_file "testing_files/files/expansion_test"
+	echo "----------------------------------------------------"
+}
+
+test_redirect(){
+	touch file
+	echo this is a file > file
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING REDIRECT TESTS${RESET}"
+	test_file "testing_files/files/redirect_test"
+	echo "----------------------------------------------------"
+	rm file
+}
+
+test_other(){
+	touch bro.sh
+	echo '#!/bin/bash' > bro.sh
+	echo "echo hi" >> bro.sh
+	chmod +x bro.sh
+	touch ls
+	echo '#!/bin/bash' > ls
+	echo "echo hi" >> ls
+	chmod +x ls
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING OTHER TESTS${RESET}"
+	test_file "testing_files/files/other_test"
+	echo "----------------------------------------------------"
+	rm ls
+	rm bro.sh
+}
+
 run_all(){
 	test_echo
 	test_cd
 	test_export
 	test_unset
+	test_exit
+	test_pipeline_or_and
+	test_expansions
+	test_redirect
+	test_other
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))
@@ -179,6 +257,7 @@ read_input(){
 }
 
 main(){
+	rm -rf error_args
 	if [[ $1 == "all" ]]
 	then
 		run_all
@@ -209,6 +288,18 @@ main(){
 	elif [[ $1 == "pip" ]]
 	then
 		test_pipeline_or_and
+		read_input
+	elif [[ $1 == "exp" ]]
+	then
+		test_expansions
+		read_input
+	elif [[ $1 == "red" ]]
+	then
+		test_redirect
+		read_input
+	elif [[ $1 == "oth" ]]
+	then
+		test_other
 		read_input
 	elif [[ $1 == "quit" ]]
 	then

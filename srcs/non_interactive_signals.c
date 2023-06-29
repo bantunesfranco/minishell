@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/24 10:18:36 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/28 12:06:54 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,12 @@
 #include "minishell.h"
 #include <termios.h>
 #include <readline/readline.h>
-// #include <term.h>
-// #include <curses.h>
-
-int	put_char(int lol)
-{
-	return (write(1, &lol, 1));
-}
 
 void	heredoc_handler(int signal)
 {
 	(void)signal;
 	g_kill_switch = 1;
-	// rl_done = 1;
 	// rl_line_buffer = NULL;
-	// tputs(clear_screen, 1, put_char);
 	// rl_on_new_line();
 	// rl_replace_line(str , 0);
 	// rl_redisplay();

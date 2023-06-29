@@ -1,0 +1,325 @@
+ls >"./ with spaces"
+rm -rf " with spaces"
+
+cat < file
+
+cat < testing_files/file_perm/nore
+
+cat < file | cat < file | cat < file
+
+chmod -r file
+cat < file | cat < file | cat < file
+chmod +r file
+
+echo hello > temp && cat < temp
+rm temp
+
+touch temp
+echo hello > temp
+echo hello >> temp
+cat temp
+rm temp
+
+echo hi >> temp
+echo hello >> temp
+echo huh >> temp
+echo lol >> temp
+cat temp
+rm temp
+
+echo hi >> temp | echo hello >> temp | cat < temp
+rm temp
+
+echo hello > temp
+cat > temp < temp
+rm temp
+
+echo hello >> temp
+cat temp
+rm temp
+
+cat < nooooooo
+
+echo hello > temp
+echo hi > temp
+cat temp
+rm temp
+
+echo hi >> temp | echo huh >> temp | echo tree >> temp | echo h > temp
+cat temp
+rm temp
+
+chmod -w file
+echo hi > file
+echo hi >> file
+chmod +w file
+
+chmod -w file
+echo hi > file | cat > file | cat >> file | cat >> file | ls > file
+cat file
+chmod +w file
+
+echo hi > temp  >temp2 > temp3 > temp4 > temp5
+cat temp temp2 temp3 temp4 temp5
+rm temp temp2 temp3 temp4 temp5
+
+echo hi >temp
+echo hello > temp2
+echo huh > temp3
+echo jiii > temp4
+cat <temp <temp4 <temp3 | wc <temp2
+rm temp temp2 temp3 temp4
+
+echo hello > temp
+echo hi >temp2
+cat <temp <nonexistand <temp2
+rm temp temp2
+
+chmod -w file
+echo hello > temp > file > temp2
+cat temp file temp2
+chmod +w file
+rm temp
+
+cat < asdasdasdas | echo hi
+
+echo bi >/dev/null | echo hello > /dev/null
+
+chmod -r file
+echo hello > file
+chmod +r file
+
+chmod -w file
+cat < file
+chmod +w file
+
+cat <asdasdas && cat file || echo hello
+
+cat < asdasdasd && cat file > temp > temp2 || echo hello > temp3
+cat temp
+cat temp2
+cat temp3
+rm temp3
+
+echo hi > /dev/null | cat
+
+export asd="as as"
+cat < $asd
+echo hello > $asd
+cat < "$asd"
+echo hello > "$asd"
+rm "$asd"
+
+cat <$asdasdasdasd
+echo hello > $asdasdasdasd
+
+HERE
+cat << lim
+"lim"
+HELLO
+42
+ lim
+testing your minishell
+limm
+lim
+
+HERE
+<<lim cat
+ "lim"
+HELLO
+42
+ lim
+testing your minishell
+limm
+lim
+
+HERE
+cat << lim
+test
+lim
+
+HERE
+cat << EOF
+"EOF"
+!! HELLO
+@42 !!
+ EOF\t\b\n
+testing your minishell :)
+limm
+EOF
+
+HERE
+cat << hello
+$USER
+$NOVAR
+$HOME
+hello
+
+HERE
+cat << 'lim'
+$USER
+$NOVAR
+$HOME
+lim
+
+HERE
+cat << lim''
+$USER
+$NOVAR
+$HOME
+lim
+
+HERE
+cat << "lim"
+$USER
+$NOVAR
+$HOME
+lim
+
+HERE
+cat << 'lim'
+$USER
+$NOVAR
+$HOME
+lim
+
+HERE
+export asd=lol
+cat << $asd
+lol
+$USER
+$asd
+
+HERE
+export asd=lol
+cat << "$asd"
+lol
+$USER
+$asd
+
+HERE
+export asd=lol
+cat << '$asd'
+lol
+$USER
+$asd
+
+HERE
+cat << lol
+$USER
+'$USER'
+"$USER"
+lol
+
+HERE
+cat << lol""
+$USER
+'$USER'
+"$USER"
+lol
+
+HERE
+cat << hi << k << l << p << s << w
+$USER
+asd
+hi
+k
+l
+lol
+pp
+p
+weeeee
+s
+REEEEEEE
+w
+
+HERE
+cat << hi << l < file
+asd
+www
+hi
+what is
+l
+
+HERE
+cat << hi << y < file << we
+asdasd
+hi
+we
+y
+qqqq
+wwwww
+we
+
+HERE
+cat << l >tmp
+asd
+r
+l
+cat tmp
+rm tmp
+
+HERE
+cat <<l<<w<<s | cate <<k | wc << p | cat
+asdasd
+l
+wwwwwww
+qqqq
+asd
+spaces
+w
+pppp
+s
+123
+k
+$USER
+p
+
+HERE
+cat << pol << s || echo hi << l << p && cat << l
+asd
+pol
+wwwwwww
+s
+123
+-----
+l
+qqqqq
+qqqq
+p
+wwwww
+l
+
+HERE
+cat << k << l | cat << s | cat < file > tmp | wceeeeee << t || cat << k && cat <<pol
+asdasdasd
+awwe
+ee
+ew
+eq
+k
+asdasd
+waeaweaweawe
+l
+asd
+waeaweaweawe123
+1
+4
+s
+-0-0-
+$HOME
+'asdasdasd'
+''
+"
+t
+qqqq
+&&&&
+$
+k
+][][][]
+pol
+
+
+
+
+

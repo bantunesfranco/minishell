@@ -1,0 +1,4 @@
+different errors for argument: 
+unset PATH
+env | grep USER
+
