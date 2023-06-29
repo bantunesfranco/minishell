@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   test_wild.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: bfranco <marvin@codam.nl>                    +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/22 16:49:42 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/28 13:20:04 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/29 10:13:24 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ int	count_dirs(char *path)
 	return (n);
 }
 
+int	ft_strequal(char *s1, char *s2)
+{
+	int	len;
+
+	len = ft_strlen(s1) + 1;
+	if (ft_strncmp(s1, s2, len) != 0)
+		return (0);
+	return (1);
+}
+
 char	**expand_dir(char **match, char *path, char **parr, int i)
 {
 	DIR				*dir;
@@ -86,7 +96,22 @@ char	**expand_dir(char **match, char *path, char **parr, int i)
 	if (!dir)
 		return (NULL);
 	if (i == 0)
-		i = ft_strlen(path);
+		i = ft_strlen(path) - 1;
+	else
+		i = 0;
+	while (match[i] && match[i] != '/')
+		i++;
+	while (parr[nb_dir] && dir)
+	{
+		entry = readdir(dir);
+		if (!entry)
+			break ;
+		tmp = ft_strjoin("/", entry->d_name)
+		if (!tmp)
+			err_msg(NULL, "wildcard expansion");
+		tmp = ft_strjoinfree(path, tmp);
+		if (!tmp)
+			err_msg(NULL, "wildcard expansion");	}
 }
 
 int	main(void)
