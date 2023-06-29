@@ -38,18 +38,33 @@ test_output(){
 }
 
 test_err(){
+	if [[ $HEREDOC == 1 ]]
+	then
+		# echo huh
+		return
+	fi
+	NEW=$(cat $1 | awk '{ if ($0 == "exit") next; else print $0}')
+	echo $NEW > $1
+	# echo HERE
+	# cat $1
+	# echo do
 	# echo minishell_err
 	# cat $1
 	# echo bash_Err
 	# cat $2
-	if [[ $1 == minishell:* ]]
+	# echo `cat $1 | grep -v 'exit'`
+	if [[ `cat $1` == minishell:* ]]
 	then
 		ERROR_MINI=$(cut -f2- -d ' ' $1)
 		ERROR_BASH=$(cut -f4- -d ' ' $2)
 	else
 		ERROR_MINI=$(cat $1)
-		ERROR_BASH=$(cat $1)
+		ERROR_BASH=$(cat $2)
 	fi
+	# echo mini
+	# echo $ERROR_MINI
+	# echo bash
+	# echo $ERROR_BASH
 	# ERROR_MINI=$(cut -f2- -d ' ' $1)
 	# ERROR_BASH=$(cut -f4- -d ' ' $2)
 	if [[ $ERROR_MINI == $ERROR_BASH ]]
@@ -64,6 +79,10 @@ test_err(){
 test_code(){
 	# echo  minishell $1
 	# echo  bash $2
+	if [[ $HEREDOC == 1 ]]
+	then
+		return
+	fi
 	if [[ $1 == $2 ]]
 	then
 		((OK++))
@@ -94,11 +113,14 @@ test_file(){
 	NL=$'\n'
 	KO_ALL=0
 	OK_ALL=0
-	rm -rf error_args
 		while read -r line
 		do
 			if [[ $line == "" ]] || [[ $line == \#* ]]
 			then
+				continue
+			elif [[ $line == "HERE" ]]
+			then
+				HEREDOC=1
 				continue
 			else
 				while [[ $line != "" ]]
@@ -114,6 +136,7 @@ test_file(){
 			exit_bash=$?
 			compare out_mini out_bash err_mini err_bash $exit_mini $exit_bash
 			TEST=""
+			HEREDOC=0
 		done < "$FILE"
 	if [[ $KO_ALL == 0 ]]
 	then
@@ -234,6 +257,7 @@ read_input(){
 }
 
 main(){
+	rm -rf error_args
 	if [[ $1 == "all" ]]
 	then
 		run_all

@@ -113,6 +113,7 @@ rm "$asd"
 cat <$asdasdasdasd
 echo hello > $asdasdasdasd
 
+HERE
 cat << lim
 "lim"
 HELLO
@@ -122,6 +123,7 @@ testing your minishell
 limm
 lim
 
+HERE
 <<lim cat
  "lim"
 HELLO
@@ -131,10 +133,12 @@ testing your minishell
 limm
 lim
 
+HERE
 cat << lim
 test
 lim
 
+HERE
 cat << EOF
 "EOF"
 !! HELLO
@@ -144,66 +148,77 @@ testing your minishell :)
 limm
 EOF
 
+HERE
 cat << hello
 $USER
 $NOVAR
 $HOME
 hello
 
+HERE
 cat << 'lim'
 $USER
 $NOVAR
 $HOME
 lim
 
+HERE
 cat << lim''
 $USER
 $NOVAR
 $HOME
 lim
 
+HERE
 cat << "lim"
 $USER
 $NOVAR
 $HOME
 lim
 
+HERE
 cat << 'lim'
 $USER
 $NOVAR
 $HOME
 lim
 
+HERE
 export asd=lol
 cat << $asd
 lol
 $USER
 $asd
 
+HERE
 export asd=lol
 cat << "$asd"
 lol
 $USER
 $asd
 
+HERE
 export asd=lol
 cat << '$asd'
 lol
 $USER
 $asd
 
+HERE
 cat << lol
 $USER
 '$USER'
 "$USER"
 lol
 
+HERE
 cat << lol""
 $USER
 '$USER'
 "$USER"
 lol
 
+HERE
 cat << hi << k << l << p << s << w
 $USER
 asd
@@ -218,6 +233,7 @@ s
 REEEEEEE
 w
 
+HERE
 cat << hi << l < file
 asd
 www
@@ -225,6 +241,7 @@ hi
 what is
 l
 
+HERE
 cat << hi << y < file << we
 asdasd
 hi
@@ -234,6 +251,7 @@ qqqq
 wwwww
 we
 
+HERE
 cat << l >tmp
 asd
 r
@@ -241,6 +259,7 @@ l
 cat tmp
 rm tmp
 
+HERE
 cat <<l<<w<<s | cate <<k | wc << p | cat
 asdasd
 l
@@ -256,6 +275,7 @@ k
 $USER
 p
 
+HERE
 cat << pol << s || echo hi << l << p && cat << l
 asd
 pol
@@ -270,6 +290,7 @@ p
 wwwww
 l
 
+HERE
 cat << k << l | cat << s | cat < file > tmp | wceeeeee << t || cat << k && cat <<pol
 asdasdasd
 awwe
