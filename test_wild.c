@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/22 16:49:42 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/29 10:13:24 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/29 14:39:14 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,22 @@ char	*getpath(char *str)
 	char	*path;
 
 	i = 0;
-	while (str[i] != '*')
+	while (str[i] && str[i] != '*')
 		i++;
 	path = (char *)ft_calloc(sizeof(char), i + 2);
 	if (!path)
-		err_exit(NULL, "wildcard expander");
+		err_msg(NULL, "wildcard expander");
 	i = 0;
 	while (str[i] && (str[i] == '/' || str[i] == '.'))
 	{
 		path[i] = str[i];
 		i++;
 	}
-	if (i == 0 || str[i - 1] == '/')
+	if (i == 0)// || str[i - 1] == '/')
 	{
 		path[i] = '.';
-		i++;
+		// i++;
 	}
-	path[i] = '\0';
 	return (path);
 }
 
@@ -84,7 +83,7 @@ int	ft_strequal(char *s1, char *s2)
 	return (1);
 }
 
-char	**expand_dir(char **match, char *path, char **parr, int i)
+char	**expand_dir(char *match, char *path, char **parr, int i)
 {
 	DIR				*dir;
 	struct dirent	*entry;
@@ -106,26 +105,33 @@ char	**expand_dir(char **match, char *path, char **parr, int i)
 		entry = readdir(dir);
 		if (!entry)
 			break ;
-		tmp = ft_strjoin("/", entry->d_name)
+		tmp = ft_strjoin("/", entry->d_name);
+		if (tmp)
+			tmp = ft_strjoin(path, tmp);
 		if (!tmp)
 			err_msg(NULL, "wildcard expansion");
-		tmp = ft_strjoinfree(path, tmp);
-		if (!tmp)
-			err_msg(NULL, "wildcard expansion");	}
+		if ((ft_strequal(parr[nb_dir], entry->d_name) || match_str(match, entry->d_name, i + 1, 0)) && !ft_strequal(".", entry->d_name) \
+		&& !ft_strequal("..", entry->d_name) && !ft_strequal(parr[nb_dir], match + i + 1))
+			expand_dir(match, tmp, parr, i + 1);
+		else if (match_str(match, entry->d_name, i + 1, 0) && (!ft_strequal(".", entry->d_name) && !ft_strequal("..", entry->d_name)))
+			printf("%s\n", entry->d_name);
+		free(tmp);
+	}
+	return (NULL);
 }
 
 int	main(void)
 {
-	char			*str = "../../../../srcs/*i*n*";
+	char			*str = "srcs/i*";
 	// char			*arr[4096] = {"srcs/incs", "srcs/input", "srcs/lexer", "srcs/main", "srcs/parser", "srcs/ireee", NULL};
 
-	// // expand_dir(str, arr, 0);
+	expand_dir(str, getpath(str), ft_split(str, '/'), 0);
 	// for (size_t i = 0; arr[i]; i++)
 	// {
 	// 	if (match_str(str, arr[i], 0, 0) == 1)
 	// 		printf("%s: %s\n", arr[i], "POGGERS, its a match");
 	// // 	printf("%s\n", arr[i]);
 	// }
-	printf("%s\n", getpath(str));
+	// printf("%s\n", getpath(str));
 	return (0);
 }
