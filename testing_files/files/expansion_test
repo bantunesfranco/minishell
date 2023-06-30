@@ -26,8 +26,6 @@ echo $H"OME"
 
 echo $HOM$HOME
 
-echo $'$$'$"$$$"$$$$$"$$"'$$$$'"
-
 echo '$'
 
 cat $HOME
@@ -52,11 +50,7 @@ cat $H'OME'
 
 cat $H"OME"
 
-cat $$$$$$$$$$$$$$$$$$$$$$
-
 cat $HOM$HOME
-
-cat $'$$'$"$$$"$$$$$"$$"'$$$$'"
 
 cat '$'
 

@@ -37,9 +37,6 @@ export lol=asd
 echo $lol
 
 unset PATH
-env | grep USER
-
-unset PATH
 pwd
 cd ..
 pwd

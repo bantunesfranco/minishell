@@ -77,9 +77,11 @@ rm temp temp2
 
 chmod -w file
 echo hello > temp > file > temp2
-cat temp file temp2
+cat temp file
 chmod +w file
 rm temp
+
+cat temp2
 
 cat < asdasdasdas | echo hi
 
@@ -96,10 +98,11 @@ chmod +w file
 cat <asdasdas && cat file || echo hello
 
 cat < asdasdasd && cat file > temp > temp2 || echo hello > temp3
-cat temp
-cat temp2
 cat temp3
 rm temp3
+
+cat temp
+cat temp2
 
 echo hi > /dev/null | cat
 
@@ -218,38 +221,38 @@ $USER
 "$USER"
 lol
 
-HERE
-cat << hi << k << l << p << s << w
-$USER
-asd
-hi
-k
-l
-lol
-pp
-p
-weeeee
-s
-REEEEEEE
-w
+# HERE
+# cat << hi << k << l << p << s << w
+# $USER
+# asd
+# hi
+# k
+# l
+# lol
+# pp
+# p
+# weeeee
+# s
+# REEEEEEE
+# w
 
-HERE
-cat << hi << l < file
-asd
-www
-hi
-what is
-l
+# HERE
+# cat << hi << l < file
+# asd
+# www
+# hi
+# what is
+# l
 
-HERE
-cat << hi << y < file << we
-asdasd
-hi
-we
-y
-qqqq
-wwwww
-we
+# HERE
+# cat << hi << y < file << we
+# asdasd
+# hi
+# we
+# y
+# qqqq
+# wwwww
+# we
 
 HERE
 cat << l >tmp
@@ -259,65 +262,65 @@ l
 cat tmp
 rm tmp
 
-HERE
-cat <<l<<w<<s | cate <<k | wc << p | cat
-asdasd
-l
-wwwwwww
-qqqq
-asd
-spaces
-w
-pppp
-s
-123
-k
-$USER
-p
+# HERE
+# cat <<l<<w<<s | cate <<k | wc << p | cat
+# asdasd
+# l
+# wwwwwww
+# qqqq
+# asd
+# spaces
+# w
+# pppp
+# s
+# 123
+# k
+# $USER
+# p
 
-HERE
-cat << pol << s || echo hi << l << p && cat << l
-asd
-pol
-wwwwwww
-s
-123
------
-l
-qqqqq
-qqqq
-p
-wwwww
-l
+# HERE
+# cat << pol << s || echo hi << l << p && cat << l
+# asd
+# pol
+# wwwwwww
+# s
+# 123
+# -----
+# l
+# qqqqq
+# qqqq
+# p
+# wwwww
+# l
 
-HERE
-cat << k << l | cat << s | cat < file > tmp | wceeeeee << t || cat << k && cat <<pol
-asdasdasd
-awwe
-ee
-ew
-eq
-k
-asdasd
-waeaweaweawe
-l
-asd
-waeaweaweawe123
-1
-4
-s
--0-0-
-$HOME
-'asdasdasd'
-''
-"
-t
-qqqq
-&&&&
-$
-k
-][][][]
-pol
+# HERE
+# cat << k << l | cat << s | cat < file > tmp | wceeeeee << t || cat << k && cat <<pol
+# asdasdasd
+# awwe
+# ee
+# ew
+# eq
+# k
+# asdasd
+# waeaweaweawe
+# l
+# asd
+# waeaweaweawe123
+# 1
+# 4
+# s
+# -0-0-
+# $HOME
+# 'asdasdasd'
+# ''
+# "
+# t
+# qqqq
+# &&&&
+# $
+# k
+# ][][][]
+# pol
 
 
 

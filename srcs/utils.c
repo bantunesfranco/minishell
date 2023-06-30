@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/08 14:07:05 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 12:46:21 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/30 12:01:01 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,34 @@ int	is_valid_input(char *str)
 
 void	unset_echoctl(void)
 {
-	// struct termios	termios;
+	struct termios	termios;
 
-	// if (tcgetattr(0, &termios) == -1)
-	// {
-	// 	err_msg(NULL, "set echoctl");
-	// 	return ;
-	// }
-	// termios.c_lflag &= ~ECHOCTL;
-	// if (tcsetattr(0, 0, &termios) == -1)
-	// 	err_msg(NULL, "set echoctl");
+	if (isatty(STDIN_FILENO))
+	{
+		if (tcgetattr(0, &termios) == -1)
+		{
+			err_msg(NULL, "set echoctl");
+			return ;
+		}
+		termios.c_lflag &= ~ECHOCTL;
+		if (tcsetattr(0, 0, &termios) == -1)
+			err_msg(NULL, "set echoctl");
+	}
 }
 
 void	set_echoctl(void)
 {
-	// struct termios	termios;
+	struct termios	termios;
 
-	// if (tcgetattr(0, &termios) == -1)
-	// {
-	// 	err_msg(NULL, "unset echoctl");
-	// 	return ;
-	// }
-	// termios.c_lflag |= ECHOCTL;
-	// if (tcsetattr(0, 0, &termios) == -1)
-	// 	err_msg(NULL, "unset echoctl");
+	if (isatty(STDIN_FILENO))
+	{
+		if (tcgetattr(0, &termios) == -1)
+		{
+			err_msg(NULL, "unset echoctl");
+			return ;
+		}
+		termios.c_lflag |= ECHOCTL;
+		if (tcsetattr(0, 0, &termios) == -1)
+			err_msg(NULL, "unset echoctl");
+	}
 }

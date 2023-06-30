@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/28 12:06:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/30 11:40:42 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,18 @@
 #include <termios.h>
 #include <readline/readline.h>
 
-void	heredoc_handler(int signal)
+void	heredoc_handler_sigquit(int signal)
+{
+	(void)signal;
+	// g_kill_switch = 1;
+	// _exit(1);
+}
+
+void	heredoc_handler_sigint(int signal)
 {
 	(void)signal;
 	g_kill_switch = 1;
-	// rl_line_buffer = NULL;
-	// rl_on_new_line();
-	// rl_replace_line(str , 0);
-	// rl_redisplay();
-	// write(0, "\n", 2);
+	_exit(1);
 }
 
 void	sig_quit_handler_non_interactive(int signal)

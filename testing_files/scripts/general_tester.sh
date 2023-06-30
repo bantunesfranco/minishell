@@ -24,10 +24,6 @@ help(){
 }
 
 test_output(){
-	# echo minishell
-	# cat $1
-	# echo bash
-	# cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -43,14 +39,31 @@ test_err(){
 		# echo huh
 		return
 	fi
-	NEW=$(cat $1 | awk '{ if ($0 == "exit") next; else print $0}')
-	echo $NEW > $1
+	# cat $1
 	# echo HERE
+	# # cat $1 | awk '{ if ($0 !~ /exit/) print $0}'
+	# echo AWK
+	# # awk '!/exit/' $1
+	# # cat $1 | awk -v ORS="\n" '{print}'
+	# echo SED
+	# sed 's/exit\n//g' $1
+	NEW=`sed -n '/^exit/!p' $1`
+	# echo $NEW
+	echo $NEW > $1
+	# echo BASH
+	# cat $2
+	# echo DONE
+	# cat lol
+	# cat lol
+	# echo HERE
+	# cat $1
 	# cat $1
 	# echo do
 	# echo minishell_err
 	# cat $1
 	# echo bash_Err
+	# cat $2
+	# cat $1
 	# cat $2
 	# echo `cat $1 | grep -v 'exit'`
 	if [[ `cat $1` == minishell:* ]]

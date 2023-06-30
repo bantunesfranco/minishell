@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/29 09:56:03 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/30 11:56:03 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	read_loop(char *del, int p)
 	errno = 0;
 	str = ft_strdup("");
 	if (!str)
-		err_msg(NULL, "here_doc");
+		child_err_msg(NULL, "here_doc");
 	while (1)
 	{
 		write(0, "> ", 2);
@@ -134,6 +134,7 @@ void	child_heredoc(char *delimiter, int p[2])
 {
 	char	*new_delimiter;
 
+	signal(SIGINT, heredoc_handler_sigint);
 	close(p[0]);
 	new_delimiter = ft_strjoin(delimiter, "\n");
 	if (new_delimiter == NULL)
@@ -157,21 +158,15 @@ char	*read_from_pipe(int p)
 
 	str = ft_strdup("");
 	if (str == NULL)
-	{
 		return (NULL);
-		// kill(child_id, SIGINT);
-		// err_msg(NULL, "here_doc");
-	}
 	while (1)
 	{
 		read_bytes = read(p, buf, 9);
-		// printf("%d\n", read_bytes);
 		if (read_bytes == -1)
 			return (free(str), NULL);
 		else if (read_bytes == 0)
 			break ;
 		buf[read_bytes] = '\0';
-		// printf("%s\n", buf);
 		temp = str;
 		str = ft_strjoin(str, buf);
 		if (str == NULL)
@@ -183,23 +178,24 @@ char	*read_from_pipe(int p)
 
 int	parent_heredoc(t_token *current_node, int p[2], int child_id)
 {
-	// char	*str;
+	int	status;
 
 	close(p[1]);
-	// str = ft_strdup("");
-	// if (str == NULL)
-	// {
-	// 	kill(child_id, SIGINT);
-	// 	err_msg(NULL, "here_doc");
-	// }
 	current_node->str = read_from_pipe(p[0]);
 	if (current_node->str == NULL)
 	{
 		close(p[0]);
 		kill(child_id, SIGINT);
 		err_msg(NULL, "here_doc");
+		return (-1);
 	}
 	close(p[0]);
+	waitpid(child_id, &status, 0);
+	if (WIFEXITED(status))
+	{
+		// printf("woah\n");
+		return (WEXITSTATUS(status));
+	}
 	return (0);
 }
 
@@ -207,7 +203,6 @@ int	read_heredoc(t_token *current_node, char *delimiter)
 {
 	int		id;
 	int		p[2];
-	// (void)current_node;
 
 	if (pipe(p) == -1)
 	{
@@ -222,9 +217,7 @@ int	read_heredoc(t_token *current_node, char *delimiter)
 	}
 	if (id == 0)
 		child_heredoc(delimiter, p);
-	// return(1);
 	return (parent_heredoc(current_node, p, id));
-	// current_node->str = read_loop(new_delimiter);
 }
 
 void	count_heredocs(t_token *first_token, t_token *error_token)
@@ -245,35 +238,24 @@ void	count_heredocs(t_token *first_token, t_token *error_token)
 	}
 }
 
-void	read_heredocs(t_token *first_token, t_token *error_token)
+int	read_heredocs(t_token *first_token, t_token *error_token)
 {
 	t_token	*temp;
+	int		error;
 
-	g_kill_switch = 0;
 	count_heredocs(first_token, error_token);
-	// setup_signal_handlers_and_terminal_interactive();
-	signal(SIGINT, heredoc_handler);
+	signal(SIGQUIT, heredoc_handler_sigquit);
+	unset_echoctl();
 	temp = first_token;
 	while (temp != error_token)
 	{
 		if (temp->type == LESS_LESS)
-			read_heredoc(temp, temp->next->word);
-		if (g_kill_switch == 1)
 		{
-			return ;
+			error = read_heredoc(temp, temp->next->word);
+			if (error != 0)
+				return (error);
 		}
 		temp = temp->next;
 	}
-	// system("leaks -q minishell");
+	return (0);
 }
-
-// int	main(void)
-// {
-// 	char	*str;
-
-// 	str = read_here_doc("\"EOF\"");
-// 	// printf("%zd\n", write(1, "jtydjtyjty", 0));
-// 	printf("str: %s", str);
-// 	free(str);
-// 	return (0);
-// }

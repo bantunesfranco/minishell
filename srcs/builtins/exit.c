@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/29 10:32:31 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/29 15:38:04 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 		exit_code = atoi_exit(cmd->cmd[1]);
 		if (exit_code == -1)
 		{
-			built_err_msg(cmd->cmd[0], NULL, "numeric argument required\n");
+			built_err_msg(cmd->cmd[0], cmd->cmd[1], "numeric argument required\n");
 			exit(255);
 		}
 		if (ft_arrlen(cmd->cmd) > 2)

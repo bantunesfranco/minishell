@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 12:30:20 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/30 11:52:41 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		print_commands(t_pipeline *first_command);
 t_pipeline	*parse_line(char *line, t_gen *gen);
 void		init_struct(t_parsing_info *p_info);
 void		parser(t_parsing_info *p_info, t_token **first_token, t_pipeline **first_pipeline);
-void		read_heredocs(t_token *first_token, t_token *error_token);
+int			read_heredocs(t_token *first_token, t_token *error_token);
 
 // functions used for the token list
 

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/29 08:48:51 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/30 12:02:27 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ char	*read_tty(t_gen *gen)
 {
 	char	*line;
 
-	line = readline("\033[1;36m🐢 minishell$ \033[0m");
+	line = readline("minishell$");
 	if (line == NULL && errno == ENOMEM)
 		err_msg(NULL, "line");
 	else if (line == NULL && errno == 0)
 	{
 		if (write(STDOUT_FILENO, "exit\n", 5) == -1)
 			err_msg(NULL, "write");
-		unset_echoctl();
+		set_echoctl();
 		exit(gen->status);
 	}
 	if (line && ft_strlen(line))
@@ -46,7 +46,7 @@ char	*read_no_tty(t_gen *gen)
 	{
 		// if (write(STDOUT_FILENO, "exit\n", 5) == -1)
 		// 	err_msg(NULL, "write");
-		// unset_echoctl();
+		set_echoctl();
 		exit(gen->status);
 	}
 	line = ft_strtrim(line2, "\n");
@@ -96,35 +96,6 @@ t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
 	return (tmp);
 }
 
-// t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
-// {
-// 	if (tmp->prev_control_operator == AND && gen->status != 0)
-// 	{
-// 		while (tmp)
-// 		{
-// 			if (tmp->next && tmp->next_control_operator == OPEN)
-// 				tmp = goto_close_operator(tmp->next);
-// 			else
-// 				tmp = tmp->next;
-// 			if (tmp && tmp->prev_control_operator == CLOSE)
-// 				break ;
-// 		}
-// 	}
-// 	else if (tmp->prev_control_operator == OR && gen->status == 0)
-// 	{
-// 		while (tmp)
-// 		{
-// 			if (tmp->next && tmp->next_control_operator == OPEN)
-// 				tmp = goto_close_operator(tmp->next);
-// 			else
-// 				tmp = tmp->next;
-// 			if (tmp && tmp->prev_control_operator == CLOSE)
-// 				break ;
-// 		}
-// 	}
-// 	return (tmp);
-// }
-
 void	minishell_loop(t_gen *gen)
 {
 	t_pipeline	*input;
@@ -152,7 +123,6 @@ void	minishell_loop(t_gen *gen)
 		}
 		// system("leaks -q minishell");
 		free_parsed_structs(input);
-		// system("leaks -q minishell");
 		errno = 0;
 	}
 }
@@ -185,5 +155,6 @@ int	main(int argc, char **argv, char **envp)
 	gen.path = NULL;
 	gen.status = 0;
 	minishell_loop(&gen);
+	set_echoctl();
 	exit(gen.status);
 }
