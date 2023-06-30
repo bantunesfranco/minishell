@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 14:05:12 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/21 10:59:29 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/30 16:38:42 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ char	**word_splitting(char *str, t_quote_mark *head);
 size_t	handle_quotes(char *word, size_t i, t_quote_mark **head);
 size_t	skip_quotes_if_neccesarry(size_t i, t_quote_mark **head);
 void	quote_removal(char **split_word, t_quote_mark *head);
+void	insert_into_array(char **split_word, char ***cmd_array, size_t i);
+void	expand_dir(char ***cmd_array, char *str, int i);
 
 #endif

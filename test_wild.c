@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/22 16:49:42 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/30 14:38:10 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/30 16:45:52 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "minishell.h"
+#include "expander.h"
 
 int	match_str(char *str, char *str2, int i, int j)
 {
@@ -34,12 +35,28 @@ int	match_str(char *str, char *str2, int i, int j)
 	return (0);
 }
 
+int	check_multiple_folder_expansion(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '*')
+		i++;
+	while (str[i] && str[i] == '/')
+		i++;
+	if (str[i] == '/' && str[i + 1] != '\0')
+		return (0);
+	return (1);
+}
+
 char	*getpath(char *str, int *f)
 {
 	int		i;
 	char	*path;
 
 	i = 0;
+	if (!check_multiple_folder_expansion(str))
+		return (NULL);
 	if (str[ft_strlen(str) - 1] == '/')
 	{
 		str[ft_strlen(str) - 1] = '\0';
@@ -47,57 +64,70 @@ char	*getpath(char *str, int *f)
 	}
 	if (str[0] == '*' && (str[1] == '/' || str[1] == '\0'))
 		return (ft_strdup("."));
-	while (str[i] != '*')
+	while (str[i] && str[i] != '*')
 		i++;
-	while (i > 0 && str[i] != '/')
+	while (i > 0 && str[i - 1] != '/')
 		i--;
 	path = ft_substr(str, 0, i);
+	if (!path)
+		child_err_msg(NULL, "wildcard expansion");
 	return (path);
 }
 
-void	expand_dir(char *str, char **arr, int i)
+void	searchdir(char *path, char *str, char **arr, int folder)
 {
 	DIR				*dir;
 	struct dirent	*entry;
-	int				folder;
-	char			*path;
+	int				i;
 
-	folder = 0;
-	path = getpath(str, &folder);
-	if (!path)
-	{
-		err_msg(NULL, "wildcard");
-		exit(errno);
-	}
-	// printf("%s\n", path);
+	i = 0;
 	dir = opendir(path);
-	while ((entry = readdir(dir)) != NULL)
+	while (dir)
 	{
-		if (match_str(str, entry->d_name, ft_strlen(path) + 1, 0) \
-		&& folder == 1 && entry->d_type == DT_DIR)
+		entry = readdir(dir);
+		if (!entry)
+			break ;
+		if ( entry->d_type == DT_DIR && folder == 1 \
+		&& match_str(str, entry->d_name, ft_strlen(path) , 0))
 			arr[i++] = ft_strdup(entry->d_name);
-		else if (match_str(str, entry->d_name, ft_strlen(path) + 1, 0) \
-		&& folder == 0)
+		else if (folder == 0 \
+		&& match_str(str, entry->d_name, ft_strlen(path), 0))
 			arr[i++] = ft_strdup(entry->d_name);
-		else
-			continue ;
 	}
-	free(path);
 	if (dir)
 		closedir(dir);
 }
 
-int	main(void)
+void	expand_dir(char ***cmd_array, char *str, int i)
 {
-	char			*str = ft_strdup("*");
-	char			**arr = ft_calloc(sizeof(char *), 200);
-	// int				i;
+	int				folder;
+	char			*path;
+	char			**wildcard_arr;
 
-	// i = -1;
-	expand_dir(str, arr, 0);
-	for (size_t i = 0; arr[i]; i++)
-		printf("%s\n", arr[i]);
-	ft_free_arr(arr);
+	if (!ft_strchr(str, '*'))
+		return ;
+	folder = 0;
+	path = getpath(str, &folder);
+	if (!path)
+		return ;
+	wildcard_arr = ft_calloc(sizeof(char *), 100);
+	if (!wildcard_arr)
+		child_err_msg(NULL, "wildcard expansion");
+	searchdir(path, str, wildcard_arr, folder);
+	insert_into_array(wildcard_arr, cmd_array, i);
+	free(path);
 	free(str);
-	return (0);
+	free(wildcard_arr);
 }
+
+// int	main(int argc, char **argv)
+// {
+// 	char			*str = ft_strdup(argv[1]);
+// 	char			**arr = ft_arrdup(argv);
+
+// 	(void)argc;
+// 	expand_dir(&arr, str, 1);
+// 	for (size_t i = 0; arr[i]; i++)
+// 		printf("%s\n", arr[i]);
+// 	ft_free_arr(arr);
+// }
