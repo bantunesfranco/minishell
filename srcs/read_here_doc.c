@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/29 09:56:03 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/30 13:42:24 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,10 +258,10 @@ void	read_heredocs(t_token *first_token, t_token *error_token)
 	{
 		if (temp->type == LESS_LESS)
 			read_heredoc(temp, temp->next->word);
-		if (g_kill_switch == 1)
-		{
-			return ;
-		}
+		// if (g_kill_switch == 1)
+		// {
+		// 	return ;
+		// }
 		temp = temp->next;
 	}
 	// system("leaks -q minishell");

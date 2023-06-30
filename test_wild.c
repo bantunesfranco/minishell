@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/22 16:49:42 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/29 17:11:02 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/06/30 14:38:10 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 int	match_str(char *str, char *str2, int i, int j)
 {
+	if (!ft_strncmp(str2, ".", 2) || !ft_strncmp(str2, "..", 3))
+		return (0);
 	if ((!str[i] || (str[i] == '*' && !str[i + 1])) && !str2[j])
 		return (1);
 	if (str[i] == '*' && !str[i + 1])
@@ -38,29 +40,27 @@ char	*getpath(char *str, int *f)
 	char	*path;
 
 	i = 0;
-	if (str[0] == '*' && (str[1] == '/' || str[1] == '\0'))
+	if (str[ft_strlen(str) - 1] == '/')
 	{
-		if (str[1] == '/')
-			*f = 1;
-		return (getcwd(NULL, 0));
+		str[ft_strlen(str) - 1] = '\0';
+		*f = 1;
 	}
+	if (str[0] == '*' && (str[1] == '/' || str[1] == '\0'))
+		return (ft_strdup("."));
 	while (str[i] != '*')
 		i++;
 	while (i > 0 && str[i] != '/')
 		i--;
-	if (str[i + 1] == '/')
-		*f = 1;
 	path = ft_substr(str, 0, i);
 	return (path);
 }
 
-void	expand_dir(char *str, char *arr[4096], int i)
+void	expand_dir(char *str, char **arr, int i)
 {
 	DIR				*dir;
 	struct dirent	*entry;
 	int				folder;
 	char			*path;
-	char			*match;
 
 	folder = 0;
 	path = getpath(str, &folder);
@@ -73,35 +73,31 @@ void	expand_dir(char *str, char *arr[4096], int i)
 	dir = opendir(path);
 	while ((entry = readdir(dir)) != NULL)
 	{
-		match = ft_strchr(str + ft_strlen(path), '/');
-		// printf("%s\n", match);
-		if (match_str(match, entry->d_name, ft_strlen(path), 0))
-		{
-			arr[i] = entry->d_name;
-			i++;
-		}
+		if (match_str(str, entry->d_name, ft_strlen(path) + 1, 0) \
+		&& folder == 1 && entry->d_type == DT_DIR)
+			arr[i++] = ft_strdup(entry->d_name);
+		else if (match_str(str, entry->d_name, ft_strlen(path) + 1, 0) \
+		&& folder == 0)
+			arr[i++] = ft_strdup(entry->d_name);
+		else
+			continue ;
 	}
-	arr[i] = NULL;
 	free(path);
-	// closedir(dir);
-	// while (str[j] != '*')
-	// 	j++;
-	// if (str[j])
-	// 	expand_dir(str + j, arr, i);
+	if (dir)
+		closedir(dir);
 }
 
 int	main(void)
 {
-	char			*str = "srcs/i*";
-	char			*arr[4096];
+	char			*str = ft_strdup("*");
+	char			**arr = ft_calloc(sizeof(char *), 200);
+	// int				i;
 
+	// i = -1;
 	expand_dir(str, arr, 0);
-	// for (size_t i = 0; arr[i]; i++)
-	// {
-	// 	if (match_str(str, arr[i], 0, 0) == 1)
-	// 		printf("%s: %s\n", arr[i], "POGGERS, its a match");
-	// // 	printf("%s\n", arr[i]);
-	// }
-	// printf("%s\n", getpath(str));
+	for (size_t i = 0; arr[i]; i++)
+		printf("%s\n", arr[i]);
+	ft_free_arr(arr);
+	free(str);
 	return (0);
 }

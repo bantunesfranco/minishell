@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   non_interactive_signals.c                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/28 12:06:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/06/30 13:42:09 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	heredoc_handler(int signal)
 {
 	(void)signal;
-	g_kill_switch = 1;
+	// g_kill_switch = 1;
 	// rl_line_buffer = NULL;
 	// rl_on_new_line();
 	// rl_replace_line(str , 0);
