@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   non_interactive_signals.c                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/30 11:40:42 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/02 09:01:01 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
