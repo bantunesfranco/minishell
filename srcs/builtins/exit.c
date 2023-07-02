@@ -6,12 +6,29 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/29 15:38:04 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/02 10:21:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <limits.h>
+
+static void	exit_error(char *msg, char *msg2, char *msg3)
+{
+	write(2, "minishell: ", 11);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+		write(2, ": ", 2);
+	}
+	if (msg2)
+	{
+		write(2, msg2, ft_strlen(msg2));
+		write(2, ": ", 2);
+	}
+	if (msg3)
+		write(2, msg3, ft_strlen(msg3));
+}
 
 static int	atoi_exit(char *str)
 {
@@ -54,13 +71,15 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 		exit_code = atoi_exit(cmd->cmd[1]);
 		if (exit_code == -1)
 		{
-			built_err_msg(cmd->cmd[0], cmd->cmd[1], "numeric argument required\n");
+			exit_error(cmd->cmd[0], cmd->cmd[1], "numeric argument required\n");
+			// built_err_msg(cmd->cmd[0], NULL, "numeric argument required\n");
 			exit(255);
 		}
 		if (ft_arrlen(cmd->cmd) > 2)
 		{
-			built_err_msg(cmd->cmd[0], NULL, "too many arguments\n");
-			exit(1);
+			exit_error(cmd->cmd[0], NULL, "too many arguments\n");
+			// built_err_msg(cmd->cmd[0], NULL, "too many arguments\n");
+			return (1);
 		}
 	}
 	set_echoctl();

@@ -49,7 +49,7 @@ test_err(){
 	# sed 's/exit\n//g' $1
 	NEW=`sed -n '/^exit/!p' $1`
 	# echo $NEW
-	echo $NEW > $1
+	echo "$NEW" > $1
 	# echo BASH
 	# cat $2
 	# echo DONE
@@ -75,9 +75,9 @@ test_err(){
 		ERROR_BASH=$(cat $2)
 	fi
 	# echo mini
-	# echo $ERROR_MINI
+	# echo "$ERROR_MINI"
 	# echo bash
-	# echo $ERROR_BASH
+	# echo "$ERROR_BASH"
 	# ERROR_MINI=$(cut -f2- -d ' ' $1)
 	# ERROR_BASH=$(cut -f4- -d ' ' $2)
 	if [[ $ERROR_MINI == $ERROR_BASH ]]

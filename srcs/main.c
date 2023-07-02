@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/30 12:02:27 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/02 19:16:16 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 #include "parsing.h"
 #include "executor.h"
 
+void	execute_instructions(t_gen *gen, t_pipeline *input);
+
 char	*read_tty(t_gen *gen)
 {
 	char	*line;
 
-	line = readline("minishell$");
+	line = readline("\033[1;35mminishell$ \033[0m");
 	if (line == NULL && errno == ENOMEM)
 		err_msg(NULL, "line");
 	else if (line == NULL && errno == 0)
@@ -72,7 +74,7 @@ t_pipeline	*goto_close_operator(t_pipeline *tmp)
 			close++;
 	}
 	if (tmp && tmp->next_control_operator == CLOSE)
-		tmp = tmp->next;
+		tmp = tmp->next->next;
 	return (tmp);
 }
 
@@ -96,6 +98,208 @@ t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
 	return (tmp);
 }
 
+int	execute_pipeline(t_gen *gen, t_pipeline **pipeline, int *pipe_read)
+{
+	int	id;
+	int	p[2];
+
+	if ((*pipeline)->next_control_operator == PIPE)
+	{
+		if (pipe(p) == -1)
+		{
+			err_msg(NULL, "executor");
+			return (-1);
+		}
+	}
+	else
+	{
+		p[0] = -1;
+		p[1] = -1;
+	}
+	id = fork();
+	if (id == -1)
+	{
+		err_msg(NULL, "executor");
+		return (-1);
+	}
+	else if (id == 0)
+	{
+		if ((*pipeline)->next_control_operator == PIPE)
+		{
+			close(p[0]);
+			if (dup2(p[1], STDOUT_FILENO) == -1)
+				child_err_msg(NULL, "executor");
+			close(p[1]);
+		}
+		if ((*pipeline)->prev_control_operator == PIPE)
+		{
+			if (dup2(*pipe_read, STDIN_FILENO) == -1)
+				child_err_msg(NULL, "executor");
+			close(*pipe_read);
+		}
+		executor(gen, *pipeline);
+		_exit(gen->status);
+	}
+	else
+	{
+		if ((*pipeline)->prev_control_operator == PIPE)
+		{
+			close(*pipe_read);
+		}
+		if ((*pipeline)->next_control_operator == PIPE)
+		{
+			close(p[1]);
+			*pipe_read = p[0];
+		}
+		*pipeline = (*pipeline)->next;
+	}
+	return (id);
+}
+
+int	execute_subshell(t_gen *gen, t_pipeline **subshell, int *pipe_read)
+{
+	int	id;
+	int	p[2];
+
+	// printf("%d\n", (*subshell)->subshell->pipe_output);
+	// printf("%d\n", (*subshell)->subshell->pipe_input);
+	if ((*subshell)->subshell->pipe_output == 1)
+	{
+		if (pipe(p) == -1)
+		{
+			err_msg(NULL, "executor");
+			return (-1);
+		}
+	}
+	else
+	{
+		p[0] = -1;
+		p[1] = -1;
+	}
+	id = fork();
+	if (id == -1)
+	{
+		err_msg(NULL, "executor");
+		return (-1);
+	}
+	else if (id == 0)
+	{
+		if ((*subshell)->subshell->pipe_output == 1)
+		{
+			close(p[0]);
+			if (dup2(p[1], STDOUT_FILENO) == -1)
+				child_err_msg(NULL, "executor");
+			close(p[1]);
+		}
+		if ((*subshell)->subshell->pipe_input == 1)
+		{
+			if (dup2(*pipe_read, STDIN_FILENO) == -1)
+				child_err_msg(NULL, "executor");
+			close(*pipe_read);
+		}
+		// printf("%p\n", (*subshell)->subshell);
+		// printf("fiss%p\n", (*subshell)->first_cmd);
+		// // printf("%s\n", (*subshell)->first_cmd->cmd[0]);
+		// printf("fz2%p\n", (*subshell)->next->first_cmd);
+		// printf("%s\n", (*subshell)->next->first_cmd->cmd[0]);
+		// printf("lololol%p\n", (*subshell)->next->subshell);
+		execute_instructions(gen, (*subshell)->next);
+		_exit(gen->status);
+	}
+	else
+	{
+		if ((*subshell)->subshell->pipe_input == 1)
+		{
+			close(*pipe_read);
+		}
+		if ((*subshell)->subshell->pipe_output == 1)
+		{
+			close(p[1]);
+			*pipe_read = p[0];
+		}
+		*subshell = goto_close_operator(*subshell);
+	}
+	return (id);
+}
+
+t_pipeline	*execute_pipeline_list(t_gen *gen, t_pipeline *first_pipeline)
+{
+	t_pipeline	*tmp;
+	int			id;
+	int			pipe_read;
+
+	pipe_read = 0;
+	tmp = first_pipeline;
+	while (tmp != NULL)
+	{
+		if (tmp->next_control_operator == OPEN)
+		{
+			// printf("here\n");
+			id = execute_subshell(gen, &tmp, &pipe_read);
+			// printf("tmp-%p\n", tmp->subshell);
+		}
+		else if (tmp->next_control_operator == PIPE || tmp->prev_control_operator == PIPE)
+		{
+			// printf("not\n"); 
+			id = execute_pipeline(gen, &tmp, &pipe_read);
+		}
+		else
+			break;
+		// tmp = tmp->next;
+	}
+	waitpid(id, &gen->status, 0);
+	if (WIFEXITED(gen->status))
+	{
+		gen->status = WEXITSTATUS(gen->status);
+	}
+	else if (WIFSIGNALED(gen->status))
+		gen->status = 128 + WTERMSIG(gen->status);
+	while (1)
+		if (wait(NULL) == -1)
+			break ;
+	// printf("%p\n", tmp);
+	// printf("%p\n", tmp->first_cmd);
+	// printf("%s\n", tmp->first_cmd->cmd[0]);
+	return (tmp);
+}
+
+void	execute_instructions(t_gen *gen, t_pipeline *input)
+{
+	t_pipeline *tmp;
+
+	tmp = input;
+	while (tmp != NULL)
+	{
+		if (tmp->prev_control_operator == CLOSE)
+		{
+			// printf("lol\n");
+			break ;
+		}
+		else if (tmp->next_control_operator == OPEN || tmp->next_control_operator == PIPE)
+		{
+			// printf("huh\n");
+			// printf("%d\n", tmp->next_control_operator);
+			tmp = execute_pipeline_list(gen, tmp);
+		}
+		else
+		{
+			// printf("hi\n");
+			executor(gen, tmp);
+			tmp = tmp->next;
+		}
+		if (tmp)// && tmp->next)
+		{
+			tmp = check_control_operators(gen, tmp);
+			// printf("%p\n", tmp);
+		}
+		else
+		{
+			// printf("aodkoasd\n");
+			break ;
+		}
+	}
+}
+
 void	minishell_loop(t_gen *gen)
 {
 	t_pipeline	*input;
@@ -113,14 +317,15 @@ void	minishell_loop(t_gen *gen)
 		input = parse_line(line, gen);
 		free(line);
 		tmp = input;
-		while (tmp)
-		{
-			executor(gen, tmp);
-			if (tmp->next)
-				tmp = check_control_operators(gen, tmp->next);
-			else
-				break ;
-		}
+		// while (tmp)
+		// {
+			execute_instructions(gen, tmp);
+			// executor(gen, tmp);
+			// if (tmp->next)
+			// 	tmp = check_control_operators(gen, tmp->next);
+			// else
+			// 	break ;
+		// }
 		// system("leaks -q minishell");
 		free_parsed_structs(input);
 		errno = 0;

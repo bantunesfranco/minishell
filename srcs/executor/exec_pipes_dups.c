@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 14:08:38 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/20 16:23:37 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/02 15:20:00 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_dups(t_cmd *cmd, int *p, int pipe_rd)
 {
 	if (cmd->prev && cmd->input->fd == STDIN_FILENO)
 		if (dup2(pipe_rd, STDIN_FILENO) == -1)
-			child_err_msg(NULL, "executor in");
+			child_err_msg(NULL, "executor");
 	if (cmd->next && cmd->output->fd == STDOUT_FILENO)
 		if (dup2(p[1], STDOUT_FILENO) == -1)
 			child_err_msg(NULL, "executor");
