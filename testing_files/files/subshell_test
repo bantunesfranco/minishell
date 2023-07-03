@@ -3,11 +3,11 @@
 (export asd=po && echo $asd)
 echo $asd
 
-export asd=po | (echo $asd)
+export asd=po | ( echo $asd)
 
 echo hi | (cat) | wc
 
-echo hello | (echo hi && ls | (cat || echo hi) | wc) | ls | (echo hi)
+echo hello | ( echo hi && ls | (cat || echo hi) | wc) | ls | (echo hi)
 
 echo hello || (cat hi | (wc) && echo huh || echo hu) && echo hi | (cat)
 
@@ -44,6 +44,10 @@ echo lol | (echo hih  && echo lol && echo powder || (cat | (wc) ) ) | (echo huh)
 cate || (cate || ( cate || (cate || (cate || (cate | (cate ) ) ) ) ) ) && echo lol
 
 cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) && echo lol
+
+cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) || echo lol
+
+cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) || echo lol) && echo huh || echo lol) && echo lol
 
 cat Makefile | (head -n 5 && wc)
 
@@ -146,11 +150,3 @@ cat tmp tmp2 tmp3
 rm tmp tmp2 tmp3
 
 (cat) < hi < hi <asdasdasd
-
-
-
-
-
-
-
-

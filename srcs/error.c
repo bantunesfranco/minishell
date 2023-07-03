@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/02 10:09:50 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/03 16:53:39 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	err_msg(char *msg, char *msg2)
 	}
 	if (errno == ENOMEM)
 	{
+		rl_clear_history();
 		set_echoctl();
 		exit(errno);
 	}
@@ -75,9 +76,6 @@ void	built_err_msg(char *msg, char *msg2, char *msg3)
 		write(2, msg3, ft_strlen(msg3));
 }
 
-/*	writes an error based on what mistake the sintax has, either a token is in the wrong position
-	or we have unclosed parenthesis or brackets*/
-
 void	lex_error_function(char *word, int syntax_erorr)
 {
 	if (syntax_erorr == 1)
@@ -93,8 +91,6 @@ void	lex_error_function(char *word, int syntax_erorr)
 		write(2, "'\n", 2);
 	}
 }
-
-/*	runs the error function based on the token order and the token where the error was encountered*/
 
 void	token_order_error(t_token *temp, int open_brackets)
 {

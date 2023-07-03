@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 18:53:47 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/03 16:54:51 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_pipeline	*parse_line(char *line, t_gen *gen)
 	t_token			*first_token;
 	t_parsing_info	p_info;
 
-	(void)gen;
 	if (line_is_only_whitespace(line))
 		return (NULL);
 	first_pipeline = NULL;
