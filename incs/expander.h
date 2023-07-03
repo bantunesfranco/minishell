@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 14:05:12 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/30 16:38:42 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 19:49:59 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "structs.h"
 # include "stdlib.h"
 # include <stdbool.h>
+# include <dirent.h>
 
 typedef struct s_quote_mark
 {
@@ -35,5 +36,9 @@ size_t	skip_quotes_if_neccesarry(size_t i, t_quote_mark **head);
 void	quote_removal(char **split_word, t_quote_mark *head);
 void	insert_into_array(char **split_word, char ***cmd_array, size_t i);
 void	expand_dir(char ***cmd_array, char *str, int i);
+int		wild_pos(char **arr);
+char	*getpath(char *str);
+int		add_entry(char *str, int type);
+void	setup_dir_search(DIR **dir, char **tmp, char *path);
 
 #endif

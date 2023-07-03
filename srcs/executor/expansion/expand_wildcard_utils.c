@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   wildcard_utils.c                                   :+:    :+:            */
+/*   expand_wildcard_utils.c                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/03 11:54:44 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/03 19:07:23 by bfranco       ########   odam.nl         */
+/*   Created: 2023/07/03 19:55:16 by bfranco       #+#    #+#                 */
+/*   Updated: 2023/07/03 19:55:21 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,14 @@ int	add_entry(char *str, int type)
 	else if (type != DT_DIR && str[ft_strlen(str) - 1] == '/')
 		return (0);
 	return (1);
+}
+
+void	setup_dir_search(DIR **dir, char **tmp, char *path)
+{
+	if (!path)
+		child_err_msg(NULL, "wildcard expansion");
+	*dir = opendir(path);
+	*tmp = ft_strjoin(path, "/");
+	if (!*dir || !*tmp)
+		child_err_msg(NULL, "wildcard expansion");
 }

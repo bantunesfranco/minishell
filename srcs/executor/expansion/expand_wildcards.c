@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 11:49:36 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/03 18:58:15 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 19:50:35 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,6 @@
 #include <string.h>
 #include "minishell.h"
 #include "expander.h"
-
-int	wild_pos(char **arr)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (arr[i])
-	{
-		if (ft_strchr(arr[i], '*'))
-		{
-			count = 1;
-			break ;
-		}
-		i++;
-	}
-	if (count == 0)
-		return (0);
-	return (i);
-}
-
-char	*getpath(char *str)
-{
-	int		i;
-
-	i = 0;
-	if (ft_strchr(str, '/') == ft_strrchr(str, '/'))
-		if (!ft_strchr(str, '/') || str[ft_strlen(str) - 1] == '/')
-			return (ft_strdup("."));
-	while (str[i] && str[i] != '*')
-		i++;
-	while (i > 0 && str[i] != '/')
-		i--;
-	return (ft_substr(str, 0, i));
-}
 
 char	*make_match_str(char *input, char *path, struct dirent *match)
 {
@@ -74,7 +38,8 @@ char	*make_match_str(char *input, char *path, struct dirent *match)
 
 int	match(char *str, char *str2, int i, int j)
 {
-	if (str[0] != '.' && (!ft_strncmp(str2, ".", 2) || !ft_strncmp(str2, "..", 3)))
+	if (str[0] != '.' \
+	&& (!ft_strncmp(str2, ".", 2) || !ft_strncmp(str2, "..", 3)))
 		return (0);
 	if (str[i] == '*' && !str[i + 1])
 		return (1);
@@ -91,29 +56,13 @@ int	match(char *str, char *str2, int i, int j)
 	return (0);
 }
 
-int	add_entry(char *str, int type)
-{
-	if (type == DT_DIR && str[ft_strlen(str) - 1] == '/')
-		return (1);
-	else if (type != DT_DIR && str[ft_strlen(str) - 1] == '/')
-		return (0);
-	return (1);
-}
-
 void	searchdir(char *path, char *str, t_list **list, char **arr)
 {
 	DIR				*dir;
 	struct dirent	*ent;
 	char			*tmp;
 
-	if (!path)
-		child_err_msg(NULL, "wildcard expansion");
-	dir = opendir(path);
-	if (!dir)
-		child_err_msg(NULL, "wildcard 4444 expansion");
-	tmp = ft_strjoin(path, "/");
-	if (!tmp)
-		child_err_msg(NULL, "wildcard expansion");
+	setup_dir_search(&dir, &tmp, path);
 	while (*arr)
 	{
 		ent = readdir(dir);
@@ -122,11 +71,15 @@ void	searchdir(char *path, char *str, t_list **list, char **arr)
 		if (ent->d_type == DT_DIR && arr[1] && match(*arr, ent->d_name, 0, 0))
 		{
 			free(path);
-			path = ft_strjoin(tmp, ent->d_name);
-			searchdir(path, str, list, &arr[1]);
+			searchdir(ft_strjoin(tmp, ent->d_name), str, list, &arr[1]);
 		}
-		else if (match(*arr, ent->d_name, 0, 0) && !arr[1] && add_entry(str, ent->d_type))
+		else if (match(*arr, ent->d_name, 0, 0) \
+		&& !arr[1] && add_entry(str, ent->d_type))
+		{
 			ft_lstadd_back(list, ft_lstnew(make_match_str(str, tmp, ent)));
+			if (errno == ENOMEM)
+				child_err_msg(NULL, "wildcard expansion");
+		}
 	}
 	free(tmp);
 	closedir(dir);
@@ -177,7 +130,6 @@ void	expand_dir(char ***cmd_array, char *str, int i)
 	if (!path_arr)
 		child_err_msg(NULL, "wildcard expansion");
 	insert_into_array(path_arr, cmd_array, i);
-	free(path);
 	free(path_arr);
 	free(str);
 }
