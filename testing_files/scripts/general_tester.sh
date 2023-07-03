@@ -19,11 +19,16 @@ help(){
 	echo "exp - run expansion tests"
 	echo "red - run redirect tests"
 	echo "oth - run other (like unset PATH) tests"
+	echo "sub - run subshell tests"
 	echo "quit - exit"
 	echo -e "help - display this message\n"
 }
 
 test_output(){
+	# echo  mini
+	# cat $1
+	# echo bash
+	# cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -247,6 +252,13 @@ test_other(){
 	rm bro.sh
 }
 
+test_subshells(){
+	echo "----------------------------------------------------"	
+	echo -e "\n	👍${MAGENTA}RUNNING SUBSHELL TESTS${RESET}"
+	test_file "testing_files/files/subshell_test"
+	echo "----------------------------------------------------"
+}
+
 run_all(){
 	test_echo
 	test_cd
@@ -257,6 +269,7 @@ run_all(){
 	test_expansions
 	test_redirect
 	test_other
+	test_subshells
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))
@@ -313,6 +326,10 @@ main(){
 	elif [[ $1 == "oth" ]]
 	then
 		test_other
+		read_input
+	elif [[ $1 == "sub" ]]
+	then
+		test_subshells
 		read_input
 	elif [[ $1 == "quit" ]]
 	then

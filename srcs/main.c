@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 19:16:16 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/03 10:04:08 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,18 +185,44 @@ int	execute_subshell(t_gen *gen, t_pipeline **subshell, int *pipe_read)
 	else if (id == 0)
 	{
 		if ((*subshell)->subshell->pipe_output == 1)
-		{
 			close(p[0]);
+		(*subshell)->subshell->input->fd = handle_input_redirection((*subshell)->subshell->input, gen);
+		if ((*subshell)->subshell->input->fd == -1)
+			_exit (1);
+		(*subshell)->subshell->output->fd = handle_output_redirection((*subshell)->subshell->output, gen);
+		if ((*subshell)->subshell->output->fd == -1)
+			_exit (1);
+		if ((*subshell)->subshell->pipe_output == 1 && (*subshell)->subshell->output->fd == STDOUT_FILENO)
+		{
+			// close(p[0]);
 			if (dup2(p[1], STDOUT_FILENO) == -1)
 				child_err_msg(NULL, "executor");
-			close(p[1]);
+			// close(p[1]);
 		}
-		if ((*subshell)->subshell->pipe_input == 1)
+		if ((*subshell)->subshell->pipe_input == 1 && (*subshell)->subshell->input->fd == STDIN_FILENO)
 		{
 			if (dup2(*pipe_read, STDIN_FILENO) == -1)
 				child_err_msg(NULL, "executor");
-			close(*pipe_read);
+			// close(*pipe_read);
 		}
+		if ((*subshell)->subshell->output->fd != STDOUT_FILENO)
+		{
+			if (dup2((*subshell)->subshell->output->fd, STDOUT_FILENO) == -1)
+				child_err_msg(NULL, "executor");
+		}
+		if ((*subshell)->subshell->input->fd != STDIN_FILENO)
+		{
+			if (dup2((*subshell)->subshell->input->fd, STDIN_FILENO) == -1)
+				child_err_msg(NULL, "executor");
+		}
+		if ((*subshell)->subshell->pipe_input == 1)
+			close(*pipe_read);
+		if ((*subshell)->subshell->pipe_output == 1)
+			close(p[1]);
+		if ((*subshell)->subshell->input->fd != STDIN_FILENO)
+			close((*subshell)->subshell->input->fd);
+		if ((*subshell)->subshell->output->fd != STDOUT_FILENO)
+			close((*subshell)->subshell->output->fd);
 		// printf("%p\n", (*subshell)->subshell);
 		// printf("fiss%p\n", (*subshell)->first_cmd);
 		// // printf("%s\n", (*subshell)->first_cmd->cmd[0]);
@@ -234,16 +260,20 @@ t_pipeline	*execute_pipeline_list(t_gen *gen, t_pipeline *first_pipeline)
 	{
 		if (tmp->next_control_operator == OPEN)
 		{
-			// printf("here\n");
+			// dprintf(2, "here\n");
 			id = execute_subshell(gen, &tmp, &pipe_read);
 			// printf("tmp-%p\n", tmp->subshell);
 		}
 		else if (tmp->next_control_operator == PIPE || tmp->prev_control_operator == PIPE)
 		{
-			// printf("not\n"); 
+			// dprintf(2, "not\n"); 
 			id = execute_pipeline(gen, &tmp, &pipe_read);
 		}
 		else
+			break ; 
+		if (tmp && (tmp->prev_control_operator == CLOSE || \
+			tmp->prev_control_operator == OR || \
+			tmp->prev_control_operator == AND))
 			break;
 		// tmp = tmp->next;
 	}
@@ -272,25 +302,25 @@ void	execute_instructions(t_gen *gen, t_pipeline *input)
 	{
 		if (tmp->prev_control_operator == CLOSE)
 		{
-			// printf("lol\n");
+			// dprintf(2, "HALLELUJA\n");
 			break ;
 		}
 		else if (tmp->next_control_operator == OPEN || tmp->next_control_operator == PIPE)
 		{
-			// printf("huh\n");
+			// dprintf(2, "huh\n");
 			// printf("%d\n", tmp->next_control_operator);
 			tmp = execute_pipeline_list(gen, tmp);
 		}
 		else
 		{
-			// printf("hi\n");
+			// dprintf(2, "hi\n");
 			executor(gen, tmp);
 			tmp = tmp->next;
 		}
-		if (tmp)// && tmp->next)
+		if (tmp != NULL)// && tmp->next)
 		{
 			tmp = check_control_operators(gen, tmp);
-			// printf("%p\n", tmp);
+			// dprintf(2, "%p\n", tmp);
 		}
 		else
 		{

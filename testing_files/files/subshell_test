@@ -1,0 +1,156 @@
+(cat)
+
+(export asd=po && echo $asd)
+echo $asd
+
+export asd=po | (echo $asd)
+
+echo hi | (cat) | wc
+
+echo hello | (echo hi && ls | (cat || echo hi) | wc) | ls | (echo hi)
+
+echo hello || (cat hi | (wc) && echo huh || echo hu) && echo hi | (cat)
+
+echoa || (cat hi | (wc) ) | echoa && echo hi || echo hu
+
+(echo lol | (wc | (cat) | (wc | (cat) ) ) ) 
+
+(echo lol | (wc | (cat) | (wc | (cat) ) ) ) | cate || echo $?
+
+(echo lol | (wc | (cat) | (wc | (cat) ) ) ) | cate && echo $? || echo $?
+
+cat hi | (cat) | (cat) | (cat) | (cat) | (cat) | (cat) | (cat) | (cat) | (cat) | (cat) | (cat) | (cat)
+
+echo hello | ( ( ( ( ( ( ( ( ( ( ( wc) ) ) ) ) ) ) ) ) ) )
+
+echo hello | (cat | (wc | (wc | (wc | (wc | (cat | (wc | (wc | (wc ) ) ) ) ) ) ) ) )
+
+echo hi | (wc) | (cat hi && echo hello || (cat hi && echo hhu || echo ji || ( echo lol) ) )
+
+echo hi && (echo hi || (ls | (cat) ) && echo hu | (cat ) ) || echoa huh && echo hi || (cat hi | (wc) )
+
+echo hi | (cat ) | echoa || echoa huh | (cat hi ) | echo huh || echo huh && (echo hi | (cat) )
+
+echoa || cat hi | (wc) | (echo hu ) | (echo huh) | wc | (echo lol) | (echoa) && echo done
+
+echoa && cat hi | (wc) | (echo hu ) | (echo huh) | wc | (echo lol) | (echoa) && echo done
+
+echoa || cat hi | (wc) | (echo hu ) | (echo huh) | wc | (echo lol) | (echoa) || echo done
+
+echo lol | (echo hih  && echo lol && echo powder || (cat | (wc) ) ) | (echo huh) | cat
+
+echo lol | (echo hih  && echo lol && echo powder || (cat | (wc) ) ) | (echo huh) && cat hi
+
+cate || (cate || ( cate || (cate || (cate || (cate | (cate ) ) ) ) ) ) && echo lol
+
+cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) && echo lol
+
+cat Makefile | (head -n 5 && wc)
+
+cat Makefile | (head -n 5 && cat)
+
+cat Makefile | (head -n 5 | cat) | wc
+
+cat Makefile | (head -n 5 && cat) | wc
+
+(echo hi && cate)
+
+(echo hi || cate)
+
+(echo hi && cat asdasdasdasdasd)
+
+echo hi | (export ads-a=asd)
+
+echo hi | (exit)
+
+(exit)
+
+echo hi && (exit)
+
+echo hi && (exit asd 100)
+
+echo hi && (exit 100 asd)
+
+export hi=asd && (env | grep hi || export hi=not && env | grep hi) && env | grep hi
+
+(echoa || echoa)
+
+(echoa && echoa)
+
+(echoa || echoa) | cat
+
+(echoa || echoa) | cate
+
+( echo hi | (echoa) )
+
+echo hi | (cat | (cate) ) | echoa || echo lol
+
+echo hi | (cat | (cate) ) | echoa && echo lol
+
+echoa && (echo hi)
+
+echoa || (echo hi)
+
+( ( ( (echoa hi) || echoa hi) && cat hi ) | (wc) || (echo hyh) && echo lol)
+
+( ( ( (echoa hi) || echoa hi) && cat hi ) | (wc) || (echo hyh) && echoa lol)
+
+(echo hello && cat hi && ifconfig) > tmp
+cat tmp
+rm tmp
+
+(cat && ifconfig && wc) < hi
+
+cat hi | (cat | (cat) && (echo hi && echo blabla || (ifconfig) > tmp) > tmp2) < hi > tmp3
+cat tmp tmp2 tmp3
+rm tmp tmp2 tmp3
+
+cat hi | (cat) < asdsadasdasd
+
+cat hi | (cat | (wc) < asdasdads)
+
+( ( ( echo hi) > tmp || cat hi | wc < asdasdas) < asdasdasda > tmp2) > tmp3
+rm -rf tmp tmp2 tmp3
+
+ifconfig | (cat) < hi
+
+ifconfig | (cat | (cat && echo hello) < hi) > tmp
+cat tmp
+rm tmp
+
+touch tmp && chmod -w tmp
+(cat | ifconfig && (echo hi) < asdasdas || (echo hello && (echo huh) ) ) > tmp
+rm tmp
+
+(cat) < asdasdasd || (cat hi | echo hello) > tmp || (cat) <asdasdasdas && echo hello
+rm tmp
+
+(ifconfig) > tmp
+(ifconfig) >> tmp
+echo hi | (cat | (wc) >> tmp) >> tmp
+cat tmp
+cat hi | (echo hello) > tmp
+cat tmp
+rm tmp
+
+(echo huh) > tmp | echo lol | (echo asdashuh) > tmp2 | (echo pppp) > tmp3
+cat tmp tmp2 tmp3
+rm tmp tmp2 tmp3
+
+(echo hii && (echo lll && echo pppp && (echo wwww && ( echo paosdpaosd && ( echo asdasdas || (echo asdasdas) > tmp) > tmp2) > tmp3) > tmp4) > tmp5) > tmp6
+cat tmp tmp2 tmp3 tmp4 tmp5 tmp6
+rm tmp tmp2 tmp3 tmp4 tmp5 tmp6
+
+(echo hihihhi) > tmp > tmp2 >tmp3
+cat tmp tmp2 tmp3
+rm tmp tmp2 tmp3
+
+(cat) < hi < hi <asdasdasd
+
+
+
+
+
+
+
+
