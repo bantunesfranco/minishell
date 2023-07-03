@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/22 16:49:42 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 12:05:39 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 14:37:32 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	searchdir(char *path, char *str, char **arr, int f)
 		if (!entry)
 			break ;
 		if (entry->d_type == DT_DIR && f == 1 \
-		&& match_str(str, entry->d_name, ft_strlen(path) , 0))
+		&& match_str(str, entry->d_name, ft_strlen(path), 0))
 			arr[i++] = make_match_str(path, entry, f);
 		else if (f == 0 && match_str(str, entry->d_name, ft_strlen(path), 0))
 			arr[i++] = make_match_str(path, entry, f);
