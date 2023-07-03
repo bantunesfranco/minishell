@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/19 15:26:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/02 15:03:33 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 20:02:44 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,87 +97,87 @@ void	insert_into_array(char **split_word, char ***cmd_array, size_t i)
 	*cmd_array = new_cmd_array;
 }
 
-// size_t	expand_single_word(char ***cmd_array, size_t i, t_gen *gen)
+size_t	expand_single_word(char ***cmd_array, size_t i, t_gen *gen)
+{
+	(void)i;
+	(void)gen;
+	(void)cmd_array;
+	t_quote_mark	*head;
+	char			*word;
+	char			**split_word;
+
+	(void)split_word;
+	head = NULL;
+	word = expand_environment_vars(*(*cmd_array + i), gen, 0, &head);
+	// printf("word %s\n", word);
+	split_word = word_splitting(word, head);
+	// printf("%p\n", split_word);
+	// printf("%p\n", *split_word);
+	quote_removal(split_word, head);
+	// printf("%p\n", split_word);
+	// printf("%p\n", *split_word);
+	insert_into_array(split_word, cmd_array, i);
+	i = i + get_sizeof_array(split_word);
+	free(split_word);
+	free(word);
+	free_quote_list(head);
+	return (i);
+	// print_array(split_word);
+	// printf("after %p\n", word);
+	// printf("%s\n", *(*cmd_array + i));
+	// printf("%s\n", *(*cmd_array + i));
+
+}
+
+void	expand_pipeline(t_cmd *cmd, t_gen *gen)
+{
+	size_t	i;
+
+	// printf("lol\n");
+	while (cmd != NULL)
+	{
+		// printf("hi\n");
+		i = 0;
+		if (cmd->cmd == NULL)
+			return ;
+		while (*(cmd->cmd + i) != NULL)
+		{
+			// printf("huh\n");
+			// printf("hi\n");
+			// print_array(cmd->cmd);
+			i = expand_single_word(&(cmd->cmd), i, gen);
+			// printf("%zu\n", i);
+			if (*cmd->cmd == NULL)
+			{
+				free(cmd->cmd);
+				cmd->cmd = NULL;
+				break ;
+			}
+			// i++;
+		}
+		cmd = cmd->next;
+	}
+}
+
+// void	expand_cmd_arrays(t_cmd *cmd, t_gen *gen)
 // {
-// 	(void)i;
+// 	(void)cmd;
 // 	(void)gen;
-// 	(void)cmd_array;
-// 	t_quote_mark	*head;
-// 	char			*word;
-// 	char			**split_word;
-
-// 	(void)split_word;
-// 	head = NULL;
-// 	word = expand_environment_vars(*(*cmd_array + i), gen, 0, &head);
-// 	// printf("word %s\n", word);
-// 	split_word = word_splitting(word, head);
-// 	// printf("%p\n", split_word);
-// 	// printf("%p\n", *split_word);
-// 	quote_removal(split_word, head);
-// 	// printf("%p\n", split_word);
-// 	// printf("%p\n", *split_word);
-// 	insert_into_array(split_word, cmd_array, i);
-// 	i = i + get_sizeof_array(split_word);
-// 	free(split_word);
-// 	free(word);
-// 	free_quote_list(head);
-// 	return (i);
-// 	// print_array(split_word);
-// 	// printf("after %p\n", word);
-// 	// printf("%s\n", *(*cmd_array + i));
-// 	// printf("%s\n", *(*cmd_array + i));
-
-// }
-
-// void	expand_pipeline(t_cmd *cmd, t_gen *gen)
-// {
-// 	size_t	i;
-
-// 	// printf("lol\n");
 // 	while (cmd != NULL)
 // 	{
-// 		// printf("hi\n");
-// 		i = 0;
-// 		if (cmd->cmd == NULL)
-// 			return ;
-// 		while (*(cmd->cmd + i) != NULL)
+// 		while (cmd->cmd)
 // 		{
-// 			// printf("huh\n");
-// 			// printf("hi\n");
-// 			// print_array(cmd->cmd);
-// 			i = expand_single_word(&(cmd->cmd), i, gen);
-// 			// printf("%zu\n", i);
-// 			if (*cmd->cmd == NULL)
-// 			{
-// 				free(cmd->cmd);
-// 				cmd->cmd = NULL;
-// 				break ;
-// 			}
-// 			// i++;
+// 			expand(*(cmd->cmd + i))
+// 			result = wordsplit();
+// 			if result == NULL
+// 				remove_pointer(free and memmove everything past that);
+// 			result = quote_remove();
+// 			if (result == 1)
+// 				vervange_vanpointer()
+// 			else
+// 				reallocate_array(cmd->cmd, result);
+// 			i++;
 // 		}
 // 		cmd = cmd->next;
 // 	}
 // }
-
-// // void	expand_cmd_arrays(t_cmd *cmd, t_gen *gen)
-// // {
-// // 	(void)cmd;
-// // 	(void)gen;
-// // 	while (cmd != NULL)
-// // 	{
-// // 		while (cmd->cmd)
-// // 		{
-// // 			expand(*(cmd->cmd + i))
-// // 			result = wordsplit();
-// // 			if result == NULL
-// // 				remove_pointer(free and memmove everything past that);
-// // 			result = quote_remove();
-// // 			if (result == 1)
-// // 				vervange_vanpointer()
-// // 			else
-// // 				reallocate_array(cmd->cmd, result);
-// // 			i++;
-// // 		}
-// // 		cmd = cmd->next;
-// // 	}
-// // }

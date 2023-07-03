@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 17:35:46 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/05/30 12:26:35 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 20:01:28 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ void	get_shlvl(char **new_env, char *env, int *j, int *vars)
 
 	shlvl = ft_atoi(env + 6);
 	//need better atoi to manage overflows
-	if (shlvl == 999)
+	if (shlvl >= 999)
 		built_err_msg("warning", NULL, \
 		"shell level (>999) too high, resetting to 1\n");
-	if (shlvl <= 0 || shlvl == 999)
+	if (shlvl <= 0 || shlvl >= 999)
 		shlvl = 1;
 	else
 		shlvl++;

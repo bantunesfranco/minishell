@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test_wild2_copy.c                                  :+:    :+:            */
+/*   expand_wildcards.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 11:49:36 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/03 19:50:35 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 20:02:17 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,19 +134,19 @@ void	expand_dir(char ***cmd_array, char *str, int i)
 	free(str);
 }
 
-int	main(int argc, char **argv)
-{
-	char			*str = ft_strdup(argv[1]);
-	char			**arr = ft_arrdup(argv);
+// int	main(int argc, char **argv)
+// {
+// 	char			*str = ft_strdup(argv[1]);
+// 	char			**arr = ft_arrdup(argv);
 
-	(void)argc;
-	expand_dir(&arr, str, 1);
-	printf("\n");
-	for (size_t i = 0; arr[i]; i++)
-		printf("%s\n", arr[i]);
-	ft_free_arr(arr);
-	exit(0);
-}
+// 	(void)argc;
+// 	expand_dir(&arr, str, 1);
+// 	printf("\n");
+// 	for (size_t i = 0; arr[i]; i++)
+// 		printf("%s\n", arr[i]);
+// 	ft_free_arr(arr);
+// 	exit(0);
+// }
 
 
 // gcc -Wall -Wextra -Werror -fsanitize=address -g srcs/init/ft_arrdup.c srcs/executor/expansion/expand_cmd_arrays.c test_wild2.c  srcs/utils.c srcs/error.c libft/libft.a -I incs/ -I libft/incs/ && ./a.out "srcs/exec*/ex*.c"
