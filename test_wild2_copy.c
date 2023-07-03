@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 11:49:36 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/03 18:05:22 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 18:58:15 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ char	*make_match_str(char *input, char *path, struct dirent *match)
 
 int	match(char *str, char *str2, int i, int j)
 {
-	// printf("str: %p\n", str);
-	// printf("str2: %p\n", str2);
-	// if (str2[0] == '.')
-	// 	return (0);
 	if (str[0] != '.' && (!ft_strncmp(str2, ".", 2) || !ft_strncmp(str2, "..", 3)))
 		return (0);
 	if (str[i] == '*' && !str[i + 1])
@@ -123,7 +119,6 @@ void	searchdir(char *path, char *str, t_list **list, char **arr)
 		ent = readdir(dir);
 		if (!ent)
 			break ;
-		// printf("entry: %s\n", ent->d_name);
 		if (ent->d_type == DT_DIR && arr[1] && match(*arr, ent->d_name, 0, 0))
 		{
 			free(path);
@@ -143,6 +138,7 @@ char	**ft_lst_to_arr(t_list **list)
 	int		i;
 	char	**arr;
 	t_list	*head;
+	t_list	*tmp;
 
 	len = ft_lstsize(*list);
 	arr = ft_calloc(sizeof(char *), len + 1);
@@ -151,7 +147,9 @@ char	**ft_lst_to_arr(t_list **list)
 	while (head)
 	{
 		arr[i] = head->content;
+		tmp = head;
 		head = head->next;
+		free(tmp);
 		i++;
 	}
 	free(list);
@@ -179,7 +177,8 @@ void	expand_dir(char ***cmd_array, char *str, int i)
 	if (!path_arr)
 		child_err_msg(NULL, "wildcard expansion");
 	insert_into_array(path_arr, cmd_array, i);
-	// free(path);
+	free(path);
+	free(path_arr);
 	free(str);
 }
 
