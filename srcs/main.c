@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 15:51:30 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 16:34:00 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	main(int argc, char **argv, char **envp)
 	gen.path = NULL;
 	// *(gen.path) = "asd";
 	gen.status = 0;
+
+	// gen.env = gen.env + 1;
 	minishell_loop(&gen);
 	set_echoctl();
 	rl_clear_history();

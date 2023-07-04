@@ -12,8 +12,8 @@ help_arg(){
 	echo "	all - run all unit tests"
 	echo "	sy - run lexer tests"
 	echo "	le - run syntax error tests"
-	echo "	ex - run expansion tests"
-	echo "	pa - run parser tests"
+	echo "gen - run general module"
+	echo "all - run all tests"
 	echo "clean - cleanup files"
 	echo "help - display this message"
 }

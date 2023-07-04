@@ -28,7 +28,6 @@ test_err(){
 }
 
 test_code(){
-	echo $1 $2
 	if [[ $1 == $2 ]]
 	then
 		echo -e "${GREEN}OK${RESET}"
@@ -66,7 +65,6 @@ do
 	exit_bash=$?
 	test_output out_mini out_bash
 	test_err err_mini err_bash
-	# test_code $exit_mini $exit_bash
 	TEST=""
 done < "$FILE"
 if [[ $KO == 0 ]]

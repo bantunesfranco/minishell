@@ -180,6 +180,20 @@ $HOME
 lim
 
 HERE
+cat << "lim''"
+$USER
+$NOVAR
+$HOME
+lim''
+
+HERE
+cat << 'lim"'
+$USER
+$NOVAR
+$HOME
+lim"
+
+HERE
 cat << 'lim'
 $USER
 $NOVAR

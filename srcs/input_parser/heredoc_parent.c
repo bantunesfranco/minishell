@@ -6,21 +6,13 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 15:48:16 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 18:32:31 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
-#include "libft.h"
-#include "parsing_structs.h"
 #include "parsing.h"
 #include "minishell.h"
-#include <readline/readline.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <signal.h>
-// #include "readline.h"
 
 static char	*read_from_pipe(int p)
 {
@@ -42,9 +34,9 @@ static char	*read_from_pipe(int p)
 		buf[read_bytes] = '\0';
 		temp = str;
 		str = ft_strjoin(str, buf);
-		if (str == NULL)
-			return (free(temp), NULL);
 		free(temp);
+		if (str == NULL)
+			return (NULL);
 	}
 	return (str);
 }

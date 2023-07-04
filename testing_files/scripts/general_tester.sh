@@ -28,7 +28,16 @@ test_output(){
 	# echo  mini
 	# cat $1
 	# echo bash
+	# echo "$LEAKS"
 	# cat $2
+	# LEAKS=$(cat $1 | grep " 0 leaks")
+	# if [[ $LEAKS == "" ]]
+	# then
+	# 	((KO++))
+	# 	echo -e "different outputs for argument: \n$TEST\nmini\n`cat $1`\nbash\n`cat $2`\n\n" >> error_args
+	# else
+	# 	((OK++))
+	# fi
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))

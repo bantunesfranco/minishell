@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/09 16:21:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 10:21:29 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 16:17:23 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,11 @@ int	mini_exit(t_gen *gen, t_cmd *cmd)
 		if (exit_code == -1)
 		{
 			exit_error(cmd->cmd[0], cmd->cmd[1], "numeric argument required\n");
-			// built_err_msg(cmd->cmd[0], NULL, "numeric argument required\n");
 			exit(255);
 		}
 		if (ft_arrlen(cmd->cmd) > 2)
 		{
 			exit_error(cmd->cmd[0], NULL, "too many arguments\n");
-			// built_err_msg(cmd->cmd[0], NULL, "too many arguments\n");
 			return (1);
 		}
 	}
