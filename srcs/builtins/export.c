@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 16:02:06 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 13:47:43 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/03 18:09:17 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static int	set_variable(t_gen *gen, t_cmd *cmd, int i, int *ret)
 	*ret = 0;
 	return (0);
 }
-
 
 int	export(t_gen *gen, t_cmd *cmd)
 {

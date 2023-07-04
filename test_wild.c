@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/22 16:49:42 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/30 21:31:57 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/03 14:37:32 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,21 @@ char	*getpath(char *str, int *f)
 	return (ft_substr(str, 0, i));
 }
 
-char	*make_match_str(char *path, char *match)
+char	*make_match_str(char *path, dirent *match, int *folder)
 {
 	char	*str;
+	char	*tmp;
 
 	if (!ft_strncmp(path, ".", 2))
-		str = ft_strdup(match);
+		str = ft_strdup(match->d_name);
 	else
-		str = ft_strjoin(path, match);
+		str = ft_strjoin(path, match->d_name);
+	if (str && match->d_type == DT_DIR && f == 1)
+	{
+		tmp = str;
+		str = ft_strjoin(str, "/");
+		free(tmp);
+	}
 	if (!str)
 		child_err_msg(NULL, "wildcard expansion");
 	return (str);
@@ -90,10 +97,10 @@ void	searchdir(char *path, char *str, char **arr, int f)
 		if (!entry)
 			break ;
 		if (entry->d_type == DT_DIR && f == 1 \
-		&& match_str(str, entry->d_name, ft_strlen(path) , 0))
-			arr[i++] = make_match_str(path, entry->d_name);
+		&& match_str(str, entry->d_name, ft_strlen(path), 0))
+			arr[i++] = make_match_str(path, entry, f);
 		else if (f == 0 && match_str(str, entry->d_name, ft_strlen(path), 0))
-			arr[i++] = make_match_str(path, entry->d_name);
+			arr[i++] = make_match_str(path, entry, f);
 	}
 	if (dir)
 		closedir(dir);
