@@ -1,0 +1,21 @@
+name: Test
+
+on:
+    pull_request:
+        branches: [ "main" ]
+    workflow_dispatch:
+
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+      
+      - name: test
+        run: bash tester all
