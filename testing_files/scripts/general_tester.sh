@@ -25,10 +25,10 @@ help(){
 }
 
 test_output(){
-	# echo  mini
-	# cat $1
-	# echo bash
-	# cat $2
+	echo  mini
+	cat $1
+	echo bash
+	cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
@@ -270,6 +270,7 @@ run_all(){
 	test_redirect
 	test_other
 	test_subshells
+	cat error_args
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))
