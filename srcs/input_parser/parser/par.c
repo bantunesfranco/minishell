@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   par.c                                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/16 15:21:06 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 10:03:17 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 19:05:22 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_token	*call_state(t_token *temp, t_pipeline *first_pipeline, t_token **head)
 	next_state[3] = end_state;
 	next_state[4] = word_state;
 	curr_pipeline = find_curr_pipeline(first_pipeline);
-	return(next_state[temp->token_group](temp, curr_pipeline, head));
+	return (next_state[temp->token_group](temp, curr_pipeline, head));
 }
 
 void	setup_starting_point(t_pipeline **first_pipeline)
@@ -46,9 +46,9 @@ void	setup_starting_point(t_pipeline **first_pipeline)
 
 void	parser(t_par_info *p_info, t_token **head, t_pipeline **first_pipeline)
 {
-	(void)p_info;
 	t_token	*temp;
 
+	(void)p_info;
 	temp = *head;
 	setup_starting_point(first_pipeline);
 	while (temp != NULL)
@@ -57,8 +57,6 @@ void	parser(t_par_info *p_info, t_token **head, t_pipeline **first_pipeline)
 		// temp = temp->next;
 	}
 	// print_redirects(*first_pipeline);
-	// printf("%p\n", (*first_pipeline)->first_cmd->cmd);
-	// printf("%s\n", (*first_pipeline)->first_cmd->cmd[0]);
 	// print_array((*first_pipeline)->first_cmd->cmd);
 	// print_commands(*first_pipeline);
 	// free_parsed_structs(*first_pipeline);

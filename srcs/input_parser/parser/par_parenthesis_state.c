@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   par_parenthesis_state.c                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 15:00:55 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 11:29:56 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 18:46:39 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	open_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **
 	add_standard_in_out_nodes(curr_pipeline->subshell);
 	curr_pipeline->next_control_operator = OPEN;
 	new_pipeline = make_new_pipeline(OPEN);
-	new_pipeline->prev = curr_pipeline;			//maybe remove this, the prev thing I mean
+	new_pipeline->prev = curr_pipeline;
 	curr_pipeline->next = new_pipeline;
 }
 

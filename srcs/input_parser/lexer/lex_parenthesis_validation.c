@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   lex_parenthesis_validation.c                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 19:43:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/07/04 10:18:23 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 18:46:46 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

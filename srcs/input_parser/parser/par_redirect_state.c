@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   par_redirect_state.c                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 14:25:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 18:39:51 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_token	*redirection_state(t_token *temp, t_pipeline *curr_pipeline, t_token **h
 {
 	t_redirect	*new_redirect;
 	t_token		*next_token;
-	
+
 	new_redirect = make_new_redirect_node(temp->next->word, temp->type - 5, -1);
 	new_redirect->str = temp->str;
 	add_redirect_to_cmd(curr_pipeline, new_redirect);

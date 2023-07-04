@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   word_splitting.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 18:44:53 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/20 08:42:38 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 19:05:26 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ char	**word_splitting(char *str, t_quote_mark *head)
 	if (!str)
 		return (NULL);
 	word_count = count_words(str, head);
-	// printf("%d\n", word_count);
 	// if (word_count == 0)
 	// 	return (NULL);
 	split_word = ft_calloc(sizeof(char *), word_count + 1);

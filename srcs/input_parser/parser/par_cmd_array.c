@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   par_cmd_array.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 08:22:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 18:39:30 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,3 @@ char	**create_cmd_array(t_token *temp, t_token *head)
 	}
 	return (cmd_array);
 }
-

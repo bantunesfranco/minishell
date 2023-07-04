@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 11:49:36 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 15:22:39 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 19:04:00 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,9 @@ char	*make_match_str(char *input, char *path, struct dirent *match)
 	char	*tmp;
 
 	if (!ft_strncmp(path, "./", 2))
-	{
-		// printf("%s\n", path);
 		str = ft_strjoin(path + 2, match->d_name);
-		// str = ft_strdup(match->d_name);
-	}
 	else
-	{
-		// printf("%s\n", path);
 		str = ft_strjoin(path, match->d_name);
-	}
 	if (str && match->d_type == DT_DIR && input[ft_strlen(input) - 1] == '/')
 	{
 		tmp = str;
@@ -45,8 +38,7 @@ char	*make_match_str(char *input, char *path, struct dirent *match)
 
 int	match(char *str, char *str2, int i, int j)
 {
-	if (str[0] != '.' && str2[0] == '.')// \
-	// || (!ft_strncmp(str2, ".", 2) || !ft_strncmp(str2, "..", 3)))
+	if (str[0] != '.' && str2[0] == '.')
 		return (0);
 	if (str[i] == '*' && !str[i + 1])
 		return (1);

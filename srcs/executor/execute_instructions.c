@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   execute_instructions.c                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 16:39:50 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/03 16:40:17 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 19:01:20 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ int	execute_subshell(t_gen *gen, t_pipeline **subshell, int *pipe_read)
 	int	id;
 	int	p[2];
 
-	// printf("%d\n", (*subshell)->subshell->pipe_output);
-	// printf("%d\n", (*subshell)->subshell->pipe_input);
 	if ((*subshell)->subshell->pipe_output == 1)
 	{
 		if (pipe(p) == -1)
@@ -139,12 +137,6 @@ int	execute_subshell(t_gen *gen, t_pipeline **subshell, int *pipe_read)
 			close((*subshell)->subshell->input->fd);
 		if ((*subshell)->subshell->output->fd != STDOUT_FILENO)
 			close((*subshell)->subshell->output->fd);
-		// printf("%p\n", (*subshell)->subshell);
-		// printf("fiss%p\n", (*subshell)->first_cmd);
-		// // printf("%s\n", (*subshell)->first_cmd->cmd[0]);
-		// printf("fz2%p\n", (*subshell)->next->first_cmd);
-		// printf("%s\n", (*subshell)->next->first_cmd->cmd[0]);
-		// printf("lololol%p\n", (*subshell)->next->subshell);
 		execute_instructions(gen, (*subshell)->next);
 		_exit(gen->status);
 	}
@@ -175,16 +167,9 @@ t_pipeline	*execute_pipeline_list(t_gen *gen, t_pipeline *first_pipeline)
 	while (tmp != NULL)
 	{
 		if (tmp->next_control_operator == OPEN)
-		{
-			// dprintf(2, "here\n");
 			id = execute_subshell(gen, &tmp, &pipe_read);
-			// printf("tmp-%p\n", tmp->subshell);
-		}
 		else if (tmp->next_control_operator == PIPE || tmp->prev_control_operator == PIPE)
-		{
-			// dprintf(2, "not\n"); 
 			id = execute_pipeline(gen, &tmp, &pipe_read);
-		}
 		else
 			break ; 
 		if (tmp && (tmp->prev_control_operator == CLOSE || \
@@ -203,46 +188,28 @@ t_pipeline	*execute_pipeline_list(t_gen *gen, t_pipeline *first_pipeline)
 	while (1)
 		if (wait(NULL) == -1)
 			break ;
-	// printf("%p\n", tmp);
-	// printf("%p\n", tmp->first_cmd);
-	// printf("%s\n", tmp->first_cmd->cmd[0]);
 	return (tmp);
 }
 
 void	execute_instructions(t_gen *gen, t_pipeline *input)
 {
-	t_pipeline *tmp;
+	t_pipeline	*tmp;
 
 	tmp = input;
 	while (tmp != NULL)
 	{
 		if (tmp->prev_control_operator == CLOSE)
-		{
-			// dprintf(2, "HALLELUJA\n");
 			break ;
-		}
 		else if (tmp->next_control_operator == OPEN || tmp->next_control_operator == PIPE)
-		{
-			// dprintf(2, "huh\n");
-			// printf("%d\n", tmp->next_control_operator);
 			tmp = execute_pipeline_list(gen, tmp);
-		}
 		else
 		{
-			// dprintf(2, "hi\n");
 			executor(gen, tmp);
 			tmp = tmp->next;
 		}
 		if (tmp != NULL)// && tmp->next)
-		{
 			tmp = check_control_operators(gen, tmp);
-			// dprintf(2, "%p\n", tmp);
-		}
 		else
-		{
-			// printf("aodkoasd\n");
 			break ;
-		}
 	}
 }
-

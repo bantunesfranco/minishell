@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   exec.c                                             :+:    :+:            */
+/*   exec_pipeline.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 15:48:12 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 18:52:41 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
 	if (cmd->cmd == NULL)
 		_exit(EXIT_SUCCESS);
 	else if (cmd->builtin)
-	{
-		// printf("yeah\n");
 		_exit(cmd->builtin(gen, cmd));
-	}
 	else
 	{
 		close_pipes(cmd, p, pipe_rd);
@@ -107,23 +104,15 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 	expand_pipeline(cmd, gen);
 	check_pipeline_for_builtins(cmd);
 	if (is_builtin(gen, cmd) == 1)
-	{
-		// printf("yeah\n");
 		return ;
-	}
 	id = cmd_loop(gen, cmd, p);
 	if (id == -1)
 		return ;
 	waitpid(id, &gen->status, 0);
 	if (WIFEXITED(gen->status))
-	{
 		gen->status = WEXITSTATUS(gen->status);
-		// printf("%d\n", gen->status);
-	}
 	else if (WIFSIGNALED(gen->status))
 		gen->status = 128 + WTERMSIG(gen->status);
-
-	// printf("%d\n", gen->status);
 	while (1)
 		if (wait(NULL) == -1)
 			break ;
