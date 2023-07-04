@@ -1,12 +1,94 @@
 different errors for argument: 
 cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) && echo lol
 
+mini
+ cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+wce: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+bash
+cate: command not found
+cate: command not found
+cate: command not found
+wce: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+
+
 different errors for argument: 
 cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) || echo lol
+
+mini
+ cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+wce: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+bash
+cate: command not found
+cate: command not found
+cate: command not found
+wce: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+
 
 different errors for argument: 
 cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) || echo lol) && echo huh || echo lol) && echo lol
 
+mini
+ cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+wce: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+bash
+cate: command not found
+cate: command not found
+cate: command not found
+wce: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+cate: command not found
+
+
 different errors for argument: 
 (echoa || echoa) | cate
+
+mini
+ echoa: command not found
+cate: command not found
+echoa: command not found
+bash
+cate: command not found
+echoa: command not found
+echoa: command not found
+
 

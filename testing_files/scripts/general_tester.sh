@@ -25,14 +25,14 @@ help(){
 }
 
 test_output(){
-	echo  mini
-	cat $1
-	echo bash
-	cat $2
+	# echo  mini
+	# cat $1
+	# echo bash
+	# cat $2
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
-		echo -e "different outputs for argument: \n$TEST" >> error_args
+		echo -e "different outputs for argument: \n$TEST\nmini\n`cat $1`\nbash\n `cat $2`\n\n" >> error_args
 	else
 		((OK++))
 	fi
@@ -90,7 +90,7 @@ test_err(){
 		((OK++))
 	else
 		((KO++))
-		echo -e "different errors for argument: \n$TEST" >> error_args
+		echo -e "different errors for argument: \n$TEST\nmini\n $ERROR_MINI\nbash\n$ERROR_BASH\n\n" >> error_args
 	fi
 }
 
