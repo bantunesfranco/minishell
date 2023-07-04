@@ -25,9 +25,9 @@ jobs:
           python3 -m pip install norminette
           brew update
           brew install readline
-  
+
       - name: Norminette
-        run: norminette minishell
+        run: norminette
 
       - name: Build
         run: make -C ${{github.workspace}}
