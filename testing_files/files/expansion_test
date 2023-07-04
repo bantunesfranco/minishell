@@ -171,3 +171,5 @@ export asd="  A  B  "
 
 export asd="  A  B  "
 /bin/echo "1"$asd2?
+
+cat hi | < hi | echo $HOME

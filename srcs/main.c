@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 08:17:09 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 15:51:30 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*read_no_tty(t_gen *gen)
 		err_msg(NULL, "read_input");
 	else if (line2 == NULL && errno == 0)
 	{
-		rl_clear_history();
 		set_echoctl();
 		exit(gen->status);
 	}
@@ -104,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!gen.env)
 		err_msg(NULL, "init");
 	gen.path = NULL;
+	// *(gen.path) = "asd";
 	gen.status = 0;
 	minishell_loop(&gen);
 	set_echoctl();

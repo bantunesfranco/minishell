@@ -80,7 +80,7 @@ cate: command not found
 
 
 different errors for argument: 
-(echoa || echoa) | cate
+(echoa || echoa) | cat
 
 mini
  echoa: command not found

@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/04 10:32:07 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 10:57:31 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 15:47:35 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	child_heredoc(char *delimiter, int p[2])
 {
 	char	*new_delimiter;
 
-	signal(SIGINT, heredoc_handler_sigint);
+	// signal(SIGINT, SIG_DFL);
 	close(p[0]);
 	new_delimiter = ft_strjoin(delimiter, "\n");
 	if (new_delimiter == NULL)

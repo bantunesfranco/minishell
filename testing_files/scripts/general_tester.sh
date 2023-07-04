@@ -32,7 +32,7 @@ test_output(){
 	if ! diff -q $1 $2 >/dev/null
 	then
 		((KO++))
-		echo -e "different outputs for argument: \n$TEST\nmini\n`cat $1`\nbash\n `cat $2`\n\n" >> error_args
+		echo -e "different outputs for argument: \n$TEST\nmini\n`cat $1`\nbash\n`cat $2`\n\n" >> error_args
 	else
 		((OK++))
 	fi
@@ -270,7 +270,7 @@ run_all(){
 	test_redirect
 	test_other
 	test_subshells
-	cat error_args
+	# cat error_args
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))

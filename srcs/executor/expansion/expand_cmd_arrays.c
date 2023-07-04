@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/19 15:26:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/03 20:02:44 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/04 15:58:00 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ size_t	expand_single_word(char ***cmd_array, size_t i, t_gen *gen)
 	// printf("%p\n", split_word);
 	// printf("%p\n", *split_word);
 	quote_removal(split_word, head);
+	
 	// printf("%p\n", split_word);
 	// printf("%p\n", *split_word);
 	insert_into_array(split_word, cmd_array, i);
@@ -138,9 +139,9 @@ void	expand_pipeline(t_cmd *cmd, t_gen *gen)
 	{
 		// printf("hi\n");
 		i = 0;
-		if (cmd->cmd == NULL)
-			return ;
-		while (*(cmd->cmd + i) != NULL)
+		// if (cmd->cmd == NULL)
+		// 	return ;
+		while (cmd->cmd != NULL && *(cmd->cmd + i) != NULL)
 		{
 			// printf("huh\n");
 			// printf("hi\n");
@@ -153,6 +154,23 @@ void	expand_pipeline(t_cmd *cmd, t_gen *gen)
 				cmd->cmd = NULL;
 				break ;
 			}
+			// i++;
+		}
+		i = 0;
+		while (cmd->cmd != NULL && *(cmd->cmd + i) != NULL)
+		{
+			// printf("huh\n");
+			// printf("hi\n");
+			// print_array(cmd->cmd);
+
+			i = expand_wildcards(&(cmd->cmd), *(cmd->cmd + i), i);
+			// printf("%zu\n", i);
+			// if (*cmd->cmd == NULL)
+			// {
+			// 	free(cmd->cmd);
+			// 	cmd->cmd = NULL;
+			// 	break ;
+			// }
 			// i++;
 		}
 		cmd = cmd->next;

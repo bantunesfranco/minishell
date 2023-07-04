@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 10:37:44 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 15:48:16 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <signal.h>
 // #include "readline.h"
 
-char	*read_from_pipe(int p)
+static char	*read_from_pipe(int p)
 {
 	char	*str;
 	char	buf[10];
@@ -49,27 +49,28 @@ char	*read_from_pipe(int p)
 	return (str);
 }
 
-int	parent_heredoc(t_token *current_node, int p[2], int child_id)
+static int	parent_heredoc(t_token *current_node, int p[2], int child_id)
 {
 	int	status;
 
 	close(p[1]);
 	current_node->str = read_from_pipe(p[0]);
+	close(p[0]);
 	if (current_node->str == NULL)
 	{
-		close(p[0]);
 		kill(child_id, SIGINT);
 		err_msg(NULL, "here_doc");
 		return (-1);
 	}
-	close(p[0]);
 	waitpid(child_id, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (WTERMSIG(status));
 	return (0);
 }
 
-int	read_heredoc(t_token *current_node, char *delimiter)
+static int	read_single_heredoc(t_token *current_node, char *delimiter)
 {
 	int		id;
 	int		p[2];
@@ -90,7 +91,7 @@ int	read_heredoc(t_token *current_node, char *delimiter)
 	return (parent_heredoc(current_node, p, id));
 }
 
-void	count_heredocs(t_token *head, t_token *error_token)
+static void	count_heredocs(t_token *head, t_token *error_token)
 {
 	int	i;
 
@@ -114,14 +115,14 @@ int	read_all_heredocs(t_token *head, t_token *error_token)
 	int		error;
 
 	count_heredocs(head, error_token);
-	signal(SIGQUIT, heredoc_handler_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	unset_echoctl();
 	temp = head;
 	while (temp != error_token)
 	{
 		if (temp->type == LESS_LESS)
 		{
-			error = read_heredoc(temp, temp->next->word);
+			error = read_single_heredoc(temp, temp->next->word);
 			if (error != 0)
 				return (error);
 		}

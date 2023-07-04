@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:21:59 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 10:07:50 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 13:50:56 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include "libft.h"
 # include "parsing_structs.h"
 # include "structs.h"
-
-sig_atomic_t	g_kill_switch;
 
 char	**env_init(char **env);
 char	**ft_split_args(char *str, char sep);
@@ -55,8 +53,6 @@ void	free_parsed_structs(t_pipeline *first_pipeline);
 
 void	setup_signal_handlers_and_terminal_non_interactive(void);
 void	setup_signal_handlers_and_terminal_interactive(void);
-void	heredoc_handler_sigquit(int signal);
-void	heredoc_handler_sigint(int signal);
 void	set_echoctl(void);
 void	unset_echoctl(void);
 

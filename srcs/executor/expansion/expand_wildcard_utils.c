@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 19:55:16 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/03 19:55:21 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/04 14:32:28 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,15 @@ char	*getpath(char *str)
 	int		i;
 
 	i = 0;
-	if (ft_strchr(str, '/') == ft_strrchr(str, '/'))
-		if (!ft_strchr(str, '/') || str[ft_strlen(str) - 1] == '/')
+	while (str[i] != '\0' && str[i] != '/')
+	{
+		if (str[i] == '*')
 			return (ft_strdup("."));
+		i++;
+	}
+	// if (ft_strchr(str, '/') == ft_strrchr(str, '/'))
+	// 	if (!ft_strchr(str, '/') || str[ft_strlen(str) - 1] == '/')
+	// 		return (ft_strdup("."));
 	while (str[i] && str[i] != '*')
 		i++;
 	while (i > 0 && str[i] != '/')

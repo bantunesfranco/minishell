@@ -159,11 +159,11 @@ $HOME
 hello
 
 HERE
-cat << 'lim'
+cat << 'asd'
 $USER
 $NOVAR
 $HOME
-lim
+asd
 
 HERE
 cat << lim''

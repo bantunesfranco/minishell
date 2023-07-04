@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 11:49:36 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/03 20:02:17 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/04 15:22:39 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,17 @@ char	*make_match_str(char *input, char *path, struct dirent *match)
 	char	*str;
 	char	*tmp;
 
-	if (!ft_strncmp(path, "./", 3))
-		str = ft_strdup(match->d_name);
+	if (!ft_strncmp(path, "./", 2))
+	{
+		// printf("%s\n", path);
+		str = ft_strjoin(path + 2, match->d_name);
+		// str = ft_strdup(match->d_name);
+	}
 	else
+	{
+		// printf("%s\n", path);
 		str = ft_strjoin(path, match->d_name);
+	}
 	if (str && match->d_type == DT_DIR && input[ft_strlen(input) - 1] == '/')
 	{
 		tmp = str;
@@ -38,8 +45,8 @@ char	*make_match_str(char *input, char *path, struct dirent *match)
 
 int	match(char *str, char *str2, int i, int j)
 {
-	if (str[0] != '.' \
-	&& (!ft_strncmp(str2, ".", 2) || !ft_strncmp(str2, "..", 3)))
+	if (str[0] != '.' && str2[0] == '.')// \
+	// || (!ft_strncmp(str2, ".", 2) || !ft_strncmp(str2, "..", 3)))
 		return (0);
 	if (str[i] == '*' && !str[i + 1])
 		return (1);
@@ -70,7 +77,6 @@ void	searchdir(char *path, char *str, t_list **list, char **arr)
 			break ;
 		if (ent->d_type == DT_DIR && arr[1] && match(*arr, ent->d_name, 0, 0))
 		{
-			free(path);
 			searchdir(ft_strjoin(tmp, ent->d_name), str, list, &arr[1]);
 		}
 		else if (match(*arr, ent->d_name, 0, 0) \
@@ -81,6 +87,7 @@ void	searchdir(char *path, char *str, t_list **list, char **arr)
 				child_err_msg(NULL, "wildcard expansion");
 		}
 	}
+	free(path);
 	free(tmp);
 	closedir(dir);
 }
@@ -109,29 +116,35 @@ char	**ft_lst_to_arr(t_list **list)
 	return (arr);
 }
 
-void	expand_dir(char ***cmd_array, char *str, int i)
+int	expand_wildcards(char ***cmd_array, char *str, int i)
 {
 	char			*path;
 	char			**path_arr;
 	t_list			**list;
 
 	if (!ft_strchr(str, '*'))
-		return ;
+		return (i + 1);
 	list = ft_calloc(sizeof(t_list *), 1);
 	path_arr = ft_split(str, '/');
 	path = getpath(str);
 	if ((!path || !list || !path_arr) && errno == ENOMEM)
 		child_err_msg(NULL, "wildcard expansion");
 	else if (!path)
-		return ;
+		return (i + 1);
 	searchdir(path, str, list, &path_arr[wild_pos(path_arr)]);
 	ft_free_arr(path_arr);
 	path_arr = ft_lst_to_arr(list);
 	if (!path_arr)
 		child_err_msg(NULL, "wildcard expansion");
+	if (*path_arr == NULL)
+	// {
+		return (free(path_arr), i + 1);
+	// }
 	insert_into_array(path_arr, cmd_array, i);
+	i = i + ft_arrlen(path_arr);
 	free(path_arr);
 	free(str);
+	return (i);
 }
 
 // int	main(int argc, char **argv)
@@ -147,6 +160,3 @@ void	expand_dir(char ***cmd_array, char *str, int i)
 // 	ft_free_arr(arr);
 // 	exit(0);
 // }
-
-
-// gcc -Wall -Wextra -Werror -fsanitize=address -g srcs/init/ft_arrdup.c srcs/executor/expansion/expand_cmd_arrays.c test_wild2.c  srcs/utils.c srcs/error.c libft/libft.a -I incs/ -I libft/incs/ && ./a.out "srcs/exec*/ex*.c"
