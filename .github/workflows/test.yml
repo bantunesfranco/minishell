@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
-      
-      - name: test
-        run: bash tester all
+        with:
+          submodules: 'true'
+
+      - name: test gen
+        run: bash tester gen all
+
+      - name: test sytax
+        run: bash tester unit sy
