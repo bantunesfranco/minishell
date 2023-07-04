@@ -21,6 +21,8 @@ jobs:
       - name: Install Dependencies
         run: |
           set -x
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install norminette
           if [ "$RUNNER_OS" == "Linux" ]; then
               sudo apt-get update -qq
               sudo apt-get install -y -qq libreadline-dev libreadline8
@@ -28,6 +30,9 @@ jobs:
               brew update
               brew install readline
           fi
+  
+      - name: Norminette
+        run: norminette minishell
 
       - name: Build
         run: make -C ${{github.workspace}}
