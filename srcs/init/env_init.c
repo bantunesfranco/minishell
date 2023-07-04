@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 17:35:46 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/03 20:01:28 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/04 08:01:57 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,29 +130,3 @@ char	**env_init(char **env)
 	free(env);
 	return (new_env);
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_cmd		cmd;
-// 	t_gen		gen;
-// 	char		**env_arr;
-
-// 	(void)argc;
-// 	// atexit(lks);
-// 	env_arr = ft_arrdup(envp);
-// 	for (int i = 0; env_arr[i]; i++)
-// 	{
-// 		if (!ft_envcmp(env_arr[i], "SHLVL="))
-// 		{
-// 			free(env_arr[i]);
-// 			env_arr[i] = ft_strdup("SHLVL=10");
-// 		}
-// 		printf("%s\n", env_arr[i]);
-// 	}
-// 	printf("\n\nINIT\n\n");
-// 	gen.env = env_init(env_arr);
-// 	for (int i = 0; gen.env[i]; i++)
-// 		printf("%s\n", gen.env[i]);
-// 	ft_free_arr(gen.env);
-// 	exit(0);
-// }

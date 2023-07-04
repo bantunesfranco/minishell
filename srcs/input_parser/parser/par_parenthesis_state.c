@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 15:00:55 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 11:43:13 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 11:29:56 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token	*skip_to_close_parenthesis(t_token *open_par)
 	return (temp);
 }
 
-t_token	*add_redirection(t_subshell *new_subshell, t_token *temp, t_token **first_token)
+t_token	*add_redirection(t_subshell *new_subshell, t_token *temp, t_token **head)
 {
 	t_redirect	*new_redirect;
 	t_token		*next_token;
@@ -42,12 +42,12 @@ t_token	*add_redirection(t_subshell *new_subshell, t_token *temp, t_token **firs
 	else
 		add_redirect_back(&(new_subshell->output), new_redirect);
 	next_token = temp->next->next;
-	remove_token(first_token, temp->next);
-	remove_token(first_token, temp);
+	remove_token(head, temp->next);
+	remove_token(head, temp);
 	return (next_token);
 }
 
-void	handle_subshell_redirections(t_subshell *new_subshell, t_token *open_par, t_token **first_token)
+void	handle_subshell_redirections(t_subshell *new_subshell, t_token *open_par, t_token **head)
 {
 	t_token	*temp;
 
@@ -56,7 +56,7 @@ void	handle_subshell_redirections(t_subshell *new_subshell, t_token *open_par, t
 	while (1)
 	{
 		if (temp->token_group == REDIRECTION)
-			temp = add_redirection(new_subshell, temp, first_token);
+			temp = add_redirection(new_subshell, temp, head);
 		else
 		{
 			if (temp->type == PIPE)
@@ -74,7 +74,7 @@ static void	add_standard_in_out_nodes(t_subshell *new_subshell)
 		new_subshell->output = make_new_redirect_node(NULL, OUTPUT, 1);
 }
 
-void	open_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
+void	open_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head)
 {
 	t_subshell	*new_subshell;
 	t_pipeline	*new_pipeline;
@@ -83,7 +83,7 @@ void	open_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **
 	if (curr_pipeline->prev_control_operator == PIPELINE)
 		new_subshell->pipe_input = 1;
 	curr_pipeline->subshell = new_subshell;
-	handle_subshell_redirections(curr_pipeline->subshell, temp, first_token);
+	handle_subshell_redirections(curr_pipeline->subshell, temp, head);
 	add_standard_in_out_nodes(curr_pipeline->subshell);
 	curr_pipeline->next_control_operator = OPEN;
 	new_pipeline = make_new_pipeline(OPEN);
@@ -91,12 +91,12 @@ void	open_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **
 	curr_pipeline->next = new_pipeline;
 }
 
-void	close_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
+void	close_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head)
 {
 	t_subshell	*new_subshell;
 	t_pipeline	*new_pipeline;
 
-	close_simple_cmd(temp, curr_pipeline, first_token);
+	close_simple_cmd(temp, curr_pipeline, head);
 	curr_pipeline->next_control_operator = CLOSE;
 	new_pipeline = make_new_pipeline(CLOSE);
 	new_subshell = make_new_subshell_struct(CLOSE);
@@ -105,15 +105,15 @@ void	close_parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token *
 	curr_pipeline->next = new_pipeline;
 }
 
-t_token	*parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
+t_token	*parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head)
 {
 	t_token	*next_token;
 
 	if (temp->type == OPEN_PAR)
-		open_parenthesis_state(temp, curr_pipeline, first_token);
+		open_parenthesis_state(temp, curr_pipeline, head);
 	else
-		close_parenthesis_state(temp, curr_pipeline, first_token);
+		close_parenthesis_state(temp, curr_pipeline, head);
 	next_token = temp->next;
-	remove_token(first_token, temp);
+	remove_token(head, temp);
 	return (next_token);
 }

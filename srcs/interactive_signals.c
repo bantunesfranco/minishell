@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/30 12:01:44 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 08:18:08 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 void	sig_quit_handler_interactive(int signal)
 {
 	(void)signal;
-	// rl_replace_line("", 0);
 	rl_redisplay();
 }
 

@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 10:25:22 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 13:58:02 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 09:04:44 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,3 @@ t_pipeline	*make_new_pipeline(t_control_operator type)
 	new_node->prev = NULL;
 	return (new_node);
 }
-
-// void	add_pipeline_back(t_pipeline **head, t_pipeline *new_pipeline)
-// {
-// 	t_pipeline	*temp;
-
-// 	temp = *head;
-// 	if (temp != NULL)
-// 	{
-// 		while (temp->next != NULL)
-// 			temp = temp->next;
-// 		temp->next = new_pipeline;
-// 	}
-// 	else
-// 		*head = new_pipeline;
-// }

@@ -23,8 +23,6 @@ help_unit_arg(){
 	echo -e "\n\nall - run all unit tests"
 	echo "sy - run syntax error tests"
 	echo "le - run lexer tests"
-	echo "ex - run expansion tests"
-	echo "pa - run parser tests"
 	echo "help - display this message"
 	echo "exit - to stop the tester"
 }
@@ -36,12 +34,6 @@ unit_test(){
 	elif [[ $1 == "le" ]]
 	then
 		test_lexer
-	elif [[ $1 == "ex" ]]
-	then
-		test_expansion
-	elif [[ $1 == "pa" ]]
-	then
-		test_parser
 	elif [[ $1 == "all" ]]
 	then
 		test_all_unit
@@ -71,7 +63,6 @@ runoption(){
 		run_all_tests $2
 	elif [[ $1 == "clean" ]]
 	then
-		# foo=$(make fclean)
 		make -C testing_files fclean
 	else
 		help_arg
@@ -99,6 +90,7 @@ test_if_passed(){
 	check=$(echo $1 | grep "TESTS PASSED")
 	if [ -z "$check" ]
 	then
+		BAD=1
 		echo -e ":${RED}			KO ${RESET}"
 	else
 		echo -e ":${GREEN}			OK ${RESET}"
@@ -111,18 +103,25 @@ test_if_passed_all(){
 	then
 		echo -e ":${GREEN}			OK${RESET}"
 	else
+		BAD=1
 		echo -e ":${RED}			KO${RESET}"
 	fi
 }
 
 run_all_tests() {
+	BAD=0
 	rm -rf error_args
 	echo -n -e "\nUnit tests"
 	ARG=$(test_all_unit)
 	test_if_passed_all "$ARG"
+	echo -n -e "\nGeneral tests"
+	ARG=$(general_test all)
+	test_if_passed_all "$ARG"
+	exit $BAD
 }
 
 test_all_unit() {
+	BAD=0
 	rm -rf error_args
 	echo -n -e "\nTesting syntax errors"
 	ARG=$(./testing_files/scripts/syntax_error.sh)
@@ -130,14 +129,7 @@ test_all_unit() {
 	echo -n "Testing lexer	"
 	ARG=$(./testing_files/scripts/lexer_tester.sh)
 	test_if_passed "$ARG"
-	echo -n "Testing expansion"
-	ARG=$(./testing_files/scripts/expansion_tester.sh)
-	test_if_passed "$ARG"
-}
-
-test_parser () {
-	rm -rf error_args
-	./testing_files/scripts/parser_tester.sh
+	exit $BAD
 }
 
 test_syntax () {
@@ -148,11 +140,6 @@ test_syntax () {
 test_lexer () {
 	rm -rf error_args
 	./testing_files/scripts/lexer_tester.sh
-}
-
-test_expansion () {
-	rm -rf error_args
-	./testing_files/scripts/expansion_tester.sh
 }
 
 # ./minishell

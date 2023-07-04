@@ -64,7 +64,6 @@ typedef struct s_cmd
 	char				**cmd;
 	char				*path;
 	int					(*builtin)(t_gen *, struct s_cmd *);
-	int					cmd_count;
 	struct s_redirect	*input;
 	struct s_redirect	*output;
 	struct s_cmd		*next;

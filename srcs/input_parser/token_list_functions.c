@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:56:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/06/21 11:51:58 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 
 /*	these functions are kind of self explanatory*/
 
-void	free_token_list(t_token *first_token)
+void	free_token_list(t_token *head)
 {
 	t_token	*temp;
 
-	while (first_token != NULL)
+	while (head != NULL)
 	{
-		temp = first_token;
-		first_token = first_token->next;
+		temp = head;
+		head = head->next;
 		free(temp->word);
 		free(temp->str);
 		free(temp);
 	}
 }
 
-void	add_new_token_to_back(t_token **first_token, t_token *new_token)
+void	add_new_token_to_back(t_token **head, t_token *new_token)
 {
 	t_token	*temp;
 
-	temp = *first_token;
+	temp = *head;
 	if (temp == NULL)
-		*first_token = new_token;
+		*head = new_token;
 	else
 	{
 		while (temp->next != NULL)
@@ -60,16 +60,16 @@ t_token	*make_new_token(char *word, t_token_type type)
 	return (new);
 }
 
-void	remove_token(t_token **first_token, t_token *node_to_delete)
+void	remove_token(t_token **head, t_token *node_to_delete)
 {
 	t_token	*temp;
 
-	temp = *first_token;
+	temp = *head;
 	while (temp != node_to_delete)
 		temp = temp->next;
-	if (temp == *first_token)
+	if (temp == *head)
 	{
-		*first_token = temp->next;
+		*head = temp->next;
 		if (temp->next != NULL)
 			temp->next->prev = NULL;
 	}
@@ -83,14 +83,14 @@ void	remove_token(t_token **first_token, t_token *node_to_delete)
 	free(temp);
 }
 
-void	remove_tokens(t_token *temp, t_token **first_token)
+void	remove_tokens(t_token *temp, t_token **head)
 {
 	t_token	*temp2;
 
-	temp2 = *first_token;
+	temp2 = *head;
 	while (temp2 != temp)
 	{
 		temp2 = temp2->next;
-		remove_token(first_token, temp2->prev);
+		remove_token(head, temp2->prev);
 	}
 }

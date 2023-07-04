@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 14:25:59 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 11:43:29 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	add_redirect_to_cmd(t_pipeline *curr_pipeline, t_redirect *new_redirect)
 		add_redirect_back(&(current_cmd->output), new_redirect);
 }
 
-t_token	*redirection_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
+t_token	*redirection_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head)
 {
 	t_redirect	*new_redirect;
 	t_token		*next_token;
@@ -38,7 +38,7 @@ t_token	*redirection_state(t_token *temp, t_pipeline *curr_pipeline, t_token **f
 	new_redirect->str = temp->str;
 	add_redirect_to_cmd(curr_pipeline, new_redirect);
 	next_token = temp->next->next;
-	remove_token(first_token, temp->next);
-	remove_token(first_token, temp);
+	remove_token(head, temp->next);
+	remove_token(head, temp);
 	return (next_token);
 }

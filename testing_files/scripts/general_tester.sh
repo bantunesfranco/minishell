@@ -158,9 +158,9 @@ test_file(){
 		done < "$FILE"
 	if [[ $KO_ALL == 0 ]]
 	then
-		echo -n -e "	👍${GREEN}TESTS PASSED"
+		echo -n -e "	👍${GREEN}TESTS OK"
 	else
-		echo -n -e "	🤮${RED}${KO_ALL} TESTS FAILED"
+		echo -n -e "	🤮${RED}${KO_ALL} TESTS KO"
 		TEST_FAILED=1
 	fi
 	total=$((OK_ALL + KO_ALL))

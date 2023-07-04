@@ -13,7 +13,7 @@ OBJ_DIR = ../obj ../obj/input_parser ../obj/builtins ../obj/init ../obj/executor
 HEADERS  = $(shell find ../incs -type f -name "*.h")
 
 # readline flags
-RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline -I $(HOME)/.brew/opt/readline/include
+RL_FLAGS = -L $(HOME)/.brew/opt/readline/lib -lreadline
 
 # libft variables
 LIBFT = ../libft/libft.a
@@ -21,11 +21,11 @@ LIBFT_DIR = ../libft
 
 # compilation variables
 CC = cc
-INCLUDES = -I ../incs -I ../libft/incs
+INCLUDES = -I ../incs -I ../libft/incs -I $(HOME)/.brew/opt/readline/include
 ifdef DEBUG
-CFLAGS = -Wall -Werror -Wextra
-else
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+else
+CFLAGS = -Wall -Werror -Wextra
 endif
 
 UNAME_S := $(shell uname -s)
@@ -39,11 +39,11 @@ endif
 
 # compilation files for all the various tests
 
-COM_LEXER = ../obj/input_parser/lexer/* ../obj/input_parser/parser_struct_init.o ../obj/input_parser/token_list_functions.o \
+COM_LEXER = ../obj/input_parser/lexer/* ../obj/input_parser/token_list_functions.o ../obj/utils.o \
 c_files/lexer_tester.c ../obj/test_utils.o ../obj/error.o ../obj/input_parser/input_parser_utils.o
 
-COM_SYNTAX = ../obj/input_parser/lexer/* ../obj/input_parser/parser_struct_init.o ../obj/input_parser/token_list_functions.o \
-c_files/syntax_tester.c ../obj/test_utils.o ../obj/error.o ../obj/input_parser/input_parser_utils.o
+COM_SYNTAX = ../obj/input_parser/lexer/* ../obj/input_parser/token_list_functions.o \
+c_files/syntax_tester.c ../obj/test_utils.o ../obj/error.o ../obj/input_parser/input_parser_utils.o ../obj/utils.o
 
 COM_PARSING = ../obj/input_parser/lexer/* ../obj/input_parser/parser/* \
 ../obj/input_parser/*.o ../obj/test_utils.o ../obj/error.o ../obj/free_cmd_list.o \
@@ -61,10 +61,10 @@ c_files/expansion_test.c ../obj/input_parser/input_parser_utils.o ../obj/test_ut
 # 	@echo "${GREEN}Done!${END}"
 
 lexer_test: comfiles
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(LIBFT) $(COM_LEXER)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(RL_FLAGS) -o $@ $(LIBFT) $(COM_LEXER)
 
 syntax_test: comfiles
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(LIBFT) $(COM_SYNTAX)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(RL_FLAGS) -o $@ $(LIBFT) $(COM_SYNTAX)
 
 parser_test: comfiles
 	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(LIBFT) $(COM_PARSING)

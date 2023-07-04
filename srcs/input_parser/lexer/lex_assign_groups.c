@@ -6,15 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 13:11:32 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/24 16:04:58 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 10:09:43 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing_structs.h"
 #include <stdlib.h>
-
-/*	tokens have certain functions they do, which can be grouped.
-	this will make parsing and error checking more concise, cause we're lookign at groups instead of individual tokens*/
 
 static void	assign_group(t_token *temp)
 {
@@ -30,11 +27,11 @@ static void	assign_group(t_token *temp)
 		temp->token_group = WORD;
 }
 
-void	assign_token_groups(t_token *first_token)
+void	assign_token_groups(t_token *head)
 {
 	t_token	*temp;
 
-	temp = first_token;
+	temp = head;
 	while (temp != NULL)
 	{
 		assign_group(temp);

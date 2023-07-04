@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 10:29:16 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/01 15:22:02 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/04 08:11:28 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_cmd	*make_new_simple_cmd(void)
 	new_node->cmd = NULL;
 	new_node->path = NULL;
 	new_node->builtin = NULL;
-	new_node->cmd_count = 0;
 	new_node->input = NULL;
 	new_node->output = NULL;
 	new_node->next = NULL;

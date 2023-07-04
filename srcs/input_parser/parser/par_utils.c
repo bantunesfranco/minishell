@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 14:24:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 13:47:29 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	add_standard_in_out_nodes(t_cmd *current_cmd)
 		current_cmd->output = make_new_redirect_node(NULL, OUTPUT, 1);
 }
 
-void	close_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token)
+void	close_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **head)
 {
 	t_cmd	*current_cmd;
 
@@ -74,8 +74,8 @@ void	close_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **first_
 		current_cmd = make_new_simple_cmd();
 		curr_pipeline->first_cmd = current_cmd;
 	}
-	current_cmd->cmd = create_cmd_array(temp, *first_token);
+	current_cmd->cmd = create_cmd_array(temp, *head);
 	// check_if_builtin(current_cmd);
 	add_standard_in_out_nodes(current_cmd);
-	remove_tokens(temp, first_token);
+	remove_tokens(temp, head);
 }

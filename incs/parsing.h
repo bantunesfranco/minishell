@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:52 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/30 11:52:41 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 10:37:55 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,24 @@ typedef t_token	*(*t_current_state_function)(t_token *, t_pipeline *, t_token **
 
 // test functions DELETE LATER
 void		print_array(char **arr);
-void		print_tokens(t_token *first_token);
+void		print_tokens(t_token *head);
 void		free_cmds(t_pipeline *first_pipeline);
 void		print_redirects(t_pipeline *first_pipeline);
 void		print_commands(t_pipeline *first_command);
 
 t_pipeline	*parse_line(char *line, t_gen *gen);
-void		init_struct(t_parsing_info *p_info);
-void		parser(t_parsing_info *p_info, t_token **first_token, t_pipeline **first_pipeline);
-int			read_heredocs(t_token *first_token, t_token *error_token);
+void		init_struct(t_par_info *p_info);
+void		parser(t_par_info *p_info, t_token **head, t_pipeline **first_pipeline);
+int			read_all_heredocs(t_token *head, t_token *error_token);
+void		child_heredoc(char *delimiter, int p[2]);
 
 // functions used for the token list
 
-void		add_new_token_to_back(t_token **first_token, t_token *new_token);
+void		add_new_token_to_back(t_token **head, t_token *new_token);
 t_token		*make_new_token(char *word, t_token_type type);
-void		free_token_list(t_token *first_token);
-void		remove_token(t_token **first_token, t_token *node_to_delete);
-void		remove_tokens(t_token *temp, t_token **first_token);
+void		free_token_list(t_token *head);
+void		remove_token(t_token **head, t_token *node_to_delete);
+void		remove_tokens(t_token *temp, t_token **head);
 
 // functions used for the pipeline list
 
@@ -60,15 +61,15 @@ t_subshell	*make_new_subshell_struct(t_control_operator type);
 
 // states
 
-t_token		*end_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token);
-t_token		*redirection_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token);
-t_token		*control_operator_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token);
-t_token		*parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token);
+t_token		*end_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head);
+t_token		*redirection_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head);
+t_token		*control_operator_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head);
+t_token		*parenthesis_state(t_token *temp, t_pipeline *curr_pipeline, t_token **head);
 
 t_cmd		*find_curr_cmd(t_pipeline *curr_pipeline);
 t_pipeline	*find_curr_pipeline(t_pipeline *curr_pipeline);
-void		close_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **first_token);
-char		**create_cmd_array(t_token *temp, t_token *first_token);
+void		close_simple_cmd(t_token *temp, t_pipeline *curr_pipeline, t_token **head);
+char		**create_cmd_array(t_token *temp, t_token *head);
 void		malloc_failure();
 size_t		skip_quotes(char *line, size_t i);
 

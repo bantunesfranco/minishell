@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:20:03 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/29 18:43:01 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	print_token(t_token_type type, char *word)
 		printf("somethings wrong	\n");
 }
 
-void	print_tokens(t_token *first_token)
+void	print_tokens(t_token *head)
 {
 	t_token	*temp;
 
-	temp = first_token;
+	temp = head;
 	while (temp != NULL)
 	{
 		print_token(temp->type, temp->word);

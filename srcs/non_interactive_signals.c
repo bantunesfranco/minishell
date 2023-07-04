@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/02 09:01:01 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 08:19:51 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 void	heredoc_handler_sigquit(int signal)
 {
 	(void)signal;
-	// g_kill_switch = 1;
-	// _exit(1);
 }
 
 void	heredoc_handler_sigint(int signal)

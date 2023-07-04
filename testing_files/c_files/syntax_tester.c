@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:45:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/24 20:22:41 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 10:07:12 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,21 @@
 #include "parsing.h"
 #include "lexer.h"
 
+static void	lexer(char *line, t_par_info *p_info, t_token **head)
+{
+	create_token_list(line, p_info, head);
+	assign_token_groups(*head);
+	validate_syntax(*head, p_info);
+}
+
 int	main(int argc, char *argv[])
 {
-	t_token			*first_token;
-	t_parsing_info	p_info;
+	t_token		*head;
+	t_par_info	p_info;
 
 	(void)argc;
-	(void)first_token;
+	(void)head;
 	(void)argv;
 	init_struct(&p_info);
-	lexer(argv[1], &p_info, &first_token);
+	lexer(argv[1], &p_info, &head);
 }

@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 18:45:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/24 19:52:07 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 10:07:45 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 #include "parsing.h"
 #include "lexer.h"
 
-void	print_toks(t_token *first_token)
+static void	lexer(char *line, t_par_info *p_info, t_token **head)
+{
+	create_token_list(line, p_info, head);
+	assign_token_groups(*head);
+	validate_syntax(*head, p_info);
+}
+
+void	print_toks(t_token *head)
 {
 	t_token	*temp;
 
-	temp = first_token;
+	temp = head;
 	printf("%s", temp->word);
 	temp = temp->next;
 	while (temp->type != NEW_LINE)
@@ -33,13 +40,13 @@ void	print_toks(t_token *first_token)
 
 int	main(int argc, char *argv[])
 {
-	t_token			*first_token;
-	t_parsing_info	p_info;
+	t_token		*head;
+	t_par_info	p_info;
 
 	(void)argc;
-	(void)first_token;
+	(void)head;
 	(void)argv;
 	init_struct(&p_info);
-	lexer(argv[1], &p_info, &first_token);
-	print_toks(first_token);
+	lexer(argv[1], &p_info, &head);
+	print_toks(head);
 }

@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:16:12 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/06/21 11:36:41 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 10:03:17 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ typedef struct s_parsing_info
 	char	*token_array[13];
 	bool	syntax_error;
 	t_token	*error_token;
-}			t_parsing_info;
+}			t_par_info;
 
 #endif
