@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
 
     steps:
       - name: Clone repository
@@ -21,13 +21,13 @@ jobs:
       - name: Install Dependencies
         run: |
           set -x
-          if [ "$RUNNER_OS" == "Linux" ]; then
-              sudo apt-get update -qq
-              sudo apt-get install -y -qq libreadline-dev libreadline8
-          elif [ "$RUNNER_OS" == "macOS" ]; then
-              brew update
-              brew install readline
-          fi
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install norminette
+          brew update
+          brew install readline
+
+      - name: Norminette
+        run: norminette
 
       - name: Build
         run: make -C ${{github.workspace}}
