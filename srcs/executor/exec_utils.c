@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   exec_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 16:42:33 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/03 16:43:00 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 19:09:46 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_pipeline	*goto_close_operator(t_pipeline *tmp)
 {
 	int		open;
 	int		close;
-	
+
 	open = 1;
 	close = 0;
 	while (tmp && open - close != 0)

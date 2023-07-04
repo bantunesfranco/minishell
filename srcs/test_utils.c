@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   test_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
+/*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:20:03 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/04 19:08:50 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ void	print_redirects(t_redirect	*redirect, int i)
 	while (temp != NULL)
 	{
 		if (temp->type == 0)
-			printf("%s",  "<<");
+			printf("%s", "<<");
 		else if (temp->type == 1)
-			printf("%s",  "<");
+			printf("%s", "<");
 		else if (temp->type == 2)
-			printf("%s",  ">>");
+			printf("%s", ">>");
 		else if (temp->type == 3)
-			printf("%s",  ">");
+			printf("%s", ">");
 		else
 			printf("wrong");
 		printf(" %s, ", temp->name);

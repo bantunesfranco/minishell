@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 16:39:50 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 19:01:20 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/04 19:11:44 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,11 +171,11 @@ t_pipeline	*execute_pipeline_list(t_gen *gen, t_pipeline *first_pipeline)
 		else if (tmp->next_control_operator == PIPE || tmp->prev_control_operator == PIPE)
 			id = execute_pipeline(gen, &tmp, &pipe_read);
 		else
-			break ; 
-		if (tmp && (tmp->prev_control_operator == CLOSE || \
-			tmp->prev_control_operator == OR || \
-			tmp->prev_control_operator == AND))
-			break;
+			break ;
+		if (tmp && (tmp->prev_control_operator == CLOSE \
+		|| tmp->prev_control_operator == OR \
+		|| tmp->prev_control_operator == AND))
+			break ;
 		// tmp = tmp->next;
 	}
 	waitpid(id, &gen->status, 0);
@@ -207,7 +207,7 @@ void	execute_instructions(t_gen *gen, t_pipeline *input)
 			executor(gen, tmp);
 			tmp = tmp->next;
 		}
-		if (tmp != NULL)// && tmp->next)
+		if (tmp != NULL)
 			tmp = check_control_operators(gen, tmp);
 		else
 			break ;
