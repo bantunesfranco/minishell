@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 16:39:50 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 19:11:44 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 08:20:34 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execute_pipeline(t_gen *gen, t_pipeline **pipeline, int *pipe_read)
 	int	id;
 	int	p[2];
 
-	if ((*pipeline)->next_control_operator == PIPE)
+	if ((*pipeline)->next_control_operator == PIPELINE)
 	{
 		if (pipe(p) == -1)
 		{
@@ -40,14 +40,14 @@ int	execute_pipeline(t_gen *gen, t_pipeline **pipeline, int *pipe_read)
 	}
 	else if (id == 0)
 	{
-		if ((*pipeline)->next_control_operator == PIPE)
+		if ((*pipeline)->next_control_operator == PIPELINE)
 		{
 			close(p[0]);
 			if (dup2(p[1], STDOUT_FILENO) == -1)
 				child_err_msg(NULL, "executor");
 			close(p[1]);
 		}
-		if ((*pipeline)->prev_control_operator == PIPE)
+		if ((*pipeline)->prev_control_operator == PIPELINE)
 		{
 			if (dup2(*pipe_read, STDIN_FILENO) == -1)
 				child_err_msg(NULL, "executor");
@@ -58,11 +58,11 @@ int	execute_pipeline(t_gen *gen, t_pipeline **pipeline, int *pipe_read)
 	}
 	else
 	{
-		if ((*pipeline)->prev_control_operator == PIPE)
+		if ((*pipeline)->prev_control_operator == PIPELINE)
 		{
 			close(*pipe_read);
 		}
-		if ((*pipeline)->next_control_operator == PIPE)
+		if ((*pipeline)->next_control_operator == PIPELINE)
 		{
 			close(p[1]);
 			*pipe_read = p[0];
@@ -168,7 +168,7 @@ t_pipeline	*execute_pipeline_list(t_gen *gen, t_pipeline *first_pipeline)
 	{
 		if (tmp->next_control_operator == OPEN)
 			id = execute_subshell(gen, &tmp, &pipe_read);
-		else if (tmp->next_control_operator == PIPE || tmp->prev_control_operator == PIPE)
+		else if (tmp->next_control_operator == PIPELINE || tmp->prev_control_operator == PIPELINE)
 			id = execute_pipeline(gen, &tmp, &pipe_read);
 		else
 			break ;
@@ -200,7 +200,7 @@ void	execute_instructions(t_gen *gen, t_pipeline *input)
 	{
 		if (tmp->prev_control_operator == CLOSE)
 			break ;
-		else if (tmp->next_control_operator == OPEN || tmp->next_control_operator == PIPE)
+		else if (tmp->next_control_operator == OPEN || tmp->next_control_operator == PIPELINE)
 			tmp = execute_pipeline_list(gen, tmp);
 		else
 		{
