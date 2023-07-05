@@ -12,7 +12,7 @@ READLINE = $(shell brew --prefix readline)
 HEADERS  = $(shell find incs -type f -name "*.h")
 SRC_FILES = $(shell find srcs -type f -name "*.c")
 OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)
-OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser obj/executor/expansion
+OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser obj/executor/expansion obj/input_parser/list_functions
 
 # readline flags
 RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include

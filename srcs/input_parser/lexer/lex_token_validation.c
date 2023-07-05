@@ -6,11 +6,12 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 19:41:08 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/07/04 12:04:00 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 13:48:09 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include <stdlib.h>
 
 static bool	is_control_operator_valid(t_token *temp, int *open_brackets)
 {

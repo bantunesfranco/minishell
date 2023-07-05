@@ -6,11 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 19:38:46 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 10:03:17 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 13:47:52 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include <stdlib.h>
 
 size_t	skip_quotes(char *line, size_t i)
 {

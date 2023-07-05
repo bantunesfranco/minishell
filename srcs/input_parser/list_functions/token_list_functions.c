@@ -6,14 +6,12 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/10 19:56:00 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/07/04 09:41:26 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 10:24:31 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-
-/*	these functions are kind of self explanatory*/
 
 void	free_token_list(t_token *head)
 {

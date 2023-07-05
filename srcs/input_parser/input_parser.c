@@ -6,12 +6,11 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 10:38:21 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 13:48:24 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "structs.h"
 #include "parsing.h"
 #include "lexer.h"
 
@@ -60,6 +59,6 @@ t_pipeline	*parse_line(char *line, t_gen *gen)
 		return (NULL);
 	}
 	setup_signal_handlers_and_terminal_non_interactive();
-	parser(&p_info, &head, &first_pipeline);
+	parser(&head, &first_pipeline);
 	return (first_pipeline);
 }

@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/04 10:32:07 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 18:32:44 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 13:45:10 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static bool	remove_quotes(char *new_del)
 			if (new_del[j] == '\0')
 				return (false);
 			ft_memmove(new_del + i, new_del + i + 1, ft_strlen(new_del + i));
-			ft_memmove(new_del + j - 1, new_del + j, ft_strlen(new_del + j - 1));
+			ft_memmove(new_del + j - 1, new_del + j, \
+						ft_strlen(new_del + j - 1));
 			i = j - 1;
 		}
 		else

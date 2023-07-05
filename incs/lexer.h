@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/24 09:21:09 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 10:07:41 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 13:46:26 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LEXER_H
 
 # include "parsing_structs.h"
-# include <stdio.h>
 
 typedef bool	(*t_is_order_valid)(t_token *, int *);
 

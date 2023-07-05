@@ -6,12 +6,10 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 08:22:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 18:39:30 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 13:27:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "parsing_structs.h"
 #include "minishell.h"
 
 static int	count_words(t_token *temp, t_token *head)

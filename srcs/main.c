@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 19:09:11 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 08:27:29 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	setup_signal_handlers_and_terminal_interactive();
+	start_env = ft_arrdup(envp);
 	if (!start_env)
 		err_msg(NULL, "init");
 	gen.env = env_init(start_env);
