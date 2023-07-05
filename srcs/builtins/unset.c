@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/04 19:18:19 by bruno         #+#    #+#                 */
-/*   Updated: 2023/06/23 13:47:04 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 15:33:53 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,7 @@ static char	**copy_env2(char **env, char *target, int size)
 	while (env[i])
 	{
 		if (!ft_envcmp(env[i], target))
-		{
-			free(env[i]);
-			i++;
-			if (!env[i])
-				break ;
-		}
+			free(env[i++]);
 		else
 			new_env[j++] = env[i++];
 	}

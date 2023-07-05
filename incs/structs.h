@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
@@ -7,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/20 12:01:57 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/05/26 21:19:54 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 17:33:14 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +52,10 @@ typedef struct s_redirect
 typedef struct s_subshell
 {
 	t_control_operator	open_close;
-	int					pipe_input; // this is a identifier to know if we need to get inpiut from a pipe
-	int					pipe_output; // this is a identifier to know if the output needs to go into a pipe
-	struct s_redirect	*input; // this is a pointer to a list of redirects that redirect the whole input or output of the subshell
-	struct s_redirect	*output; // this is a pointer to a list of redirects that redirect the whole input or output of the subshell
+	int					pipe_input;
+	int					pipe_output;
+	struct s_redirect	*input;
+	struct s_redirect	*output;
 }						t_subshell;
 
 typedef struct s_cmd
@@ -72,11 +71,11 @@ typedef struct s_cmd
 
 typedef struct s_pipeline
 {
-	int					error_code; // this is the error code of our current pipeline, might be unnesecary if we have it in the geeral struct
-	t_control_operator	next_control_operator; // This is the control operator after the pipeline or after the subshell
-	t_control_operator	prev_control_operator; // This is the control operator before the pipeline or before the subshell
-	t_subshell			*subshell; // This exist if we want to fork
-	t_cmd				*first_cmd; // This is NULL if there is a subshell
+	int					error_code;
+	t_control_operator	next_control_operator;
+	t_control_operator	prev_control_operator;
+	t_subshell			*subshell;
+	t_cmd				*first_cmd; 
 	struct s_pipeline	*next;
 	struct s_pipeline	*prev;
 }						t_pipeline;

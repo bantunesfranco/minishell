@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/05 08:11:39 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 13:40:08 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,10 @@ static int	set_env_vars(char *target, t_gen *gen)
 	}
 	temp = gen->env[i];
 	gen->env[i] = ft_strjoin(target, cwd);
-	if (!gen->env[i])
-		return (free(cwd), err_msg(NULL, "cd"), -1);
-	free(temp);
 	free(cwd);
-	return (0);
+	if (!gen->env[i])
+		return (err_msg(NULL, "cd"), -1);
+	return (free(temp), 0);
 }
 
 static int	go_to(char *target, t_gen *gen)
@@ -96,7 +95,7 @@ int	cd(t_gen *gen, t_cmd *cmd)
 {
 	char	*old;
 
-	// old = NULL;
+	old = NULL;
 	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
 	{
 		if (go_to("HOME=", gen) == -1)
@@ -113,8 +112,7 @@ int	cd(t_gen *gen, t_cmd *cmd)
 		if (write(cmd->output->fd, "\n", 1) == -1)
 			return (err_msg(NULL, cmd->cmd[0]), -1);
 	}
-	else
-		if (go_to(cmd->cmd[1], gen) == -1)
-			return (1);
+	else if (go_to(cmd->cmd[1], gen) == -1)
+		return (1);
 	return (0);
 }
