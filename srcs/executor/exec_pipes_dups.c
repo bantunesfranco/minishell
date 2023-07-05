@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 14:08:38 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 15:20:00 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 17:48:48 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,15 @@ int	pipe_and_fork(t_cmd *cmd, int *p)
 			return (-1);
 		}
 	}
-	else
-	{
-		p[0] = -1;
-		p[1] = -1;
-	}
 	id = fork();
 	if (id == -1)
 	{
+		if (cmd->next)
+		{
+			close(p[0]);
+			close(p[1]);
+		}
 		err_msg(NULL, "executor");
-		return (-1);
 	}
 	return (id);
 }

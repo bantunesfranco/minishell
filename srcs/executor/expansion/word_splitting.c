@@ -6,33 +6,14 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 18:44:53 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 19:05:26 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 19:01:28 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
-#include "libft.h"
-#include "parsing.h"
 
-void	free_arr(char **arr)
-{
-	int	i;
-
-	if (!arr)
-		err_msg(NULL, "expander");
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		arr[i] = NULL;
-		i++;
-	}
-	free(arr);
-	err_msg(NULL, "expander");
-}
-
-int	get_word_end(char *str, int i, t_quote_mark **head)
+static int	get_word_end(char *str, int i, t_quote_mark **head)
 {
 	while (*(str + i) != ' ' && *(str + i) != '\t' && \
 			*(str + i) != '\n' && *(str + i) != '\0')
@@ -44,7 +25,7 @@ int	get_word_end(char *str, int i, t_quote_mark **head)
 	return (i);
 }
 
-void	decrement_index_in_list(t_quote_mark *head)
+static void	decrement_index_in_list(t_quote_mark *head)
 {
 	while (head != NULL)
 	{
@@ -53,7 +34,7 @@ void	decrement_index_in_list(t_quote_mark *head)
 	}
 }
 
-int	split_str(char **split_word, char *str, t_quote_mark *head)
+static void	split_str(char **split_word, char *str, t_quote_mark *head)
 {
 	size_t	i;
 	int		j;
@@ -68,7 +49,7 @@ int	split_str(char **split_word, char *str, t_quote_mark *head)
 			word_end = get_word_end(str, i, &head);
 			*(split_word + j) = ft_substr(str, i, word_end - i);
 			if (*(split_word + j) == NULL)
-				return (0);
+				err_msg(NULL, "expander");
 			j++;
 			i = word_end - 1;
 		}
@@ -76,10 +57,9 @@ int	split_str(char **split_word, char *str, t_quote_mark *head)
 			decrement_index_in_list(head);
 		i++;
 	}
-	return (1);
 }
 
-int	count_words(char *str, t_quote_mark *head)
+static int	count_words(char *str, t_quote_mark *head)
 {
 	size_t	i;
 	int		word_count;
@@ -113,12 +93,9 @@ char	**word_splitting(char *str, t_quote_mark *head)
 	if (!str)
 		return (NULL);
 	word_count = count_words(str, head);
-	// if (word_count == 0)
-	// 	return (NULL);
 	split_word = ft_calloc(sizeof(char *), word_count + 1);
 	if (!split_word)
 		err_msg(NULL, "expander");
-	if (split_str(split_word, str, head) == 0)
-		free_arr(split_word);
+	split_str(split_word, str, head);
 	return (split_word);
 }

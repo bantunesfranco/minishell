@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 07:04:39 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 15:43:26 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 19:04:24 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	expand_redirect(char **name, t_gen *gen)
 	save = ft_strdup(*name);
 	if (save == NULL)
 		err_msg(NULL, "expander");
-	word = expand_environment_vars(*name, gen, 0, &head);
+	word = expand_env(*name, gen, 0, &head);
 	split_word = word_splitting(word, head);
 	free(word);
 	if (ft_arrlen(split_word) != 1)
@@ -50,16 +50,3 @@ bool	expand_redirect(char **name, t_gen *gen)
 	free_quote_list(head);
 	return (true);
 }
-
-// void	expand_heredoc(char *str, char *delim)
-// {
-// 	if (ft_strchr(delim, '\'') || ftsrcg(delim, '"'))
-// 		return (str);
-// 	str = expand(str heredoc 1);
-// 	return (str);
-// }
-
-// void	expand_delim(char *delim)
-// {
-// 	delim = quote_remove_delim( loop till quotes, memmove then loop till next same quote and memmove adn go on looping)
-// }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   exec_pipeline.c                                    :+:    :+:            */
+/*   exec_simple_pipeline.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 18:52:41 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 18:21:31 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	cmd_loop(t_gen *gen, t_cmd *cmd, int *p)
 	return (id);
 }
 
-void	executor(t_gen *gen, t_pipeline *pipeline)
+void	exec_simple_pipeline(t_gen *gen, t_pipeline *pipeline)
 {
 	t_cmd	*cmd;
 	int		p[2];
@@ -107,7 +107,10 @@ void	executor(t_gen *gen, t_pipeline *pipeline)
 		return ;
 	id = cmd_loop(gen, cmd, p);
 	if (id == -1)
+	{
+		gen->status = 1;
 		return ;
+	}
 	waitpid(id, &gen->status, 0);
 	if (WIFEXITED(gen->status))
 		gen->status = WEXITSTATUS(gen->status);

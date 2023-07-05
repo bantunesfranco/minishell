@@ -6,14 +6,14 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/21 13:47:34 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/06/21 13:51:06 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 18:19:04 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "minishell.h"
 
-void	check_if_builtin(t_cmd *current_cmd)
+static void	check_if_builtin(t_cmd *current_cmd)
 {
 	if (current_cmd->cmd == NULL)
 		return ;

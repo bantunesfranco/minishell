@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 16:42:33 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 19:09:46 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 18:20:11 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ t_pipeline	*goto_close_operator(t_pipeline *tmp)
 
 t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
 {
-	if (tmp->prev_control_operator == CLOSE || tmp->prev_control_operator == OPEN)
+	if (tmp->prev_control_operator == CLOSE \
+		|| tmp->prev_control_operator == OPEN)
 		return (tmp);
 	while (tmp)
 	{
