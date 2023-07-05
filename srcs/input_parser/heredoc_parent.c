@@ -6,13 +6,14 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/08 13:58:04 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 18:32:31 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 08:20:54 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "minishell.h"
 #include <signal.h>
+#include <sys/wait.h>
 
 static char	*read_from_pipe(int p)
 {

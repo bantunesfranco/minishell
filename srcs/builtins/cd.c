@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/02 10:07:39 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 08:11:39 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	cd(t_gen *gen, t_cmd *cmd)
 {
 	char	*old;
 
-	old = NULL;
+	// old = NULL;
 	if (!cmd->cmd[1] || !ft_strncmp(cmd->cmd[1], "--", 3))
 	{
 		if (go_to("HOME=", gen) == -1)
