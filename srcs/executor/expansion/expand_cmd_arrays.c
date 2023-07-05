@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/19 15:26:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/05 19:02:14 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/05 21:31:19 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	insert_into_array(char **split_word, char ***cmd_array, size_t i)
 		*(new_cmd_array + j) = *(*cmd_array + j);
 		j++;
 	}
-	j = j + copy_array(new_cmd_array + j, split_word);
+	j = j + copy_array(new_cmd_array + j, split_word); 
 	j = j + copy_array(new_cmd_array + j, *cmd_array + i + 1);
 	free(*cmd_array);
 	*cmd_array = new_cmd_array;
