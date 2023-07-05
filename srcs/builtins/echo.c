@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 14:34:50 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/06/23 09:01:18 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/05 14:07:04 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,14 @@ static int	write_content(char *content, int fd, int opt)
 {
 	if (!content || ft_strlen(content) == 0)
 	{
-		if (opt)
-			return (0);
-		if (write(fd, "\n", 1) == -1)
+		if (!opt && write(fd, "\n", 1) == -1)
 			return (-1);
 	}
 	else
 	{
 		if (write(fd, content, ft_strlen(content)) == -1)
 			return (-1);
-		if (opt)
-			return (0);
-		if (write(fd, "\n", 1) == -1)
+		if (!opt && write(fd, "\n", 1) == -1)
 			return (-1);
 	}
 	return (0);
@@ -79,10 +75,9 @@ static char	*join_message(char **args, int len)
 		size = ft_strlen(args[i]);
 		ft_memmove(&str[j], args[i], size);
 		j += size;
+		str[j] = ' ';
 		if (j == len - 1)
 			str[j] = '\0';
-		else
-			str[j] = ' ';
 		j++;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/03 09:27:34 by bruno         #+#    #+#                 */
-/*   Updated: 2023/05/18 19:57:39 by codespace     ########   odam.nl         */
+/*   Updated: 2023/07/05 13:30:59 by bfranco       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd	cmd2;
 	t_gen	gen;
 
-	// atexit(lks);
 	(void)argc;
 	cmd.cmd = ft_split(argv[1], ' ');
 	cmd2.cmd = ft_split(argv[2], ' ');
