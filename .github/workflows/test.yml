@@ -23,7 +23,7 @@ jobs:
         run: bash tester gen all
 
       - name: test syntax
-        run: bash tester unit sy
+        run: bash tester.sh unit sy
 
       - name: test lexer
-        run: bash tester unit le
+        run: bash tester.sh unit le
