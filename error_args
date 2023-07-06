@@ -1,45 +1,5 @@
 different errors for argument: 
-exit 1 | echo huh
-
-mini
- You have access to multiple processes named minishell:
-    a) 61849 ./minishell
-    b) 61850 ./minishell
-
-leaks[61852]: leaks cannot find any existing process you have access to which has a name like 'minishell'; try running with `sudo`.
-bash
-
-
-
-different errors for argument: 
 cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) && echo lol
-
-mini
- cate: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-wce: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-bash
-cate: command not found
-cate: command not found
-cate: command not found
-wce: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-cate: command not found
-
-
-different errors for argument: 
-cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) || echo lol
 
 mini
  cate: command not found
@@ -90,59 +50,6 @@ cate: command not found
 cate: command not found
 cate: command not found
 cate: command not found
-
-
-different errors for argument: 
-echo hi | (exit)
-
-mini
- You have access to multiple processes named minishell:
-    a) 66358 ./minishell
-    b) 66360 ./minishell
-
-leaks[66361]: leaks cannot find any existing process you have access to which has a name like 'minishell'; try running with `sudo`.
-bash
-
-
-
-different errors for argument: 
-(exit)
-
-mini
- You have access to multiple processes named minishell:
-    a) 66376 ./minishell
-    b) 66377 ./minishell
-
-leaks[66378]: leaks cannot find any existing process you have access to which has a name like 'minishell'; try running with `sudo`.
-bash
-
-
-
-different errors for argument: 
-echo hi && (exit)
-
-mini
- You have access to multiple processes named minishell:
-    a) 66392 ./minishell
-    b) 66393 ./minishell
-
-leaks[66394]: leaks cannot find any existing process you have access to which has a name like 'minishell'; try running with `sudo`.
-bash
-
-
-
-different errors for argument: 
-echo hi && (exit asd 100)
-
-mini
- exit: asd: numeric argument required
-have access to multiple processes named minishell:
-   a) 66408 ./minishell
-   b) 66409 ./minishell
-
-leaks cannot find any existing process you have access to which has a name like 'minishell'; try running with `sudo`.
-bash
-exit: asd: numeric argument required
 
 
 different errors for argument: 

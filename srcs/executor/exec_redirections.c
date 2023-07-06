@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/26 09:35:10 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/05 18:19:13 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/06 15:18:15 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,13 @@ int	handle_input_redirection(t_redirect *input, t_gen *gen)
 	while (head)
 	{
 		if (head->type == INPUT)
+		{
 			head->fd = handle_input_redir(head, gen);
+			if (head->fd == -1)
+				return (-1);
+		}
 		else if (head->type == HEREDOC && !head->next)
 			head->fd = handle_heredoc_redir(head, gen);
-		if (head->fd == -1)
-			return (-1);
 		if (!head->next)
 			break ;
 		close(head->fd);
