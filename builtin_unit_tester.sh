@@ -7,7 +7,7 @@ CYAN='\033[1;36m'
 RESET='\033[0m'
 
 INCLUDES="-I incs -I libft/incs"
-TESTER_DIR="tests/builtins"
+TESTER_DIR="testing_files/builtins"
 
 CFLAGS="-Wall -Werror -Wextra"
 CFLAGSD="-Wall -Werror -Wextra -g -fsanitize=address"

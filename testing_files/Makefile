@@ -40,10 +40,10 @@ endif
 # compilation files for all the various tests
 
 COM_LEXER = ../obj/input_parser/lexer/* ../obj/input_parser/list_functions/token_list_functions.o ../obj/utils.o \
-c_files/lexer_tester.c ../obj/test_utils.o ../obj/error.o ../obj/input_parser/input_parser_utils.o
+c_files/lexer_tester.c ../obj/error.o ../obj/input_parser/input_parser_utils.o
 
 COM_SYNTAX = ../obj/input_parser/lexer/* ../obj/input_parser/list_functions/token_list_functions.o \
-c_files/syntax_tester.c ../obj/test_utils.o ../obj/error.o ../obj/input_parser/input_parser_utils.o ../obj/utils.o
+c_files/syntax_tester.c ../obj/error.o ../obj/input_parser/input_parser_utils.o ../obj/utils.o
 
 lexer_test: comfiles
 	@$(CC) $(CFLAGS) $(INCLUDES) $(RL_FLAGS) -o $@ $(LIBFT) $(COM_LEXER)

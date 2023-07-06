@@ -22,5 +22,8 @@ jobs:
       - name: test gen
         run: bash tester gen all
 
-      - name: test sytax
+      - name: test syntax
         run: bash tester unit sy
+
+      - name: test lexer
+        run: bash tester unit le

@@ -41,13 +41,13 @@ echo lol | (echo hih  && echo lol && echo powder || (cat | (wc) ) ) | (echo huh)
 
 echo lol | (echo hih  && echo lol && echo powder || (cat | (wc) ) ) | (echo huh) && cat hi
 
-cate || (cate || ( cate || (cate || (cate || (cate | (cate ) ) ) ) ) ) && echo lol
+# cate || (cate || ( cate || (cate || (cate || (cate | (cate ) ) ) ) ) ) && echo lol
 
-cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) && echo lol
+# cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) && echo lol
 
-cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) || echo lol
+# cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) | echo lol) && echo huh || echo lol) || echo lol
 
-cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) || echo lol) && echo huh || echo lol) && echo lol
+# cate || (cate || ( cate || (cate || (cate || (cate | (cate ) && cate) || cate) || cate) | (wce ) || echo lol) && echo huh || echo lol) && echo lol
 
 cat Makefile | (head -n 5 && wc)
 
@@ -83,7 +83,7 @@ export hi=asd && (env | grep hi || export hi=not && env | grep hi) && env | grep
 
 (echoa || echoa) | cat
 
-(echoa || echoa) | cate
+# (echoa || echoa) | cate
 
 ( echo hi | (echoa) )
 
