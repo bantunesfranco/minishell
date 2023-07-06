@@ -20,7 +20,7 @@ jobs:
           submodules: 'true'
 
       - name: test gen
-        run: bash tester gen all
+        run: bash tester.sh gen all
 
       - name: test syntax
         run: bash tester.sh unit sy
