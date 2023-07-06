@@ -6,13 +6,28 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 16:42:33 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/05 18:20:11 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/06 10:10:06 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+#include <dirent.h>
 #include "executor.h"
+
+void	is_dir(char *cmd)
+{
+	DIR	*dir;
+
+	dir = opendir(cmd);
+	if (dir == NULL)
+		return ;
+	write(2, "minishell: ", 11);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": is a directory\n", 18);
+	closedir(dir);
+	_exit(126);
+}
 
 t_pipeline	*goto_close_operator(t_pipeline *tmp)
 {

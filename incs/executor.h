@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/22 12:31:23 by codespace     #+#    #+#                 */
-/*   Updated: 2023/07/05 18:12:40 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/06 10:10:36 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int			exec_subsh_pipeline(t_gen *gen, t_pipeline **pipeline, \
 int			handle_heredoc_redir(t_redirect *heredoc_node, t_gen *gen);
 t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp);
 t_pipeline	*goto_close_operator(t_pipeline *tmp);
+void		is_dir(char *cmd);
 
 #endif

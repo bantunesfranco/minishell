@@ -30,21 +30,21 @@ test_output(){
 	# echo bash
 	# echo "$LEAKS"
 	# cat $2
-	# LEAKS=$(cat $1 | grep " 0 leaks")
-	# if [[ $LEAKS == "" ]]
-	# then
-	# 	((KO++))
-	# 	echo -e "different outputs for argument: \n$TEST\nmini\n`cat $1`\nbash\n`cat $2`\n\n" >> error_args
-	# else
-	# 	((OK++))
-	# fi
-	if ! diff -q $1 $2 >/dev/null
+	LEAKS=$(cat $1 | grep " 0 leaks")
+	if [[ $LEAKS == "" ]]
 	then
 		((KO++))
 		echo -e "different outputs for argument: \n$TEST\nmini\n`cat $1`\nbash\n`cat $2`\n\n" >> error_args
 	else
 		((OK++))
 	fi
+	# if ! diff -q $1 $2 >/dev/null
+	# then
+	# 	((KO++))
+	# 	echo -e "different outputs for argument: \n$TEST\nmini\n`cat $1`\nbash\n`cat $2`\n\n" >> error_args
+	# else
+	# 	((OK++))
+	# fi
 }
 
 test_err(){
@@ -280,6 +280,7 @@ run_all(){
 	test_other
 	test_subshells
 	# cat error_args
+	rm -rf hi
 	if [[ $TEST_FAILED == "1" ]]
 	then
 		exit $((TEST_FAILED))
@@ -293,6 +294,8 @@ read_input(){
 }
 
 main(){
+	touch hi
+	echo hello > hi
 	rm -rf error_args
 	if [[ $1 == "all" ]]
 	then
@@ -352,4 +355,5 @@ main(){
 foo=$(make -C .)
 
 main $1	
+rm -rf hi
 

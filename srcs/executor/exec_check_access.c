@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 18:51:43 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/06 10:13:37 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,13 @@
 #include <dirent.h>
 #include <sys/wait.h>
 
-void	is_dir(char *cmd)
+static char	*ft_strjoin_free_first(char *str1, char *str2)
 {
-	DIR	*dir;
+	char	*new;
 
-	dir = opendir(cmd);
-	if (dir == NULL)
-		return ;
-	write(2, "minishell: ", 11);
-	write(2, cmd, ft_strlen(cmd));
-	write(2, ": is a directory\n", 18);
-	closedir(dir);
-	_exit(126);
+	new = ft_strjoin(str1, str2);
+	free(str1);
+	return (new);
 }
 
 static int	check_rel_path(t_cmd *cmd, int p)
@@ -41,12 +36,10 @@ static int	check_rel_path(t_cmd *cmd, int p)
 		return (err_msg(NULL, "check path"), 1);
 	else if (!cmd->path)
 		return (1);
-	tmp = ft_strjoin(cmd->path, "/");
-	free(cmd->path);
+	tmp = ft_strjoin_free_first(cmd->path, "/");
 	if (!tmp)
 		return (err_msg(NULL, "check path"), 1);
-	cmd->path = ft_strjoin(tmp, cmd->cmd[0]);
-	free(tmp);
+	cmd->path = ft_strjoin_free_first(tmp, cmd->cmd[0]);
 	if (!cmd->path)
 		return (err_msg(NULL, "check path"), 1);
 	if (access(cmd->path, F_OK) || access(cmd->path, X_OK))

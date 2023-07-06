@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 11:49:36 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/04 19:04:00 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/06 09:49:49 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,26 +129,10 @@ int	expand_wildcards(char ***cmd_array, char *str, int i)
 	if (!path_arr)
 		child_err_msg(NULL, "wildcard expansion");
 	if (*path_arr == NULL)
-	// {
 		return (free(path_arr), i + 1);
-	// }
 	insert_into_array(path_arr, cmd_array, i);
 	i = i + ft_arrlen(path_arr);
 	free(path_arr);
 	free(str);
 	return (i);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	char			*str = ft_strdup(argv[1]);
-// 	char			**arr = ft_arrdup(argv);
-
-// 	(void)argc;
-// 	expand_dir(&arr, str, 1);
-// 	printf("\n");
-// 	for (size_t i = 0; arr[i]; i++)
-// 		printf("%s\n", arr[i]);
-// 	ft_free_arr(arr);
-// 	exit(0);
-// }

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/16 15:21:06 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/05 13:22:37 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/06 10:07:42 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_token	*word_state(t_token *temp, t_pipeline *cur_pipe, t_token **head)
 
 t_token	*call_state(t_token *temp, t_pipeline *first_pipeline, t_token **head)
 {
-	t_current_state_function	next_state[5];
-	t_pipeline					*cur_pipe;
+	t_curr_st_function	next_state[5];
+	t_pipeline			*cur_pipe;
 
 	next_state[0] = ctrl_op_st;
 	next_state[1] = par_st;

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/05 13:53:00 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/06 10:20:48 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,13 @@ void	leaks(void)
 	system("leaks -q minishell");
 }
 
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_gen	gen;
 	char	**start_env;
 
-	// atexit(leaks);
+	atexit(leaks);
 	(void)argv;
 	if (argc != 1)
 	{
