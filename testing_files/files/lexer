@@ -1,0 +1,98 @@
+cat hi | echo hello
+cat hi | echo hello
+
+cat hi
+cat hi
+
+cat hi | echo hello
+cat hi | echo hello
+
+cat
+cat
+
+cat hi > hello
+cat hi > hello
+
+cat hi < hello
+cat hi < hello
+
+cat hi << hello
+cat hi << hello
+
+cat hi >> hello
+cat hi >> hello
+
+cat hi | (echo hello)
+cat hi | ( echo hello )
+
+cat hi | ((((((((((echo hello))))))))))
+cat hi | ( ( ( ( ( ( ( ( ( ( echo hello ) ) ) ) ) ) ) ) ) )
+
+cat hi && echo hello
+cat hi && echo hello
+
+cat hi || echo hello
+cat hi || echo hello
+
+cat hi | (echo > hi && ((wc << here < hi > hello) || echo hi >> cat >> re >> re) | wc) && cat << lol > pols | (((((cat)))))
+cat hi | ( echo > hi && ( ( wc << here < hi > hello ) || echo hi >> cat >> re >> re ) | wc ) && cat << lol > pols | ( ( ( ( ( cat ) ) ) ) )
+
+cat hi>lol
+cat hi > lol
+
+cat hi>>lol
+cat hi >> lol
+
+cat hi<lol
+cat hi < lol
+
+cat hi<<lol
+cat hi << lol
+
+<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol<<lol
+<< lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol << lol
+
+cat                           hi
+cat hi
+
+cat									hi | 		yolo
+cat hi | yolo
+
+cat hi|echo
+cat hi | echo
+
+cat hi||echo
+cat hi || echo
+
+cat hi&&echo
+cat hi && echo
+
+cat hi&echo
+cat hi&echo
+
+cat hi>echo
+cat hi > echo
+
+cat hi>>echo
+cat hi >> echo
+
+cat hi<echo
+cat hi < echo
+
+cat hi<<echo
+cat hi << echo
+
+cat hi|(echo)
+cat hi | ( echo )
+
+cat hi"asd" | echo 'asd'ss"ssd''"
+cat hi"asd" | echo 'asd'ss"ssd''"
+
+cat """"""""""""""""""""hi""""
+cat """"""""""""""""""""hi""""
+
+<<h"lol''''''"
+<< h"lol''''''"
+
+<<h
+<< h

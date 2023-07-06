@@ -1,0 +1,147 @@
+export lo-=asd
+unset lo
+env | grep lo
+echo $lo
+
+export asd="lolol aaaa po"
+unset asd
+env | grep asd
+echo $asd
+
+export yyyyyy="'"
+unset yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy="123124--++'''' ''][[[\]]]"
+unset yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy="123124--++''''+= ''][[[\]]]"
+unset yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy="123124--++''''+=+= ''][[[\]]]"
+unset yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy=""
+unset yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy
+unset yyyyyy
+env | grep yyyyyy
+
+export yyyyyy=asdasd yyyyy="pore" yyyy=uuuuu"tre "'asd'
+unset yyyyyy
+env | grep yyyy
+echo $yyyyyy $yyyyy $yyyy
+
+export yyyyyy=
+unset yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy=123
+unset yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export ___yyyyyy=123
+unset ___yyyyyy
+env | grep yyyyyy
+echo $yyyyyy
+
+export TES=T=""
+unset $TES
+env | grep TES
+echo $TES
+
+export TES$?T=123
+unset 
+env | grep TES
+
+export HELLO42=T=""
+unset HELLO42
+echo $HELLO42
+env | grep HELLO42
+env | grep HELLO42=T=
+
+export yyyy=asd
+env | grep yyyy
+echo $yyyy
+export yyyy+=asd
+env | grep yyyy
+echo $yyyy
+export yyyy+=asd
+export yyyy+=asd
+export yyyy+=asd
+export yyyy+=asd
+export yyyy+=asd
+unset yyyy
+env | grep yyyy
+echo $yyyy
+
+export yyyy=asd yyyy+=asd yyyy+=asd yyyy+=asd
+unset yyyy
+env | grep yyyy
+echo $yyyy
+
+export yyyy=asd aaaa+=asd bbbb+=asd bbbb+=asd
+unset yyyy aaaa bbbb
+env | grep yyyy
+env | grep aaaa
+env | grep bbbb
+echo $yyyy
+echo $aaaa
+echo $bbbb
+
+export yyyy=asd aaaa+="asd" bbbb+='asd' bbbb+='asd'
+unset yyyy aaaa bbbb
+env | grep yyyy
+env | grep aaaa
+env | grep bbbb
+echo $yyyy
+echo $aaaa
+echo $bbbb
+
+export bbbb="" bbbb+="$HOME" bbbb+='$HOME' bbbb+=$HOME
+unset bbbb
+env | grep bbbb
+echo $bbbb
+
+export bbbb="" bbbb+="$HOME"$USER bbbb+=banana$? bbbb+=$HOME
+unset bbbb
+env | grep bbbb
+echo $bbbb
+
+unset
+
+unset ""
+
+unset ''
+
+unset "'"
+
+unset $
+
+unset TE*ST
+
+unset TES#T
+
+unset TES@T
+
+unset TES!T
+
+unset ============
+
+echo $HOME
+unset HOME
+echo $HOME
+
+unset ________

@@ -1,0 +1,163 @@
+export lo-=asd
+env | grep lo
+echo $lo
+
+export as--=asd we-=po
+
+export asd="lolol aaaa po"
+env | grep asd
+echo $asd
+
+export yyyyyy="'"
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy="123124--++'''' ''][[[\]]]"
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy="123124--++''''+= ''][[[\]]]"
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy="123124--++''''+=+= ''][[[\]]]"
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy=""
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy
+env | grep yyyyyy
+
+export yyyyyy=asdasd yyyyy="pore" yyyy=uuuuu"tre "'asd'
+env | grep yyyy
+echo $yyyyyy $yyyyy $yyyy
+
+export =asd
+
+export =asd
+env | grep asd
+
+export 12@=asd
+
+export 12@=asd
+env | grep 12@
+echo 12@
+
+export ''=''
+
+export ''=''
+
+export export
+env | grep export
+
+export yyyyyy=
+env | grep yyyyyy
+echo $yyyyyy
+
+export yyyyyy=123
+env | grep yyyyyy
+echo $yyyyyy
+
+export ___yyyyyy=123
+env | grep yyyyyy
+echo $yyyyyy
+
+# export --TEST=123
+
+export ''=''
+
+export "="="="
+
+export '='='='
+
+export TES=T=""
+
+export TE+S=T=""
+
+export TES.T=123
+
+export TES.T=123
+
+export TES+T=123
+
+export TES=T=123
+
+export TES}T=123
+
+export TES{T=123
+
+export TES-T=123
+
+export _TEST=123
+
+export TES_T=123
+
+export TEST_=123
+
+export TE*ST=123
+
+export TES#T=123
+
+export TES@T=123
+
+export TES!T=123
+
+export TES$?T=123
+env | grep TES
+
+export +=asd
+
+echo $?
+export ?=hallo
+echo $?
+
+export HELLO42=T=""
+echo $HELLO42
+env | grep HELLO42
+env | grep HELLO42=T=
+
+export yyyy=asd
+env | grep yyyy
+echo $yyyy
+export yyyy+=asd
+env | grep yyyy
+echo $yyyy
+export yyyy+=asd
+export yyyy+=asd
+export yyyy+=asd
+export yyyy+=asd
+export yyyy+=asd
+env | grep yyyy
+echo $yyyy
+
+export yyyy=asd yyyy+=asd yyyy+=asd yyyy+=asd
+env | grep yyyy
+echo $yyyy
+
+export yyyy=asd aaaa+=asd bbbb+=asd bbbb+=asd
+env | grep yyyy
+echo $yyyy
+echo $aaaa
+echo $bbbb
+
+export yyyy=asd aaaa+="asd" bbbb+='asd' bbbb+='asd'
+env | grep yyyy
+echo $yyyy
+echo $aaaa
+echo $bbbb
+
+export bbbb="" bbbb+="$HOME" bbbb+='$HOME' bbbb+=$HOME
+env | grep yyyy
+echo $bbbb
+
+export bbbb="" bbbb+="$HOME"$USER bbbb+=banana$? bbbb+=$HOME
+env | grep yyyy
+echo $bbbb
+
+export yyyyyyyyy=asd yyy-=adsasdasd yyyyy=asd
+env | grep yyy
+
+export asad-=qweqw awea-=asdasd as@asd=asdasd aw#p=asdasd _=asdasd wae%=asdasd

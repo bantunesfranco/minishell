@@ -1,0 +1,181 @@
+bro.sh
+
+./bro.sh
+
+ls
+
+./ls
+
+/bin/ls
+
+/bin/bro.sh
+
+unset PATH
+ls
+
+unset PATH
+/bin/ls
+ls
+
+unset PATH
+echo hi
+
+unset PATH
+export lol=asd
+
+unset PATH
+export lol=asd
+unset lol
+
+unset PATH
+export lol=asd
+unset lol
+echo $lol
+
+unset PATH
+export lol=asd
+echo $lol
+
+unset PATH
+pwd
+cd ..
+pwd
+
+unset PATH
+cd -
+pwd
+
+unset PATH
+exit
+
+unset PATH
+cat bro.sh
+
+ls
+unset PATH
+ls
+
+cat bro.sh
+unset PATH
+cat bro.sh
+
+bro.sh
+unset PATH
+bro.sh
+
+./bro.sh
+unset PATH
+./bro.sh
+
+
+"echo "
+
+"echo -nnnnn"
+
+echo '''''-''n'
+
+>> "$H"OM"E"
+cat OME
+rm OME
+
+>> "$USER'$USER'"
+cat "$USER'$USER'"
+rm -f "$USER'$USER'"
+
+cd /Users/$USER/Desktop/
+pwd
+
+export T=ech
+echo $T"o -n"
+
+echo "-nnnnn "
+
+export T=nnnnnnnn
+echo "-""$T"nnnnnnnnnnnnn -nnnnnnnn"$T" '-''$T'
+
+export T=nnnnnnnn
+echo "-"'$T'nnnnnnnnnnnnn -nnnnnnnn'$T' '-'"$T "
+
+export T=nnnnnnnn
+echo "-"'$T'nnnnnnnnnnnnn -nnnnnnnn$T '-''$T '
+
+export T=e E=c S=h L=o
+$T$E$S$L
+
+export T=e E=c S=h L=o
+$T$E"c"$L -nn
+
+export T=e E=c S=h L=o
+$T$E"C"$L -nn
+
+export T="|"
+echo segfault $T grep segfault
+
+export T='|'
+echo segfault $T grep segfault
+
+export T=">"
+echo segfault $T grep segfault
+
+export T='<'
+echo segfault $T grep segfault
+
+export T="<<"
+echo segfault $T grep segfault
+
+export T='<<'
+echo segfault $T grep segfault
+
+export T="|"
+$T$T$T$T$T$T$T
+
+export T="echo segfault | grep segfault"
+$T
+
+"e"'x''p''o''r''t' L=T
+echo $T
+
+export T='|'
+echo $T echo lala $T echo $T echo ?
+
+export T="<<"
+$T.
+
+" ls"
+
+" cat"
+
+" echo"
+
+p""''''w''''''""""""''''''''''''''''''''''''''''''''d
+
+exit 9223372036854775805
+
+exit 123"123"
+
+touch ""
+
+touch "  "
+rm -f "  "
+
+expr $? + $?
+
+expr 21 + 21
+
+awk 'BEGIN{for(i=1;i<=10;i++){for(j=1;j<=10;j++){printf("%4d ",i*j)} printf("\n")}}' /dev/null | tail -n 10
+
+awk 'BEGIN{for(i=1;i<=1000000;i++)print int(rand()*1000)}' | awk '{sum+=$1} END {print sum/NR}'
+
+""
+
+"   "
+
+"    "
+
+"		"
+
+"			"
+
+sleep 0 | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
+
+echo Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet orci nec quam lobortis scelerisque. Morbi scelerisque leo molestie justo semper condimentum. Proin hendrerit ut nulla in mattis. Curabitur velit turpis, congue ut aliquam id, condimentum at dolor. Quisque ultricies neque in tellus pretium, vitae porta ipsum vestibulum. Vivamus cursus volutpat diam, at interdum erat fringilla ac. In nisl quam, ultrices vitae cursus ut, aliquam sed lacus. Suspendisse ac turpis fermentum, pulvinar risus quis, molestie elit. Mauris faucibus eget est vitae efficitur. Mauris feugiat enim in posuere auctor. Morbi lorem lorem, pellentesque et viverra vitae, ullamcorper a mauris. Cras blandit pulvinar accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean id hendrerit elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet orci nec quam lobortis scelerisque. Morbi scelerisque leo molestie justo semper condimentum. Proin hendrerit ut nulla in mattis. Curabitur velit turpis, congue ut aliquam id, condimentum at dolor. Quisque ultricies neque in tellus pretium, vitae porta ipsum vestibulum. Vivamus cursus volutpat diam, at interdum erat fringilla ac. In nisl quam, ultrices vitae cursus ut, aliquam sed lacus. Suspendisse ac turpis fermentum, pulvinar risus quis, molestie elit. Mauris faucibus eget est vitae efficitur. Mauris feugiat enim in posuere auctor. Morbi lorem lorem, pellentesque et viverra vitae, ullamcorper a mauris. Cras blandit pulvinar accumsan. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean id hendrerit elit.

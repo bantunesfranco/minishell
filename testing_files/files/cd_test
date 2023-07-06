@@ -1,0 +1,150 @@
+pwd
+cd
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd incs
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd .
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd
+pwd
+cd -
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd incs
+cd ..
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd ..
+pwd
+echo $PWD
+echo $OLDPWD
+
+echo $PWD
+echo $OLDPWD
+pwd
+cd
+echo $PWD
+echo $OLDPWD
+pwd
+
+cd asdsadasd
+pwd
+
+pwd
+cd /////
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd "."
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd $HOME
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd '$HOME'
+pwd
+
+cd ..
+cd $OLDPWD
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd $PWD
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd '$PWD'
+pwd
+
+cd asdasdasdas
+
+cd ..
+cd $OLDPWD
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd "."
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd /Users
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd ./././
+pwd
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd '/////'
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd ../../..
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd ?
+pwd
+
+pwd
+cd +
+pwd
+
+pwd
+cd _
+pwd
+
+cd ../../
+cd -
+cd -
+echo $PWD
+echo $OLDPWD
+
+pwd
+cd echo
+pwd
+
+pwd
+cd $OLDPWD/something
+pwd
+
+pwd
+cd incs/ djhwbdhwbd wgdyuhgw jdwjdh wuiydjwh 
+pwd
+echo $PWD
+echo $OLDPWD
