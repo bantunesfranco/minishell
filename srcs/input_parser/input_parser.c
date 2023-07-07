@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/18 16:23:43 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/05 13:48:24 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/07 13:56:11 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	line_is_only_whitespace(char *line)
 	i = 0;
 	while (*(line + i) != '\0')
 	{
-		if (*(line + i) != ' ' || (*(line + i) >= '\t' && *(line + i) <= '\r'))
+		if (!ft_isspace(*(line + i)))
 			return (false);
 		i++;
 	}
