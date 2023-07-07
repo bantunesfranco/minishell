@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/30 12:01:01 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/06 17:57:18 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/07/07 16:54:59 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*read_tty(t_gen *gen)
 {
 	char	*line;
 
-	line = readline("\033[1;35mminishell$ \033[0m");
+	line = readline("minishell$ ");
 	if (line == NULL && errno == ENOMEM)
 		err_msg(NULL, "read_input");
 	else if (line == NULL && errno == 0)

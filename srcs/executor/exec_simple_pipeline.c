@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/05 18:21:31 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/07 17:02:27 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,18 @@ int	cmd_loop(t_gen *gen, t_cmd *cmd, int *p)
 	return (id);
 }
 
+int	handle_signal(int status)
+{
+	int	signal;
+
+	signal = WTERMSIG(status);
+	if (signal == 2)
+		write(1, "\n", 1);
+	else if (signal == 3)
+		write(0, "Quit: 3\n", 8);
+	return (128 + signal);
+}
+
 void	exec_simple_pipeline(t_gen *gen, t_pipeline *pipeline)
 {
 	t_cmd	*cmd;
@@ -115,7 +127,7 @@ void	exec_simple_pipeline(t_gen *gen, t_pipeline *pipeline)
 	if (WIFEXITED(gen->status))
 		gen->status = WEXITSTATUS(gen->status);
 	else if (WIFSIGNALED(gen->status))
-		gen->status = 128 + WTERMSIG(gen->status);
+		gen->status = handle_signal(gen->status);
 	while (1)
 		if (wait(NULL) == -1)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/20 19:00:05 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/04 13:52:16 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/07 17:03:09 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 void	sig_quit_handler_non_interactive(int signal)
 {
 	(void)signal;
-	write(0, "Quit: 3\n", 8);
 }
 
 void	sig_int_handler_non_interactive(int signal)
 {
 	(void)signal;
-	write(1, "\n", 1);
 }
 
 void	setup_signal_handlers_and_terminal_non_interactive(void)

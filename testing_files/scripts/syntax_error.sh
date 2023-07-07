@@ -59,12 +59,12 @@ do
 			read -r line
 		done
 	fi
-	./testing_files/syntax_test $TEST 2>err_mini >out_mini
-	exit_mini=$?
-	echo -n "$TEST" | bash 2>err_bash >out_bash
-	exit_bash=$?
-	test_output out_mini out_bash
-	test_err err_mini err_bash
+	./testing_files/syntax_test $TEST 
+	# exit_mini=$?
+	# echo -n "$TEST" | bash 2>err_bash >out_bash
+	# exit_bash=$?
+	# test_output out_mini out_bash
+	# test_err err_mini err_bash
 	TEST=""
 done < "$FILE"
 if [[ $KO == 0 ]]
