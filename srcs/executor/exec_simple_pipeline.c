@@ -6,15 +6,16 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/02 07:51:09 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/07 17:02:27 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/08 11:11:42 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "executor.h"
 #include "expander.h"
+#include <termios.h>
 
-int	is_builtin(t_gen *gen, t_cmd *cmd)
+static int	is_builtin(t_gen *gen, t_cmd *cmd)
 {
 	if (!cmd)
 		return (0);
@@ -38,7 +39,7 @@ int	is_builtin(t_gen *gen, t_cmd *cmd)
 	return (0);
 }
 
-void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
+static void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
 {
 	if (cmd->next)
 		close(p[0]);
@@ -64,7 +65,7 @@ void	exec_cmd(t_gen *gen, t_cmd *cmd, int *p, int pipe_rd)
 	}
 }
 
-int	cmd_loop(t_gen *gen, t_cmd *cmd, int *p)
+static int	cmd_loop(t_gen *gen, t_cmd *cmd, int *p)
 {
 	int		id;
 	int		pipe_rd;
@@ -92,37 +93,8 @@ int	cmd_loop(t_gen *gen, t_cmd *cmd, int *p)
 	return (id);
 }
 
-int	handle_signal(int status)
+static void	wait_children(int id, t_gen *gen, struct termios *saved_terminal)
 {
-	int	signal;
-
-	signal = WTERMSIG(status);
-	if (signal == 2)
-		write(1, "\n", 1);
-	else if (signal == 3)
-		write(0, "Quit: 3\n", 8);
-	return (128 + signal);
-}
-
-void	exec_simple_pipeline(t_gen *gen, t_pipeline *pipeline)
-{
-	t_cmd	*cmd;
-	int		p[2];
-	int		id;
-
-	if (pipeline->subshell)
-		return ;
-	cmd = pipeline->first_cmd;
-	expand_pipeline(cmd, gen);
-	check_pipeline_for_builtins(cmd);
-	if (is_builtin(gen, cmd) == 1)
-		return ;
-	id = cmd_loop(gen, cmd, p);
-	if (id == -1)
-	{
-		gen->status = 1;
-		return ;
-	}
 	waitpid(id, &gen->status, 0);
 	if (WIFEXITED(gen->status))
 		gen->status = WEXITSTATUS(gen->status);
@@ -131,4 +103,34 @@ void	exec_simple_pipeline(t_gen *gen, t_pipeline *pipeline)
 	while (1)
 		if (wait(NULL) == -1)
 			break ;
+	if (isatty(STDIN_FILENO) && tcsetattr(0, 0, saved_terminal) == -1)
+		err_msg(NULL, "set echoctl");
+}
+
+void	exec_simple_pipeline(t_gen *gen, t_pipeline *pipeline)
+{
+	t_cmd			*cmd;
+	int				p[2];
+	int				id;
+	struct termios	saved_terminal;
+
+	if (pipeline->subshell)
+		return ;
+	cmd = pipeline->first_cmd;
+	expand_pipeline(cmd, gen);
+	check_pipeline_for_builtins(cmd);
+	if (is_builtin(gen, cmd) == 1)
+		return ;
+	if (isatty(STDIN_FILENO) && tcgetattr(0, &saved_terminal) == -1)
+	{
+		err_msg(NULL, "unset echoctl");
+		return ;
+	}
+	id = cmd_loop(gen, cmd, p);
+	if (id == -1)
+	{
+		gen->status = 1;
+		return ;
+	}
+	wait_children(id, gen, &saved_terminal);
 }

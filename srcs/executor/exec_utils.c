@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 16:42:33 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/06 10:10:06 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/07/08 11:02:18 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,16 @@ t_pipeline	*check_control_operators(t_gen *gen, t_pipeline *tmp)
 			break ;
 	}
 	return (tmp);
+}
+
+int	handle_signal(int status)
+{
+	int	signal;
+
+	signal = WTERMSIG(status);
+	if (signal == 2)
+		write(1, "\n", 1);
+	else if (signal == 3)
+		write(0, "Quit: 3\n", 8);
+	return (128 + signal);
 }
