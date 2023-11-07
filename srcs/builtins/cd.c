@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/19 16:53:33 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/05 13:40:08 by bfranco       ########   odam.nl         */
+/*   Updated: 2023/11/07 11:38:36 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static int	go_to(char *target, t_gen *gen)
 		return (-1);
 	if (set_env_vars("OLDPWD=", gen) == -1)
 		return (-1);
+	printf("%s\n", path);
 	if (chdir(path) == -1)
 		return (err_msg("cd", path), -1);
 	if (set_env_vars("PWD=", gen) == -1)

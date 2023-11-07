@@ -6,7 +6,7 @@
 /*   By: janmolenaar <janmolenaar@student.codam.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/11 19:41:08 by janmolenaar   #+#    #+#                 */
-/*   Updated: 2023/07/05 13:48:09 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/11/01 08:08:45 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	is_redirection_valid(t_token *temp, int *open_brackets)
 	(void)open_brackets;
 	if (temp->next->token_group == WORD)
 		return (true);
-	return (true);
+	return (false);
 }
 
 static bool	is_whitespace_valid(t_token *temp, int *open_brackets)

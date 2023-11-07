@@ -7,7 +7,7 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = minishell
-READLINE = $(shell brew --prefix readline)
+# READLINE = $(shell brew --prefix readline)
 # READLINE = /Users/jmolenaa/.brew/Cellar/readline/8.2.1/
 HEADERS  = $(shell find incs -type f -name "*.h")
 SRC_FILES = $(shell find srcs -type f -name "*.c")
@@ -15,7 +15,6 @@ OBJ_FILES = $(SRC_FILES:srcs/%.c=obj/%.o)
 OBJ_DIR = obj obj/input_parser obj/builtins obj/init obj/executor obj/input_parser/lexer obj/input_parser/parser obj/executor/expansion obj/input_parser/list_functions
 
 # readline flags
-RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include
 
 # libft variables
 LIBFT = libft/libft.a
@@ -23,7 +22,8 @@ LIBFT_DIR = libft
 
 # compilation variables
 CC = cc
-INCLUDES = -I incs -I libft/incs -I $(READLINE)/include
+# INCLUDES = -I incs -I libft/incs -I $(READLINE)/include
+INCLUDES = -I incs -I libft/incs
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 else
@@ -33,10 +33,11 @@ endif
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
 	RL_FLAGS = -lreadline -ltinfo
-	OBJ_FLAGS := $(RL_FLAGS)
+# OBJ_FLAGS := $(RL_FLAGS)
 else ifeq ($(UNAME_S), Darwin)
-	RL_FLAGS = -L $(READLINE)/lib -lreadline 
-	OBJ_FLAGS := 
+	RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include
+# RL_FLAGS = -L $(READLINE)/lib -lreadline 
+# OBJ_FLAGS := 
 else
 	$(error OS: $(OS) is not supported!)
 endif
@@ -49,11 +50,11 @@ $(NAME): $(LIBFT) $(OBJ_FILES)
 	@echo "${GREEN}Done!${END}"
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -S -C $(LIBFT_DIR)
 
 obj/%.o: srcs/%.c $(HEADERS) | $(OBJ_DIR)
 	@echo "${BLUE}Compiling $<${END}"
-	@$(CC) $(INCLUDES) $(OBJ_FLAGS) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(INCLUDES) $(CFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
