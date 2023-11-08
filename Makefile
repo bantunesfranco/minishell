@@ -7,7 +7,6 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = minishell
-# READLINE = $(shell brew --prefix readline)
 # READLINE = /Users/jmolenaa/.brew/Cellar/readline/8.2.1/
 HEADERS  = $(shell find incs -type f -name "*.h")
 SRC_FILES = $(shell find srcs -type f -name "*.c")
@@ -35,7 +34,9 @@ ifeq ($(UNAME_S), Linux)
 	RL_FLAGS = -lreadline -ltinfo
 # OBJ_FLAGS := $(RL_FLAGS)
 else ifeq ($(UNAME_S), Darwin)
-	RL_FLAGS = -L $(READLINE)/lib -lreadline -I $(READLINE)/include
+	READLINE = $(shell brew --prefix readline)
+	RL_FLAGS = -L $(READLINE)/lib -lreadline
+	INCLUDES += -I $(READLINE)/include
 # RL_FLAGS = -L $(READLINE)/lib -lreadline 
 # OBJ_FLAGS := 
 else
