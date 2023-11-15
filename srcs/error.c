@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/29 12:49:27 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/07/06 09:51:54 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/11/15 11:47:04 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	err_msg(char *msg, char *msg2)
 	if (errno == 127)
 	{
 		write(2, msg2, ft_strlen(msg2));
-		write(2, ": command not found\n", 21);
+		write(2, ": command not found\n", 20);
 	}
 	else
 	{
@@ -51,7 +51,7 @@ void	child_err_msg(char *msg, char *msg2)
 	if (errno == 127)
 	{
 		write(2, msg2, ft_strlen(msg2));
-		write(2, ": command not found\n", 21);
+		write(2, ": command not found\n", 20);
 	}
 	else
 		perror(msg2);

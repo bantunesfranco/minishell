@@ -6,7 +6,7 @@
 /*   By: bfranco <bfranco@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/05/25 12:04:23 by bfranco       #+#    #+#                 */
-/*   Updated: 2023/07/06 10:13:37 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/11/15 12:18:30 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	check_rel_path(t_cmd *cmd, int p)
 	if ((!ft_strchr(cmd->cmd[0], '/') || cmd->cmd[0][0] == '/') && p == 1)
 		return (1);
 	is_dir(cmd->cmd[0]);
-	cmd->path = getcwd(NULL, 1);
+	cmd->path = getcwd(NULL, 0);
 	if (!cmd->path && errno == ENOMEM)
 		return (err_msg(NULL, "check path"), 1);
 	else if (!cmd->path)

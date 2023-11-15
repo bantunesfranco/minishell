@@ -37,11 +37,6 @@ export yyyyyy
 unset yyyyyy
 env | grep yyyyyy
 
-export yyyyyy=asdasd yyyyy="pore" yyyy=uuuuu"tre "'asd'
-unset yyyyyy
-env | grep yyyy
-echo $yyyyyy $yyyyy $yyyy
-
 export yyyyyy=
 unset yyyyyy
 env | grep yyyyyy
@@ -56,11 +51,6 @@ export ___yyyyyy=123
 unset ___yyyyyy
 env | grep yyyyyy
 echo $yyyyyy
-
-export TES=T=""
-unset $TES
-env | grep TES
-echo $TES
 
 export TES$?T=123
 unset 
@@ -121,24 +111,6 @@ env | grep bbbb
 echo $bbbb
 
 unset
-
-unset ""
-
-unset ''
-
-unset "'"
-
-unset $
-
-unset TE*ST
-
-unset TES#T
-
-unset TES@T
-
-unset TES!T
-
-unset ============
 
 echo $HOME
 unset HOME

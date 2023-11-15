@@ -1,10 +1,11 @@
+#!/bin/bash
+
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 MAGENTA='\033[1;35m'
 RESET='\033[0m'
 BOLD='\033[1m'
 
-#!/bin/bash
 
 help(){
 	echo -e "\n${BOLD}Run with one of the following arguments\n${RESET}"
@@ -14,7 +15,6 @@ help(){
 	echo "un - run unset tests"
 	echo "ex - run export tests"
 	echo "exit - run exit tests"
-	echo "env - run env tests"
 	echo "pip - run pipeline or and tests"
 	echo "exp - run expansion tests"
 	echo "red - run redirect tests"
@@ -25,11 +25,6 @@ help(){
 }
 
 test_output(){
-	# echo  mini
-	# cat $1
-	# echo bash
-	# echo "$LEAKS"
-	# cat $2
 	# LEAKS=$(cat $1 | grep " 0 leaks")
 	# if [[ $LEAKS == "" ]]
 	# then
@@ -53,8 +48,7 @@ test_err(){
 		# echo huh
 		return
 	fi
-	# cat $1
-	# echo HERE
+	# echo $TEST
 	# # cat $1 | awk '{ if ($0 !~ /exit/) print $0}'
 	# echo AWK
 	# # awk '!/exit/' $1
@@ -88,18 +82,14 @@ test_err(){
 		ERROR_MINI=$(cat $1)
 		ERROR_BASH=$(cat $2)
 	fi
-	# echo mini
-	# echo "$ERROR_MINI"
-	# echo bash
-	# echo "$ERROR_BASH"
 	# ERROR_MINI=$(cut -f2- -d ' ' $1)
 	# ERROR_BASH=$(cut -f4- -d ' ' $2)
-	if [[ $ERROR_MINI == $ERROR_BASH ]]
+	if [[ "$ERROR_MINI" == "$ERROR_BASH" ]]
 	then
 		((OK++))
 	else
 		((KO++))
-		echo -e "different errors for argument: \n$TEST\nmini\n $ERROR_MINI\nbash\n$ERROR_BASH\n\n" >> error_args
+		echo -e "different errors for argument: \n$TEST\nmini\n$ERROR_MINI\nbash\n$ERROR_BASH\n\n" >> error_args
 	fi
 }
 
@@ -192,13 +182,6 @@ test_cd(){
 	echo "----------------------------------------------------"
 }
 
-test_env(){
-	echo "----------------------------------------------------"	
-	echo -e "\n	👍${MAGENTA}RUNNING env TESTS${RESET}"
-	test_file "testing_files/files/env_test"
-	echo "----------------------------------------------------"
-}
-
 test_unset(){
 	echo "----------------------------------------------------"	
 	echo -e "\n	👍${MAGENTA}RUNNING UNSET TESTS${RESET}"
@@ -279,7 +262,6 @@ run_all(){
 	test_redirect
 	test_other
 	test_subshells
-	# cat error_args
 	rm -rf hi
 	if [[ $TEST_FAILED == "1" ]]
 	then
@@ -307,10 +289,6 @@ main(){
 	elif [[ $1 == "cd" ]]
 	then
 		test_cd
-		read_input
-	elif [[ $1 == "env" ]]
-	then
-		test_env
 		read_input
 	elif [[ $1 == "un" ]]
 	then

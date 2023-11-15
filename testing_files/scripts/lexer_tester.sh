@@ -1,9 +1,10 @@
+#!/bin/bash
+
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
 
-#!/bin/bash
 
 test_output () {
 	if [[ $1 == $2 ]]
@@ -45,7 +46,6 @@ do
 		read -r line
 		test_output $OUTPUT $line
 		test_err err_mini
-		# test_code $exit_mini $exit_bash
 	fi
 done < "$FILE"
 if [[ $KO == 0 ]]

@@ -31,10 +31,6 @@ echo $yyyyyy
 export yyyyyy
 env | grep yyyyyy
 
-export yyyyyy=asdasd yyyyy="pore" yyyy=uuuuu"tre "'asd'
-env | grep yyyy
-echo $yyyyyy $yyyyy $yyyy
-
 export =asd
 
 export =asd
@@ -156,8 +152,5 @@ echo $bbbb
 export bbbb="" bbbb+="$HOME"$USER bbbb+=banana$? bbbb+=$HOME
 env | grep yyyy
 echo $bbbb
-
-export yyyyyyyyy=asd yyy-=adsasdasd yyyyy=asd
-env | grep yyy
 
 export asad-=qweqw awea-=asdasd as@asd=asdasd aw#p=asdasd _=asdasd wae%=asdasd

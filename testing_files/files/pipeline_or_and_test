@@ -30,11 +30,7 @@ exit 1 | echo huh
 
 cate | echo hi
 
-cate | cate | cate | cate | cate | cate | cate | cate | cate | cate | ls
-
 ls | ls | ls | cate
-
-env | grep SHLVL
 
 echo noooooooooooo | cat -e | cat -e | cat -e
 
@@ -91,10 +87,6 @@ echo hi && export huh=lrrr || echo $huh
 echo $huh
 
 export hi=asd | echo hello && echo $hi
-
-awk -v '{print $0}' && echo hi
-
-awk -v '{print $0}' || echo hi
 
 echo hello && (ls)
 

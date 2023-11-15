@@ -9,7 +9,7 @@ END=\033[0m
 NAME = lexer_test syntax_test parser_test expansion_test
 SRC_FILES = $(shell find ../srcs -type f -name "*.c")
 OBJ_FILES = $(SRC_FILES:../srcs/%.c=../obj/%.o)
-OBJ_DIR = ../obj ../obj/input_parser ../obj/builtins ../obj/init ../obj/executor ../obj/input_parser/lexer ../obj/input_parser/parser ../obj/executor/expansion
+OBJ_DIR = ../obj ../obj/input_parser ../obj/builtins ../obj/init ../obj/executor ../obj/input_parser/lexer  ../obj/input_parser/list_functions ../obj/input_parser/parser ../obj/executor/expansion
 HEADERS  = $(shell find ../incs -type f -name "*.h")
 
 # readline flags
@@ -21,21 +21,31 @@ LIBFT_DIR = ../libft
 
 # compilation variables
 CC = cc
-INCLUDES = -I ../incs -I ../libft/incs -I $(HOME)/.brew/opt/readline/include
+INCLUDES = -I ../incs -I ../libft/incs
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 else
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 endif
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
-	OBJ_FLAGS := $(RL_FLAGS)
+	RL_FLAGS = -lreadline -ltinfo
 else ifeq ($(UNAME_S), Darwin)
-	OBJ_FLAGS := 
+	READLINE = $(shell brew --prefix readline)
+	RL_FLAGS = -L $(READLINE)/lib -lreadline
+	INCLUDES += -I $(READLINE)/include
 else
 	$(error OS: $(OS) is not supported!)
 endif
+
+# ifeq ($(UNAME_S), Linux)
+# 	OBJ_FLAGS := $(RL_FLAGS)
+# else ifeq ($(UNAME_S), Darwin)
+# 	OBJ_FLAGS := 
+# else
+# 	$(error OS: $(OS) is not supported!)
+# endif
 
 # compilation files for all the various tests
 
@@ -46,10 +56,10 @@ COM_SYNTAX = ../obj/input_parser/lexer/* ../obj/input_parser/list_functions/toke
 c_files/syntax_tester.c ../obj/error.o ../obj/input_parser/input_parser_utils.o ../obj/utils.o
 
 lexer_test: comfiles
-	@$(CC) $(CFLAGS) $(INCLUDES) $(RL_FLAGS) -o $@ $(LIBFT) $(COM_LEXER)
+	$(CC) $(CFLAGS) -o $@ $(COM_LEXER) $(INCLUDES) $(LIBFT) $(RL_FLAGS)
 
 syntax_test: comfiles
-	@$(CC) $(CFLAGS) $(INCLUDES) $(RL_FLAGS) -o $@ $(LIBFT) $(COM_SYNTAX)
+	$(CC) $(CFLAGS) -o $@ $(COM_SYNTAX) $(INCLUDES) $(LIBFT) $(RL_FLAGS)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
@@ -57,7 +67,7 @@ $(LIBFT):
 comfiles: $(LIBFT) $(OBJ_FILES)
 
 ../obj/%.o: ../srcs/%.c $(HEADERS) | $(OBJ_DIR)
-	@$(CC) $(INCLUDES) $(OBJ_FLAGS) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(INCLUDES) $(CFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)

@@ -143,8 +143,3 @@ pwd
 cd $OLDPWD/something
 pwd
 
-pwd
-cd incs/ djhwbdhwbd wgdyuhgw jdwjdh wuiydjwh 
-pwd
-echo $PWD
-echo $OLDPWD

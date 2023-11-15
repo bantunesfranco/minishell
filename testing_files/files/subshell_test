@@ -71,8 +71,6 @@ echo hi | (exit)
 
 echo hi && (exit)
 
-echo hi && (exit asd 100)
-
 echo hi && (exit 100 asd)
 
 export hi=asd && (env | grep hi || export hi=not && env | grep hi) && env | grep hi

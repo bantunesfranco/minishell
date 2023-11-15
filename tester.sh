@@ -1,9 +1,10 @@
+#!/bin/bash
+
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
 
-#!/bin/bash
 
 help_arg(){
 	echo -e "\n${BOLD}Run ./tester with one of the following arguments\n${RESET}"
@@ -63,7 +64,7 @@ runoption(){
 		run_all_tests $2
 	elif [[ $1 == "clean" ]]
 	then
-		make -C testing_files fclean
+		make -s -C testing_files fclean
 	else
 		help_arg
 	fi
@@ -141,7 +142,5 @@ test_lexer () {
 	rm -rf error_args
 	./testing_files/scripts/lexer_tester.sh
 }
-
-# ./minishell
 
 main $1 $2

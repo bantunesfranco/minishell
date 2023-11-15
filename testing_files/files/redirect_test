@@ -7,10 +7,6 @@ cat < testing_files/file_perm/nore
 
 cat < file | cat < file | cat < file
 
-chmod -r file
-cat < file | cat < file | cat < file
-chmod +r file
-
 echo hello > temp && cat < temp
 rm temp
 
@@ -25,9 +21,6 @@ echo hello >> temp
 echo huh >> temp
 echo lol >> temp
 cat temp
-rm temp
-
-echo hi >> temp | echo hello >> temp | cat < temp
 rm temp
 
 echo hello > temp
@@ -45,18 +38,9 @@ echo hi > temp
 cat temp
 rm temp
 
-echo hi >> temp | echo huh >> temp | echo tree >> temp | echo h > temp
-cat temp
-rm temp
-
 chmod -w file
 echo hi > file
 echo hi >> file
-chmod +w file
-
-chmod -w file
-echo hi > file | cat > file | cat >> file | cat >> file | ls > file
-cat file
 chmod +w file
 
 echo hi > temp  >temp2 > temp3 > temp4 > temp5

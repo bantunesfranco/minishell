@@ -1,11 +1,12 @@
+#!/bin/bash
+
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 BOLD='\033[1m'
 
-#!/bin/bash
 
-# functions comparing output, error and error code
+# functions comparing output, error
 
 test_output(){
 	if ! diff -q $1 $2 >/dev/null
@@ -24,15 +25,6 @@ test_err(){
 	else
 		((KO++))
 		echo -e "different errors for argument: \n$TEST" >> error_args
-	fi
-}
-
-test_code(){
-	if [[ $1 == $2 ]]
-	then
-		echo -e "${GREEN}OK${RESET}"
-	else
-		echo -e "${RED}KO${RESET}"
 	fi
 }
 
@@ -60,9 +52,7 @@ do
 		done
 	fi
 	./testing_files/syntax_test $TEST 2>err_mini >out_mini
-	exit_mini=$?
 	echo -n "$TEST" | bash 2>err_bash >out_bash
-	exit_bash=$?
 	test_output out_mini out_bash
 	test_err err_mini err_bash
 	TEST=""

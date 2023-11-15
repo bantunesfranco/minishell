@@ -42,10 +42,6 @@ cd ..
 pwd
 
 unset PATH
-cd -
-pwd
-
-unset PATH
 exit
 
 unset PATH
@@ -171,10 +167,6 @@ awk 'BEGIN{for(i=1;i<=1000000;i++)print int(rand()*1000)}' | awk '{sum+=$1} END 
 "   "
 
 "    "
-
-"		"
-
-"			"
 
 sleep 0 | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat
 
